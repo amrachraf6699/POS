@@ -14,6 +14,7 @@ class LocaleFoundationTest extends TestCase
 
         $this->assertStringContainsString('lang="ar"', $html);
         $this->assertStringContainsString('dir="rtl"', $html);
+        $this->assertStringContainsString('cdn.tailwindcss.com', $html);
     }
 
     public function test_tracker_layout_remains_english_and_ltr(): void
