@@ -185,7 +185,8 @@
                         "vendor/bin/phpstan analyse --memory-limit=1G passed.",
                         "composer install --dry-run --no-interaction --prefer-dist --no-progress passed.",
                         "Tenant switching and invitation architecture documented in docs/architecture/invitation-and-tenant-switching.md.",
-                        "Final implementation and lifecycle tests committed as a5b4722 and pushed to origin/main."
+                        "Final implementation and lifecycle tests committed as a5b4722 and pushed to origin/main.",
+                        "Added dedicated ResendInvitationRequest and RevokeInvitationRequest boundaries; InvitationLifecycleTest, Pint, Larastan, and tracker JSON validation pass."
                     ],
                     "latest_commit": "a5b4722"
                 },

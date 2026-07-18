@@ -10,6 +10,8 @@ use Modules\Identity\App\Actions\CreateInvitationAction;
 use Modules\Identity\App\Domain\Invitations\InvitationAuthorization;
 use Modules\Identity\App\Domain\Tenancy\TenantContext;
 use Modules\Identity\App\Http\Requests\CreateInvitationRequest;
+use Modules\Identity\App\Http\Requests\ResendInvitationRequest;
+use Modules\Identity\App\Http\Requests\RevokeInvitationRequest;
 use Modules\Identity\App\Models\Invitation;
 use Modules\Identity\App\Notifications\InvitationNotification;
 
@@ -41,9 +43,8 @@ final class InvitationController extends Controller
         return back()->with('status', 'تم إرسال الدعوة.');
     }
 
-    public function resend(Invitation $invitation): RedirectResponse
+    public function resend(ResendInvitationRequest $request, Invitation $invitation): RedirectResponse
     {
-        $request = request();
         $tenant = $this->context->tenant();
         abort_unless((int) $invitation->tenant_id === (int) $tenant->getKey(), 404);
         abort_unless($this->authorization->canManage($request->user(), $tenant), 403);
@@ -55,7 +56,7 @@ final class InvitationController extends Controller
         return back()->with('status', 'تم إرسال الدعوة مرة أخرى.');
     }
 
-    public function revoke(Invitation $invitation): RedirectResponse
+    public function revoke(RevokeInvitationRequest $request, Invitation $invitation): RedirectResponse
     {
         $tenant = $this->context->tenant();
         abort_unless((int) $invitation->tenant_id === (int) $tenant->getKey(), 404);
