@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "last_updated_at": "2026-07-19T01:20:00+00:00",
+    "last_updated_at": "2026-07-19T02:00:00+00:00",
     "updated_by": "Codex",
     "phases": {
         "00-Project-Foundation": {
@@ -148,9 +148,10 @@
                         "vendor/bin/pint --test passed.",
                         "vendor/bin/phpstan analyse --memory-limit=1G passed.",
                         "composer install --dry-run --no-interaction --prefer-dist --no-progress passed.",
-                        "Tenant context architecture documented in docs/architecture/tenant-context.md."
+                        "Tenant context architecture documented in docs/architecture/tenant-context.md.",
+                        "Final implementation and isolation tests committed as bfc2c8b and pushed to origin/main."
                     ],
-                    "latest_commit": "1b98c0a"
+                    "latest_commit": "bfc2c8b"
                 },
                 "TASK-003-invitations-and-current-tenant": {
                     "title": "Invitations and Current Tenant",
