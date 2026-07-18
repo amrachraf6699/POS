@@ -8,6 +8,7 @@ use Modules\Tracker\App\Domain\Services\PhaseDocumentReader;
 use Modules\Tracker\App\Domain\Services\ProgressCalculator;
 use Modules\Tracker\App\Domain\Services\TrackerService;
 use Modules\Tracker\App\Domain\Services\TrackerStateReader;
+use Modules\Tracker\App\Domain\Services\TrackerStateWriter;
 use Modules\Tracker\App\Domain\Services\TrackerValidator;
 
 class TrackerServiceProvider extends ServiceProvider
@@ -37,6 +38,7 @@ class TrackerServiceProvider extends ServiceProvider
         $this->app->register(RouteServiceProvider::class);
 
         $this->app->singleton(TrackerStateReader::class, fn () => new TrackerStateReader(base_path('tracker/tracker.json')));
+        $this->app->singleton(TrackerStateWriter::class, fn () => new TrackerStateWriter(base_path('tracker/tracker.json')));
         $this->app->singleton(PhaseDocumentReader::class, fn () => new PhaseDocumentReader(base_path('Phases')));
         $this->app->singleton(TrackerValidator::class);
         $this->app->singleton(ProgressCalculator::class);

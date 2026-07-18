@@ -2,6 +2,8 @@
 
 namespace Modules\Tracker\App\Domain\Services;
 
+use Modules\Tracker\App\Domain\Exceptions\TrackerStateException;
+
 class TrackerService
 {
     public function __construct(
@@ -9,6 +11,7 @@ class TrackerService
         private readonly PhaseDocumentReader $documentReader,
         private readonly TrackerValidator $validator,
         private readonly ProgressCalculator $calculator,
+        private readonly TrackerStateWriter $writer,
     ) {}
 
     public function dashboard(): array
@@ -48,6 +51,8 @@ class TrackerService
             $issueCounts['problems'] += count($phase['problems'] ?? []);
         }
 
+        $issueItems = $this->issueItems($phases);
+
         return [
             'meta' => [
                 'last_updated_at' => $state['last_updated_at'] ?? null,
@@ -62,6 +67,112 @@ class TrackerService
             ],
             'statuses' => TrackerValidator::STATUSES,
             'phases' => $phases,
+            'issue_items' => $issueItems,
+        ];
+    }
+
+    public function issue(string $issueId): array
+    {
+        $issue = collect($this->dashboard()['issue_items'])->firstWhere('id', $issueId);
+
+        if (! is_array($issue)) {
+            abort(404);
+        }
+
+        return $issue;
+    }
+
+    public function phase(string $phaseId): array
+    {
+        $phase = collect($this->dashboard()['phases'])->firstWhere('id', $phaseId);
+
+        if (! is_array($phase)) {
+            abort(404);
+        }
+
+        return $phase;
+    }
+
+    public function task(string $phaseId, string $taskId): array
+    {
+        $phase = $this->phase($phaseId);
+        $task = collect($phase['tasks'])->firstWhere('id', $taskId);
+
+        if (! is_array($task)) {
+            abort(404);
+        }
+
+        return ['phase' => $phase, 'task' => $task];
+    }
+
+    public function resolveIssue(string $issueId, string $resolution): array
+    {
+        $dashboard = $this->dashboard();
+        $issue = collect($dashboard['issue_items'])->firstWhere('id', $issueId);
+
+        if (! is_array($issue)) {
+            abort(404);
+        }
+
+        $state = $this->stateReader->read();
+        if ($issue['task_id']) {
+            $scope = &$state['phases'][$issue['phase_id']]['tasks'][$issue['task_id']];
+        } else {
+            $scope = &$state['phases'][$issue['phase_id']];
+        }
+        $messages = $scope[$issue['type'].'s'] ?? [];
+        $messageIndex = array_search($issue['message'], $messages, true);
+
+        if ($messageIndex === false) {
+            throw new TrackerStateException('The selected tracker issue is stale. Reload the dashboard.');
+        }
+
+        array_splice($scope[$issue['type'].'s'], $messageIndex, 1);
+        $scope['resolutions'][] = '['.now('UTC')->toIso8601String().'] '.$resolution;
+        $state['last_updated_at'] = now('UTC')->toIso8601String();
+        $state['updated_by'] = 'Tracker dashboard';
+        $this->writer->write($state);
+
+        return $issue;
+    }
+
+    private function issueItems(array $phases): array
+    {
+        $items = [];
+        foreach ($phases as $phase) {
+            foreach (['conflict' => $phase['conflicts'] ?? [], 'problem' => $phase['problems'] ?? []] as $type => $messages) {
+                foreach ($messages as $index => $message) {
+                    $items[] = $this->issueItem($phase, null, $type, $index, $message);
+                }
+            }
+
+            foreach ($phase['tasks'] as $task) {
+                foreach (['conflict' => $task['conflicts'] ?? [], 'problem' => $task['problems'] ?? []] as $type => $messages) {
+                    foreach ($messages as $index => $message) {
+                        $items[] = $this->issueItem($phase, $task, $type, $index, $message);
+                    }
+                }
+            }
+        }
+
+        return $items;
+    }
+
+    private function issueItem(array $phase, ?array $task, string $type, int $index, string $message): array
+    {
+        $scope = $task ? $task['id'] : 'phase';
+
+        return [
+            'id' => substr(hash('sha256', $phase['id'].'|'.$scope.'|'.$type.'|'.$index.'|'.$message), 0, 16),
+            'type' => $type,
+            'label' => ucfirst($type),
+            'message' => $message,
+            'phase_id' => $phase['id'],
+            'phase_title' => $phase['title'],
+            'task_id' => $task['id'] ?? null,
+            'task_title' => $task['title'] ?? null,
+            'status' => $task['status'] ?? $phase['status'],
+            'latest_commit' => $task['latest_commit'] ?? null,
         ];
     }
 }

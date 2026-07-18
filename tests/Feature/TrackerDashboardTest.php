@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Modules\Tracker\App\Domain\Services\TrackerService;
 use Tests\TestCase;
 
 class TrackerDashboardTest extends TestCase
@@ -15,7 +16,7 @@ class TrackerDashboardTest extends TestCase
             ->assertSee('12')
             ->assertSee('48')
             ->assertSee('Not started')
-            ->assertSee('Agent-maintained');
+            ->assertSee('Agent maintained');
     }
 
     public function test_tracker_dashboard_has_no_write_routes(): void
@@ -23,5 +24,26 @@ class TrackerDashboardTest extends TestCase
         $this->assertFalse(app('router')->getRoutes()->hasNamedRoute('tracker.store'));
         $this->assertFalse(app('router')->getRoutes()->hasNamedRoute('tracker.update'));
         $this->assertFalse(app('router')->getRoutes()->hasNamedRoute('tracker.destroy'));
+    }
+
+    public function test_tracker_has_problem_phase_and_task_detail_routes(): void
+    {
+        $dashboard = app(TrackerService::class)->dashboard();
+        $phase = $dashboard['phases'][0];
+        $task = $phase['tasks'][0];
+        $issue = $dashboard['issue_items'][0];
+
+        $this->get('/__tracker/problems')->assertOk()->assertSee('Problems & conflicts', false);
+        $this->get(route('tracker.problems.show', $issue['id']))->assertOk()->assertSee($issue['message']);
+        $this->get(route('tracker.phases.show', $phase['id']))->assertOk()->assertSee($phase['title']);
+        $this->get(route('tracker.tasks.show', [$phase['id'], $task['id']]))->assertOk()->assertSee($task['title']);
+    }
+
+    public function test_resolve_route_requires_a_resolution(): void
+    {
+        config(['tracker.web_updates' => true]);
+        $issue = app(TrackerService::class)->dashboard()['issue_items'][0];
+
+        $this->withoutMiddleware()->post(route('tracker.problems.resolve', $issue['id']), [])->assertSessionHasErrors('resolution');
     }
 }

@@ -81,6 +81,8 @@ For each completed task, report: files changed, behavior added, schema/API impac
 
 AI agents are the only actors authorized to update project tracking state. Humans do not update tracker state through the application.
 
+The local-only problem-resolution workflow is an exception for development support: when `TRACKER_WEB_UPDATES=true` (never enabled in production), the dashboard may record a proposed resolution in `tracker/tracker.json`. An AI agent must immediately review the change, verify the evidence, update the relevant task/phase metadata, commit it with a meaningful message, and push it. Production and any non-local environment must remain read-only.
+
 - Maintain live tracker state in the committed `tracker/tracker.json` file.
 - After every coherent implementation step, update the affected task status, parent phase status, notes, conflicts, problems, resolutions, evidence, timestamps, and latest commit as applicable.
 - Use only the approved statuses: `not_started`, `planned`, `in_progress`, `review`, `done`, and `blocked`.
