@@ -10,7 +10,7 @@ Build the Egypt-focused, Arabic-only POS SaaS as a Laravel 10 modular monolith u
 - SQLite for local development and fast tests; MySQL 8+ for production.
 - Blade with selective JavaScript; Arabic and RTL are the initial product language.
 - Shared database with application-owned `tenant_id` scoping. Do not add a tenancy package.
-- Package-free domain folders under `app/Domain` unless a task explicitly approves another location.
+- Use `nwidart/laravel-modules` as the project structure package. Each business area must be represented as a module under `Modules/<ModuleName>`.
 - Integer minor units for money; VAT-inclusive retail pricing; no floating-point money.
 - Simple products only; online-only POS; branch transfers are in scope.
 - Stripe SaaS billing and ETA e-Invoice/e-Receipt adapters are integration boundaries, not reasons to leak provider logic into domain code.
@@ -18,6 +18,8 @@ Build the Egypt-focused, Arabic-only POS SaaS as a Laravel 10 modular monolith u
 ## Architecture rules
 
 - Keep controllers thin. Put business workflows in Actions/Services and expose stable DTO-like request/response boundaries.
+- Use `nwidart/laravel-modules` module boundaries for domain code, migrations, routes, providers, views, and module tests. Do not bypass the module structure with a second competing `app/Domain` architecture.
+- Keep module dependencies explicit and one-directional. Shared abstractions belong in a deliberately named shared module or approved application layer.
 - Tenant context must be established before tenant-owned queries. Never trust a tenant ID from request input.
 - Every tenant-owned table includes `tenant_id` and appropriate composite indexes.
 - Use policies/Form Requests for authorization and validation. UI visibility is not authorization.
@@ -30,7 +32,9 @@ Build the Egypt-focused, Arabic-only POS SaaS as a Laravel 10 modular monolith u
 
 ## Naming and structure
 
-- Use `app/Domain/<Context>/{Actions,Data,Enums,Events,Exceptions,Models,Policies,Services}` as needed.
+- Use `Modules/<ModuleName>/{Config,Console,Database,Domain,Http,Models,Policies,Providers,Resources,Routes,Tests}` as needed, following the package's generated module conventions.
+- Put module business logic in `Modules/<ModuleName>/Domain/{Actions,Data,Enums,Events,Exceptions,Services,ValueObjects}`.
+- Keep module migrations, factories, seeders, routes, views, and tests inside their owning module.
 - Use Laravel conventions for migrations, Form Requests, policies, jobs, notifications, and tests.
 - Prefer explicit names such as `CompleteSaleAction`, `TransferStockAction`, and `TenantContextMiddleware`.
 - Keep each task focused and avoid unrelated refactors.
@@ -50,7 +54,22 @@ Every behavior task adds or updates tests. Required coverage includes happy path
 
 ## Package policy
 
-Do not install packages automatically. First document the purpose, selected version, PHP/Laravel compatibility, alternatives, and rollback/removal impact. Pin Laravel 10/PHP 8.1-compatible versions and update the compatibility record.
+`nwidart/laravel-modules` is an approved required dependency for project structure. Before installation, verify and record the exact Laravel 10/PHP 8.1-compatible release with Composer. Do not silently substitute a different module package or a package-free structure. For every other package, first document the purpose, selected version, PHP/Laravel compatibility, alternatives, and rollback/removal impact. Pin all versions and update the compatibility record.
+
+## Incremental commit policy
+
+Git history is part of the implementation contract.
+
+- Before changing files, inspect the current branch and working tree. Preserve unrelated user changes.
+- Before the first implementation step, confirm that the project is a Git repository and that commits can be created. If commits are impossible, stop and report the blocker instead of continuing silently.
+- Define each implementation step as one coherent, reviewable change. A step may include several related files and tests; it must not mix unrelated features or cleanup.
+- Commit immediately after each coherent step passes its relevant checks. Do not wait until the phase or project is finished.
+- Group commits by meaningful related change, not mechanically by file and not as one commit per task when several task steps form one coherent change.
+- Use messages that identify the phase and outcome, for example: `phase-01: enforce tenant-scoped route binding` or `phase-05: complete atomic cash checkout`.
+- Keep the working tree clean between steps. Never carry a pile of completed steps into a final catch-all commit.
+- Do not squash incremental implementation commits into one final commit. Do not amend an earlier commit unless explicitly asked or the immediately preceding commit is being corrected before the next step begins.
+- After every commit, report the commit hash, message, checks run, and the next uncommitted step.
+- Documentation-only changes follow the same policy.
 
 ## Required agent handoff
 

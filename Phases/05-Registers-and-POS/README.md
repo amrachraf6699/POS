@@ -1,6 +1,6 @@
 # Phase 05 — Registers and POS
 
-Implement registers, sessions, cash movements, cart behavior, idempotent server-side checkout, payments, held carts, and sale history.
+Implement the Registers and Sales modules with sessions, cash movements, cart behavior, idempotent server-side checkout, payments, held carts, and sale history.
 
 ## Dependencies
 

@@ -1,6 +1,6 @@
 # Phase 01 — Authentication and Tenancy
 
-Create users, tenants, tenant context, membership, invitations, authentication protections, and proof that tenant data cannot cross boundaries.
+Create the Authentication, Tenancy, and Users modules with users, tenants, tenant context, membership, invitations, authentication protections, and proof that tenant data cannot cross boundaries.
 
 ## Dependencies
 

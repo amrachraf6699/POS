@@ -1,6 +1,6 @@
 # Phase 04 — Inventory and Transfers
 
-Build the immutable movement ledger, fast balances, opening stock, adjustments, low-stock detection, and atomic branch transfers.
+Build the Inventory module with an immutable movement ledger, fast balances, opening stock, adjustments, low-stock detection, and atomic branch transfers.
 
 ## Dependencies
 

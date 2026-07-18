@@ -1,6 +1,6 @@
 # Phase 02 — Business, Branches, and Users
 
-Configure the business, branches, branch membership, roles, permissions, and owner safeguards.
+Configure the Businesses, Branches, Users, and Authorization modules with business settings, branches, branch membership, roles, permissions, and owner safeguards.
 
 ## Dependencies
 

@@ -1,6 +1,6 @@
 # Phase 09 — Subscriptions and Stripe
 
-Implement trial, Starter/Business plans, usage limits, Stripe subscription boundaries, signed webhooks, grace periods, and billing audit history.
+Implement the Subscriptions module with trial, Starter/Business plans, usage limits, Stripe subscription boundaries, signed webhooks, grace periods, and billing audit history.
 
 ## Dependencies
 

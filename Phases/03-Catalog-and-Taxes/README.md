@@ -1,6 +1,6 @@
 # Phase 03 — Catalog and Taxes
 
-Implement simple products, categories, SKUs/barcodes, VAT-inclusive prices, soft deletion, and immutable sales snapshots.
+Implement the Catalog and Taxes modules with simple products, categories, SKUs/barcodes, VAT-inclusive prices, soft deletion, and immutable sales snapshots.
 
 ## Dependencies
 

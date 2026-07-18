@@ -1,6 +1,6 @@
 # Phase 10 — Security, Audit, and Operations
 
-Harden tenant isolation, authorization, concurrency, queues, rate limits, backups, monitoring, and production-safe error handling.
+Harden the Security, Audit, and Operations modules plus cross-module tenant isolation, authorization, concurrency, queues, rate limits, backups, monitoring, and production-safe error handling.
 
 ## Dependencies
 

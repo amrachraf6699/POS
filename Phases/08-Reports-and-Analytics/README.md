@@ -1,6 +1,6 @@
 # Phase 08 — Reports and Analytics
 
-Deliver operational reporting: daily sales, payments, VAT, stock, register results, trends, comparisons, performance breakdowns, and CSV export.
+Deliver the Reports module with daily sales, payments, VAT, stock, register results, trends, comparisons, performance breakdowns, and CSV export.
 
 ## Dependencies
 

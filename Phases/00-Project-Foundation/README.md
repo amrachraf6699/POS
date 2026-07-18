@@ -1,6 +1,6 @@
 # Phase 00 — Project Foundation
 
-Establish the supported runtime, local/production database policy, domain-folder conventions, Arabic/RTL baseline, quality checks, and decision records before feature work.
+Establish the supported runtime, local/production database policy, `nwidart/laravel-modules` structure, Arabic/RTL baseline, quality checks, and decision records before feature work.
 
 ## Dependencies
 
@@ -13,6 +13,6 @@ The project can run on SQLite locally, targets MySQL 8 in production, has repeat
 ## Tasks
 
 - TASK-001-runtime-and-environments.md
-- TASK-002-domain-folder-conventions.md
+- TASK-002-modules-package-and-conventions.md
 - TASK-003-arabic-rtl-foundation.md
 - TASK-004-quality-gates-and-compatibility.md

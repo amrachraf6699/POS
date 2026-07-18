@@ -1,6 +1,6 @@
 # Phase 07 — Returns, Refunds, and Expenses
 
-Implement original-sale-linked returns, partial refunds, restocking, expenses, register closing, and audit logging.
+Implement the Returns, Expenses, and Audit modules with original-sale-linked returns, partial refunds, restocking, expenses, register closing, and audit logging.
 
 ## Dependencies
 

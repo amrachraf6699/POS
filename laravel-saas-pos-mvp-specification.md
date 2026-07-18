@@ -1214,7 +1214,7 @@ Useful features:
 
 Recommendation:
 
-Use it if the team and AI agent can consistently maintain module boundaries.
+Use it as the required project-structure package. The team and AI agent must consistently maintain module boundaries.
 
 Do not use modules as an excuse to:
 
@@ -1224,7 +1224,7 @@ Do not use modules as an excuse to:
 - Put every model in a separate module
 - Create excessive abstractions
 
-Alternative without a package:
+Rejected fallback (not used):
 
 ```text
 app/
@@ -1235,11 +1235,11 @@ app/
 │   └── ...
 ```
 
-A package-free modular monolith is simpler and reduces dependency risk.
+The package-free domain-folder alternative is not approved for this project.
 
 Decision rule:
 
-Use `nwidart/laravel-modules` only if its Laravel-10-compatible release is confirmed through Composer. Otherwise, use domain folders without a modules package.
+Use `nwidart/laravel-modules` as the required structure package after confirming a Laravel-10/PHP-8.1-compatible release through Composer. If no compatible release exists, stop and request a version decision; do not silently fall back to package-free domain folders.
 
 ---
 
@@ -1591,7 +1591,7 @@ Rules:
 | Concern | Primary Candidate | MVP Decision |
 |---|---|---|
 | Tenancy | `stancl/tenancy` | Evaluate and likely use |
-| Modules | `nwidart/laravel-modules` | Optional |
+| Modules | `nwidart/laravel-modules` | Required; pin Laravel-10/PHP-8.1-compatible release |
 | Permissions | `spatie/laravel-permission` | Use |
 | Audit logging | `spatie/laravel-activitylog` | Use or wrap |
 | Stripe subscriptions | `laravel/cashier` | Use only for Stripe |
@@ -2182,7 +2182,7 @@ The AI agent should discuss and resolve these before implementation:
 4. Blade/Livewire or Inertia/Vue?
 5. Shared database or database-per-tenant?
 6. `stancl/tenancy` or `spatie/laravel-multitenancy`?
-7. `nwidart/laravel-modules` or package-free domain folders?
+7. Which Laravel-10/PHP-8.1-compatible `nwidart/laravel-modules` release should be pinned?
 8. Which SaaS billing provider?
 9. Are product variants required in MVP?
 10. Is negative stock allowed?
@@ -2209,7 +2209,7 @@ Database: MySQL 8
 Tenancy: Shared database with tenant_id
 Tenant resolution: Subdomain plus authenticated current tenant
 Tenancy package: stancl/tenancy, after compatibility proof
-Modules package: Optional; use nwidart only after compatibility proof
+Modules package: Required; use `nwidart/laravel-modules` after compatibility proof and pinning
 Authorization: spatie/laravel-permission
 Frontend: Inertia.js + Vue
 Authentication: Breeze + Sanctum

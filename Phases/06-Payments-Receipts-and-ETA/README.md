@@ -1,6 +1,6 @@
 # Phase 06 — Payments, Receipts, and ETA
 
-Record in-store payment methods, produce Arabic receipts, and create separate ETA e-Invoice/e-Receipt adapter boundaries with sandbox readiness.
+Implement the Payments, Receipts, and Compliance modules with in-store payment methods, Arabic receipts, and separate ETA e-Invoice/e-Receipt adapter boundaries with sandbox readiness.
 
 ## Dependencies
 

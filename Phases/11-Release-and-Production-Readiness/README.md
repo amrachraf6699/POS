@@ -1,6 +1,6 @@
 # Phase 11 — Release and Production Readiness
 
-Turn the completed MVP into a repeatable, documented release with migrations, workers, scheduler, Stripe/ETA gates, rollback, and launch acceptance.
+Turn the completed MVP modules into a repeatable, documented release with migrations, workers, scheduler, Stripe/ETA gates, rollback, and launch acceptance.
 
 ## Dependencies
 
