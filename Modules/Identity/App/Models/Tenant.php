@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Identity\Database\Factories\TenantFactory;
 
 /**
+ * @property int $id
  * @property string $status
  */
 class Tenant extends Model

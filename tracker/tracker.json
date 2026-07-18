@@ -121,7 +121,7 @@
                         "vendor/bin/phpstan analyse --memory-limit=1G passed",
                         "composer install --dry-run --no-interaction --prefer-dist --no-progress passed"
                     ],
-                    "latest_commit": "pending"
+                    "latest_commit": "472c480"
                 },
                 "TASK-002-tenant-context-and-scoping": {
                     "title": "Tenant Context and Scoping",

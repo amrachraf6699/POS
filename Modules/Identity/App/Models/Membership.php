@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\Identity\Database\Factories\MembershipFactory;
 
 /**
+ * @property int $id
  * @property string $role
  * @property string $status
  */
