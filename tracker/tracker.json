@@ -1,7 +1,7 @@
 {
     "schema_version": 1,
-    "last_updated_at": "2026-07-18T21:27:17+00:00",
-    "updated_by": "Tracker dashboard",
+    "last_updated_at": "2026-07-19T00:40:00+00:00",
+    "updated_by": "Codex",
     "phases": {
         "00-Project-Foundation": {
             "title": "Project Foundation",
@@ -89,22 +89,30 @@
         },
         "01-Authentication-and-Tenancy": {
             "title": "Authentication and Tenancy",
-            "status": "not_started",
+            "status": "in_progress",
             "weight": 2,
-            "notes": [],
+            "notes": [
+                "TASK-001 implementation started with the Identity module schema and lifecycle models."
+            ],
             "conflicts": [],
             "problems": [],
             "resolutions": [],
             "tasks": {
                 "TASK-001-users-and-tenants": {
                     "title": "Users and Tenants",
-                    "status": "not_started",
-                    "notes": [],
+                    "status": "in_progress",
+                    "notes": [
+                        "Identity module scaffolding, users status, tenants, memberships, models, and factories are implemented. Registration workflow and UI remain pending."
+                    ],
                     "conflicts": [],
                     "problems": [],
                     "resolutions": [],
-                    "evidence": [],
-                    "latest_commit": null
+                    "evidence": [
+                        "php artisan module:list shows Identity enabled",
+                        "php artisan migrate:fresh --env=testing passed",
+                        "php artisan migrate:status confirms users, tenants, and memberships schema"
+                    ],
+                    "latest_commit": "pending"
                 },
                 "TASK-002-tenant-context-and-scoping": {
                     "title": "Tenant Context and Scoping",
