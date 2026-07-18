@@ -32,6 +32,18 @@ use Modules\Identity\App\Http\Middleware\ResolveTenantContext;
 class Kernel extends HttpKernel
 {
     /**
+     * Tenant context must be established before implicit route model binding.
+     *
+     * @var array<int, class-string|string>
+     */
+    protected $middlewarePriority = [
+        StartSession::class,
+        Authenticate::class,
+        ResolveTenantContext::class,
+        SubstituteBindings::class,
+    ];
+
+    /**
      * The application's global HTTP middleware stack.
      *
      * These middleware are run during every request to your application.

@@ -36,6 +36,10 @@ class RegistrationTest extends TestCase
 
         $response->assertRedirect('/home');
         $this->assertAuthenticated();
+        $this->assertSame(
+            Tenant::query()->where('slug', 'cairo-store')->value('id'),
+            session('current_tenant_id')
+        );
         $this->assertDatabaseHas('users', ['email' => 'owner@example.com', 'status' => User::STATUS_ACTIVE]);
         $this->assertDatabaseHas('tenants', ['name' => 'Cairo Store', 'slug' => 'cairo-store', 'status' => Tenant::STATUS_ACTIVE]);
         $this->assertDatabaseHas('memberships', ['role' => Membership::ROLE_OWNER, 'status' => Membership::STATUS_ACTIVE]);

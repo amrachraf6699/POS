@@ -128,21 +128,29 @@
                 },
                 "TASK-002-tenant-context-and-scoping": {
                     "title": "Tenant Context and Scoping",
-                    "status": "in_progress",
+                    "status": "done",
                     "notes": [
-                        "Started the fail-closed tenant context contract and tenant-owned model scoping foundation."
+                        "Implemented fail-closed tenant context, central and tenant middleware, tenant selection, and tenant-owned model scoping."
                     ],
                     "conflicts": [],
                     "problems": [],
-                    "resolutions": [],
+                    "resolutions": [
+                        "Added middleware priority so tenant context is established before implicit route model binding."
+                    ],
                     "evidence": [
                         "Implementation step 1 started: TenantContext, TenantContextException, TenantScope, and BelongsToTenant are being added.",
                         "Registration will establish current_tenant_id in the authenticated session.",
                         "Step 1 committed as 1257a1d and pushed to origin/main.",
                         "Pint, Larastan, Identity feature tests, and tracker JSON validation passed.",
-                        "Step 2 added tenant and central middleware aliases, tenant selection routes, selection UI, and central route markers for the tracker."
+                        "Step 2 commit 1b98c0a pushed tenant and central middleware aliases, tenant selection routes, selection UI, and central route markers for the tracker.",
+                        "TenantContextTest passed: 8 tests, 29 assertions.",
+                        "Full suite passed: 33 tests, 98 assertions.",
+                        "vendor/bin/pint --test passed.",
+                        "vendor/bin/phpstan analyse --memory-limit=1G passed.",
+                        "composer install --dry-run --no-interaction --prefer-dist --no-progress passed.",
+                        "Tenant context architecture documented in docs/architecture/tenant-context.md."
                     ],
-                    "latest_commit": "1257a1d"
+                    "latest_commit": "1b98c0a"
                 },
                 "TASK-003-invitations-and-current-tenant": {
                     "title": "Invitations and Current Tenant",
