@@ -156,13 +156,16 @@
                 },
                 "TASK-003-invitations-and-current-tenant": {
                     "title": "Invitations and Current Tenant",
-                    "status": "in_progress",
+                    "status": "done",
                     "notes": [
-                        "Started the invitation schema, manager membership role, authorization contract, and secure token foundation."
+                        "Implemented secure manager invitations, existing/new recipient acceptance, queued delivery, revocation/resend, and canonical tenant switching."
                     ],
                     "conflicts": [],
                     "problems": [],
-                    "resolutions": [],
+                    "resolutions": [
+                        "Added the minimal login bridge required for existing invited accounts while keeping invitation acceptance email-bound.",
+                        "Resolved CSRF fixture and PHPStan factory typing issues without weakening application CSRF or tenant isolation behavior."
+                    ],
                     "evidence": [
                         "Implementation step 1 started: invitation records, configurable expiry, manager role, and authorization boundary are being added.",
                         "InvitationAuthorizationTest passed: 3 tests, 9 assertions.",
@@ -174,9 +177,17 @@
                         "InvitationAuthorizationTest passed: 3 tests, 9 assertions.",
                         "Signed acceptance routes, existing/new recipient flows, login bridge, queued notification, and management controllers/views implemented.",
                         "Resolved PHP 8.1 compatibility by keeping DTOs as regular final classes and preserving the approved PHP 8.1 runtime.",
-                        "Pint and Larastan pass for the acceptance and delivery slice."
+                        "Pint and Larastan pass for the acceptance and delivery slice.",
+                        "InvitationLifecycleTest passed: 4 tests, 18 assertions.",
+                        "Full suite passed: 43 tests, 144 assertions.",
+                        "php artisan migrate:fresh --env=testing --force passed with the invitations migration.",
+                        "vendor/bin/pint --test passed.",
+                        "vendor/bin/phpstan analyse --memory-limit=1G passed.",
+                        "composer install --dry-run --no-interaction --prefer-dist --no-progress passed.",
+                        "Tenant switching and invitation architecture documented in docs/architecture/invitation-and-tenant-switching.md.",
+                        "Final implementation commit is being created and will be pushed with this tracker update."
                     ],
-                    "latest_commit": null
+                    "latest_commit": "fd512b7"
                 },
                 "TASK-004-isolation-and-authorization-tests": {
                     "title": "Isolation and Authorization Tests",

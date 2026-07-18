@@ -26,7 +26,10 @@ class RegistrationTest extends TestCase
 
     public function test_registration_creates_and_authenticates_an_owner_atomically(): void
     {
+        $this->get('/register')->assertOk();
+
         $response = $this->post('/register', [
+            '_token' => csrf_token(),
             'name' => 'Amr Achraf',
             'email' => 'owner@example.com',
             'password' => 'password-123',

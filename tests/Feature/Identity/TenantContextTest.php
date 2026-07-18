@@ -105,10 +105,10 @@ class TenantContextTest extends TestCase
             ->assertSee($tenant->getAttribute('name'))
             ->assertDontSee($otherTenant->getAttribute('name'));
 
-        $this->actingAs($user)->post(route('tenant.selection.store', $otherTenant))
+        $this->actingAs($user)->post(route('tenant.selection.store', $otherTenant), ['_token' => csrf_token()])
             ->assertForbidden();
 
-        $this->actingAs($user)->post(route('tenant.selection.store', $tenant))
+        $this->actingAs($user)->post(route('tenant.selection.store', $tenant), ['_token' => csrf_token()])
             ->assertRedirect('/home')
             ->assertSessionHas('current_tenant_id', $tenant->id);
     }
