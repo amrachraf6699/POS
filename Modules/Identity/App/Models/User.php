@@ -9,6 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Modules\Identity\Database\Factories\UserFactory;
 
 /**
+ * @property int $id
  * @property string $status
  */
 class User extends Authenticatable
@@ -42,6 +43,10 @@ class User extends Authenticatable
 
     public function accessibleTenants()
     {
+        if (! $this->isActive()) {
+            return Tenant::query()->whereRaw('1 = 0');
+        }
+
         return Tenant::query()
             ->where('tenants.status', Tenant::STATUS_ACTIVE)
             ->whereHas('memberships', function ($query): void {

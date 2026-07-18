@@ -100,10 +100,11 @@
             "tasks": {
                 "TASK-001-users-and-tenants": {
                     "title": "Users and Tenants",
-                    "status": "in_progress",
+                    "status": "done",
                     "notes": [
                         "Identity module scaffolding, users status, tenants, memberships, models, and factories are implemented.",
-                        "Atomic owner registration action, request validation, slug collision handling, session authentication, and registration routes are implemented. Arabic registration UI and lifecycle tests remain pending."
+                        "Atomic owner registration action, request validation, slug collision handling, session authentication, and registration routes are implemented.",
+                        "Arabic RTL registration UI and lifecycle safety coverage are complete."
                     ],
                     "conflicts": [],
                     "problems": [],
@@ -113,7 +114,12 @@
                         "php artisan migrate:fresh --env=testing passed",
                         "php artisan migrate:status confirms users, tenants, and memberships schema",
                         "Registration route/controller/action added; full registration tests pending",
-                        "php artisan route:list --path=register confirms register and register.store"
+                        "php artisan route:list --path=register confirms register and register.store",
+                        "RegistrationTest passed: 5 tests including atomic registration, slug collision, rollback, lifecycle access, and Arabic RTL rendering",
+                        "Full suite passed: 24 tests, 64 assertions",
+                        "vendor/bin/pint --test passed",
+                        "vendor/bin/phpstan analyse --memory-limit=1G passed",
+                        "composer install --dry-run --no-interaction --prefer-dist --no-progress passed"
                     ],
                     "latest_commit": "pending"
                 },
