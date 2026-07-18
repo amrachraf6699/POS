@@ -8,7 +8,7 @@ Existing Laravel skeleton only.
 
 ## Exit criteria
 
-The project can run on SQLite locally, targets MySQL 8 in production, has repeatable tests and quality checks, and documents every approved dependency and architectural constraint.
+The project can run on SQLite locally, targets MySQL 8 in production, has repeatable tests and quality checks, and documents every approved dependency and architectural constraint. See `docs/ENVIRONMENT.md`, `docs/QUALITY.md`, and `docs/architecture/package-compatibility.md` for the operational records.
 
 ## Tasks
 

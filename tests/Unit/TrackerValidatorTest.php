@@ -12,7 +12,7 @@ class TrackerValidatorTest extends TestCase
     {
         $this->expectException(TrackerStateException::class);
 
-        (new TrackerValidator())->validate([
+        (new TrackerValidator)->validate([
             'schema_version' => 1,
             'phases' => ['phase' => [
                 'status' => 'unknown',
@@ -29,7 +29,7 @@ class TrackerValidatorTest extends TestCase
     {
         $this->expectException(TrackerStateException::class);
 
-        (new TrackerValidator())->validate([
+        (new TrackerValidator)->validate([
             'schema_version' => 1,
             'phases' => ['phase' => [
                 'status' => 'not_started',
@@ -46,7 +46,7 @@ class TrackerValidatorTest extends TestCase
     {
         $this->expectException(TrackerStateException::class);
 
-        (new TrackerValidator())->validate([
+        (new TrackerValidator)->validate([
             'schema_version' => 1,
             'phases' => ['phase' => [
                 'status' => 'not_started',

@@ -6,9 +6,7 @@ use Modules\Tracker\App\Domain\Exceptions\TrackerStateException;
 
 class PhaseDocumentReader
 {
-    public function __construct(private readonly string $phasesPath)
-    {
-    }
+    public function __construct(private readonly string $phasesPath) {}
 
     public function read(): array
     {
@@ -62,9 +60,11 @@ class PhaseDocumentReader
 
     private function taskReferences(string $contents): array
     {
-        preg_match_all('/^- (TASK-[^\s`]+\.md)$/m', $contents, $matches);
+        if (preg_match_all('/^- (TASK-[^\s`]+\.md)$/m', $contents, $matches) === false) {
+            return [];
+        }
 
-        return array_values(array_unique($matches[1] ?? []));
+        return array_values(array_unique($matches[1]));
     }
 
     private function title(string $contents, string $fallback): string
