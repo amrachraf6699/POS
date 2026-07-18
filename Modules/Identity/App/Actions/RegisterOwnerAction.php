@@ -46,6 +46,7 @@ class RegisterOwnerAction
         });
 
         Auth::login($result->user);
+        session(['current_tenant_id' => $result->tenant->getKey()]);
 
         return $result;
     }

@@ -94,7 +94,8 @@
             "status": "in_progress",
             "weight": 2,
             "notes": [
-                "TASK-001 implementation started with the Identity module schema and lifecycle models."
+                "TASK-001 implementation started with the Identity module schema and lifecycle models.",
+                "TASK-002 tenant context and scoping implementation is in progress."
             ],
             "conflicts": [],
             "problems": [],
@@ -127,12 +128,17 @@
                 },
                 "TASK-002-tenant-context-and-scoping": {
                     "title": "Tenant Context and Scoping",
-                    "status": "not_started",
-                    "notes": [],
+                    "status": "in_progress",
+                    "notes": [
+                        "Started the fail-closed tenant context contract and tenant-owned model scoping foundation."
+                    ],
                     "conflicts": [],
                     "problems": [],
                     "resolutions": [],
-                    "evidence": [],
+                    "evidence": [
+                        "Implementation step 1 started: TenantContext, TenantContextException, TenantScope, and BelongsToTenant are being added.",
+                        "Registration will establish current_tenant_id in the authenticated session."
+                    ],
                     "latest_commit": null
                 },
                 "TASK-003-invitations-and-current-tenant": {

@@ -4,6 +4,7 @@ namespace Modules\Identity\App\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Modules\Identity\App\Domain\Tenancy\TenantContext;
 
 class IdentityServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,7 @@ class IdentityServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->scoped(TenantContext::class, static fn (): TenantContext => new TenantContext);
         $this->app->register(RouteServiceProvider::class);
     }
 
