@@ -14,6 +14,8 @@ use Modules\Identity\Database\Factories\InvitationFactory;
  * @property string $role
  * @property string $token_hash
  * @property string $status
+ * @property \Illuminate\Support\Carbon $expires_at
+ * @property-read Tenant $tenant
  */
 class Invitation extends Model
 {

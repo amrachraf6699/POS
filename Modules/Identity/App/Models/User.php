@@ -10,6 +10,7 @@ use Modules\Identity\Database\Factories\UserFactory;
 
 /**
  * @property int $id
+ * @property string $email
  * @property string $status
  */
 class User extends Authenticatable

@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Modules\Identity\App\Domain\Tenancy\TenantContext;
 use Modules\Identity\App\Models\Tenant;
 
 final class TenantSelectionController extends Controller
 {
+    public function __construct(private readonly TenantContext $context) {}
+
     public function index(Request $request): View
     {
         return view('identity::tenants.select', [
@@ -29,6 +32,7 @@ final class TenantSelectionController extends Controller
         }
 
         $request->session()->put('current_tenant_id', $selectedTenant->getKey());
+        $this->context->clear();
 
         return redirect()->intended('/home');
     }

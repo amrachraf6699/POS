@@ -169,7 +169,12 @@
                         "php artisan migrate:fresh --env=testing --force applied the invitations schema.",
                         "vendor/bin/pint --test passed.",
                         "vendor/bin/phpstan analyse --memory-limit=1G passed.",
-                        "Tracker JSON validation passed."
+                        "Tracker JSON validation passed.",
+                        "InvitationAcceptanceTest passed: 3 tests, 18 assertions.",
+                        "InvitationAuthorizationTest passed: 3 tests, 9 assertions.",
+                        "Signed acceptance routes, existing/new recipient flows, login bridge, queued notification, and management controllers/views implemented.",
+                        "Resolved PHP 8.1 compatibility by keeping DTOs as regular final classes and preserving the approved PHP 8.1 runtime.",
+                        "Pint and Larastan pass for the acceptance and delivery slice."
                     ],
                     "latest_commit": null
                 },

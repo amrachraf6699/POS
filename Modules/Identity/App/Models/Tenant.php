@@ -9,6 +9,7 @@ use Modules\Identity\Database\Factories\TenantFactory;
 
 /**
  * @property int $id
+ * @property string $name
  * @property string $status
  */
 class Tenant extends Model
