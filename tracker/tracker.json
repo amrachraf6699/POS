@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "last_updated_at": null,
+  "updated_by": "initialization",
+  "phases": {
+    "00-Project-Foundation": {"title":"Project Foundation","status":"not_started","weight":1,"notes":[],"conflicts":[],"problems":[],"resolutions":[],"tasks":{
+      "TASK-001-runtime-and-environments":{"title":"Runtime and Environments","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-002-modules-package-and-conventions":{"title":"Modules Package and Conventions","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-003-arabic-rtl-foundation":{"title":"Arabic and RTL Foundation","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-004-quality-gates-and-compatibility":{"title":"Quality Gates and Compatibility","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null}}},
+    "01-Authentication-and-Tenancy": {"title":"Authentication and Tenancy","status":"not_started","weight":2,"notes":[],"conflicts":[],"problems":[],"resolutions":[],"tasks":{
+      "TASK-001-users-and-tenants":{"title":"Users and Tenants","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-002-tenant-context-and-scoping":{"title":"Tenant Context and Scoping","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-003-invitations-and-current-tenant":{"title":"Invitations and Current Tenant","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-004-isolation-and-authorization-tests":{"title":"Isolation and Authorization Tests","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null}}},
+    "02-Business-Branches-and-Users": {"title":"Business, Branches, and Users","status":"not_started","weight":1,"notes":[],"conflicts":[],"problems":[],"resolutions":[],"tasks":{
+      "TASK-001-business-settings":{"title":"Business Settings","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-002-branches-and-assignments":{"title":"Branches and Assignments","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-003-roles-and-permissions":{"title":"Roles and Permissions","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-004-onboarding-flow":{"title":"Business Onboarding Flow","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null}}},
+    "03-Catalog-and-Taxes": {"title":"Catalog and Taxes","status":"not_started","weight":1,"notes":[],"conflicts":[],"problems":[],"resolutions":[],"tasks":{
+      "TASK-001-categories-and-tax-rates":{"title":"Categories and Tax Rates","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-002-simple-products":{"title":"Simple Products","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-003-pricing-and-vat-calculation":{"title":"Pricing and VAT Calculation","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-004-catalog-import-export-boundaries":{"title":"Catalog Import and Export Boundaries","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null}}},
+    "04-Inventory-and-Transfers": {"title":"Inventory and Transfers","status":"not_started","weight":2,"notes":[],"conflicts":[],"problems":[],"resolutions":[],"tasks":{
+      "TASK-001-inventory-ledger-and-balances":{"title":"Inventory Ledger and Balances","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-002-opening-stock-and-adjustments":{"title":"Opening Stock and Adjustments","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-003-branch-transfers":{"title":"Branch Transfers","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-004-low-stock-and-inventory-tests":{"title":"Low Stock and Inventory Tests","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null}}},
+    "05-Registers-and-POS": {"title":"Registers and POS","status":"not_started","weight":3,"notes":[],"conflicts":[],"problems":[],"resolutions":[],"tasks":{
+      "TASK-001-registers-and-sessions":{"title":"Registers and Sessions","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-002-cart-and-checkout-contract":{"title":"Cart and Checkout Contract","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-003-atomic-sale-completion":{"title":"Atomic Sale Completion","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-004-held-carts-and-sale-history":{"title":"Held Carts and Sale History","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null}}},
+    "06-Payments-Receipts-and-ETA": {"title":"Payments, Receipts, and ETA","status":"not_started","weight":2,"notes":[],"conflicts":[],"problems":[],"resolutions":[],"tasks":{
+      "TASK-001-payment-methods-and-refunds-contract":{"title":"Payment Methods and Refunds Contract","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-002-arabic-receipts-and-snapshots":{"title":"Arabic Receipts and Snapshots","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-003-eta-document-adapters":{"title":"ETA Document Adapters","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-004-submission-retries-and-compliance-gate":{"title":"Submission Retries and Compliance Gate","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null}}},
+    "07-Returns-Refunds-and-Expenses": {"title":"Returns, Refunds, and Expenses","status":"not_started","weight":2,"notes":[],"conflicts":[],"problems":[],"resolutions":[],"tasks":{
+      "TASK-001-returns-and-restocking":{"title":"Returns and Restocking","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-002-refunds-and-payment-reconciliation":{"title":"Refunds and Payment Reconciliation","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-003-expenses-and-register-closing":{"title":"Expenses and Register Closing","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-004-audit-log-and-operations-tests":{"title":"Audit Log and Operations Tests","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null}}},
+    "08-Reports-and-Analytics": {"title":"Reports and Analytics","status":"not_started","weight":2,"notes":[],"conflicts":[],"problems":[],"resolutions":[],"tasks":{
+      "TASK-001-report-query-boundaries":{"title":"Report Query Boundaries","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-002-operational-dashboards-and-trends":{"title":"Operational Dashboards and Trends","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-003-stock-and-register-reports":{"title":"Stock and Register Reports","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-004-csv-export-and-report-tests":{"title":"CSV Export and Report Tests","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null}}},
+    "09-Subscriptions-and-Stripe": {"title":"Subscriptions and Stripe","status":"not_started","weight":2,"notes":[],"conflicts":[],"problems":[],"resolutions":[],"tasks":{
+      "TASK-001-plans-trials-and-usage":{"title":"Plans, Trials, and Usage","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-002-subscription-state-machine":{"title":"Subscription State Machine","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-003-stripe-checkout-and-webhooks":{"title":"Stripe Checkout and Webhooks","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-004-enforcement-and-billing-tests":{"title":"Enforcement and Billing Tests","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null}}},
+    "10-Security-Audit-and-Operations": {"title":"Security, Audit, and Operations","status":"not_started","weight":2,"notes":[],"conflicts":[],"problems":[],"resolutions":[],"tasks":{
+      "TASK-001-security-review-and-rate-limits":{"title":"Security Review and Rate Limits","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-002-queue-cache-file-tenant-context":{"title":"Queue, Cache, File, and Tenant Context","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-003-concurrency-and-penetration-tests":{"title":"Concurrency and Penetration Tests","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-004-backup-monitoring-and-error-safety":{"title":"Backup, Monitoring, and Error Safety","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null}}},
+    "11-Release-and-Production-Readiness": {"title":"Release and Production Readiness","status":"not_started","weight":1,"notes":[],"conflicts":[],"problems":[],"resolutions":[],"tasks":{
+      "TASK-001-deployment-and-environment-checklist":{"title":"Deployment and Environment Checklist","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-002-migration-worker-and-scheduler-runbook":{"title":"Migration, Worker, and Scheduler Runbook","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-003-stripe-and-eta-launch-gates":{"title":"Stripe and ETA Launch Gates","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
+      "TASK-004-final-acceptance-and-rollback-drill":{"title":"Final Acceptance and Rollback Drill","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null}}}
+  }
+}

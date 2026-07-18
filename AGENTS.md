@@ -75,6 +75,24 @@ Git history is part of the implementation contract.
 
 For each completed task, report: files changed, behavior added, schema/API impact, tests run, assumptions, known limitations, and the next unblocked task. Update the relevant phase README and task status. Never silently change architecture or scope.
 
+## Tracker maintenance contract
+
+AI agents are the only actors authorized to update project tracking state. Humans do not update tracker state through the application.
+
+- Maintain live tracker state in the committed `tracker/tracker.json` file.
+- After every coherent implementation step, update the affected task status, parent phase status, notes, conflicts, problems, resolutions, evidence, timestamps, and latest commit as applicable.
+- Use only the approved statuses: `not_started`, `planned`, `in_progress`, `review`, `done`, and `blocked`.
+- Do not mark a task `done` until its task definition of done and required tests are satisfied.
+- Do not mark a blocked task done because work moved to another task.
+- Record conflicts and problems immediately; never hide, overwrite, or silently delete unresolved issues.
+- Record a resolution when a conflict or problem is genuinely addressed.
+- Preserve unrelated tracker entries when updating one task or phase.
+- Validate the JSON and recalculate progress before committing.
+- Commit the tracker update together with the related implementation step, using a meaningful phase/outcome commit message.
+- Report changed tracker entries, progress change, new/resolved issues, checks, and commit hash in the handoff.
+- Update phase/task Markdown only when requirements, acceptance criteria, dependencies, or implementation scope genuinely change; status and operational progress belong in `tracker/tracker.json`.
+- Never put secrets, credentials, private customer data, absolute filesystem paths, or sensitive infrastructure details in tracker notes.
+
 ## Definition of done
 
 Requirements, validation, authorization, tenant isolation, indexes, transactions, tests, error handling, documentation, and observability considerations are complete. The implementation passes the repository checks and does not weaken historical accuracy or financial consistency.
