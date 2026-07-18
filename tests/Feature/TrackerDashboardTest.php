@@ -14,6 +14,7 @@ class TrackerDashboardTest extends TestCase
             ->assertSee('خطة POS MVP')
             ->assertSee('12')
             ->assertSee('48')
+            ->assertSee('لم يبدأ')
             ->assertSee('متابعة مشروع POS');
     }
 

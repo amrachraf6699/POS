@@ -2,7 +2,6 @@
 
 namespace Modules\Tracker\App\Domain\Services;
 
-use Illuminate\Support\Facades\File;
 use Modules\Tracker\App\Domain\Exceptions\TrackerStateException;
 
 class PhaseDocumentReader
@@ -18,7 +17,8 @@ class PhaseDocumentReader
         }
 
         $documents = [];
-        $directories = collect(File::directories($this->phasesPath))->sort()->values();
+        $directories = array_values(array_filter(glob($this->phasesPath.DIRECTORY_SEPARATOR.'*') ?: [], 'is_dir'));
+        sort($directories);
 
         foreach ($directories as $directory) {
             $readmePath = $directory.DIRECTORY_SEPARATOR.'README.md';

@@ -41,4 +41,21 @@ class TrackerValidatorTest extends TestCase
             'tasks' => [['id' => 'task']],
         ]]);
     }
+
+    public function test_invalid_weight_is_rejected(): void
+    {
+        $this->expectException(TrackerStateException::class);
+
+        (new TrackerValidator())->validate([
+            'schema_version' => 1,
+            'phases' => ['phase' => [
+                'status' => 'not_started',
+                'weight' => 0,
+                'tasks' => ['task' => ['status' => 'not_started']],
+            ]],
+        ], [[
+            'id' => 'phase',
+            'tasks' => [['id' => 'task']],
+        ]]);
+    }
 }
