@@ -26,6 +26,8 @@ use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Modules\Identity\App\Http\Middleware\CentralRoute;
+use Modules\Identity\App\Http\Middleware\ResolveTenantContext;
 
 class Kernel extends HttpKernel
 {
@@ -77,6 +79,7 @@ class Kernel extends HttpKernel
      */
     protected $middlewareAliases = [
         'auth' => Authenticate::class,
+        'central' => CentralRoute::class,
         'auth.basic' => AuthenticateWithBasicAuth::class,
         'auth.session' => AuthenticateSession::class,
         'cache.headers' => SetCacheHeaders::class,
@@ -86,6 +89,7 @@ class Kernel extends HttpKernel
         'precognitive' => HandlePrecognitiveRequests::class,
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
+        'tenant' => ResolveTenantContext::class,
         'verified' => EnsureEmailIsVerified::class,
     ];
 }

@@ -137,9 +137,12 @@
                     "resolutions": [],
                     "evidence": [
                         "Implementation step 1 started: TenantContext, TenantContextException, TenantScope, and BelongsToTenant are being added.",
-                        "Registration will establish current_tenant_id in the authenticated session."
+                        "Registration will establish current_tenant_id in the authenticated session.",
+                        "Step 1 committed as 1257a1d and pushed to origin/main.",
+                        "Pint, Larastan, Identity feature tests, and tracker JSON validation passed.",
+                        "Step 2 added tenant and central middleware aliases, tenant selection routes, selection UI, and central route markers for the tracker."
                     ],
-                    "latest_commit": null
+                    "latest_commit": "1257a1d"
                 },
                 "TASK-003-invitations-and-current-tenant": {
                     "title": "Invitations and Current Tenant",
