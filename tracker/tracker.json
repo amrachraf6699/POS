@@ -5,7 +5,7 @@
   "phases": {
     "00-Project-Foundation": {"title":"Project Foundation","status":"in_progress","weight":1,"notes":["Tracker module foundation is implemented; remaining foundation tasks are still pending."],"conflicts":[],"problems":[],"resolutions":[],"tasks":{
       "TASK-001-runtime-and-environments":{"title":"Runtime and Environments","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
-      "TASK-002-modules-package-and-conventions":{"title":"Modules Package and Conventions","status":"done","notes":["Pinned nwidart/laravel-modules 10.0.6 and scaffolded the Tracker module."],"conflicts":[],"problems":[],"resolutions":[],"evidence":["php artisan module:make Tracker","php artisan route:list"],"latest_commit":"phase-00: implement tracker dashboard"},
+      "TASK-002-modules-package-and-conventions":{"title":"Modules Package and Conventions","status":"done","notes":["Pinned nwidart/laravel-modules 10.0.6 and scaffolded the Tracker module."],"conflicts":[],"problems":[],"resolutions":[],"evidence":["php artisan module:make Tracker","php artisan route:list"],"latest_commit":"b2fc78b"},
       "TASK-003-arabic-rtl-foundation":{"title":"Arabic and RTL Foundation","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null},
       "TASK-004-quality-gates-and-compatibility":{"title":"Quality Gates and Compatibility","status":"not_started","notes":[],"conflicts":[],"problems":[],"resolutions":[],"evidence":[],"latest_commit":null}}},
     "01-Authentication-and-Tenancy": {"title":"Authentication and Tenancy","status":"not_started","weight":2,"notes":[],"conflicts":[],"problems":[],"resolutions":[],"tasks":{
