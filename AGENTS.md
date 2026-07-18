@@ -68,7 +68,9 @@ Git history is part of the implementation contract.
 - Use messages that identify the phase and outcome, for example: `phase-01: enforce tenant-scoped route binding` or `phase-05: complete atomic cash checkout`.
 - Keep the working tree clean between steps. Never carry a pile of completed steps into a final catch-all commit.
 - Do not squash incremental implementation commits into one final commit. Do not amend an earlier commit unless explicitly asked or the immediately preceding commit is being corrected before the next step begins.
-- After every commit, report the commit hash, message, checks run, and the next uncommitted step.
+- After every commit, push that commit to the configured remote before beginning the next implementation step. Push the current branch explicitly; do not use force-push or rewrite remote history.
+- If pushing fails, stop before starting the next step, report the exact push blocker, and do not pretend the work is remotely synchronized.
+- After every commit and push, report the commit hash, message, remote/branch, push result, checks run, and the next uncommitted step.
 - Documentation-only changes follow the same policy.
 
 ## Required agent handoff
@@ -88,8 +90,8 @@ AI agents are the only actors authorized to update project tracking state. Human
 - Record a resolution when a conflict or problem is genuinely addressed.
 - Preserve unrelated tracker entries when updating one task or phase.
 - Validate the JSON and recalculate progress before committing.
-- Commit the tracker update together with the related implementation step, using a meaningful phase/outcome commit message.
-- Report changed tracker entries, progress change, new/resolved issues, checks, and commit hash in the handoff.
+- Commit and push the tracker update together with the related implementation step, using a meaningful phase/outcome commit message.
+- Report changed tracker entries, progress change, new/resolved issues, checks, commit hash, and push result in the handoff.
 - Update phase/task Markdown only when requirements, acceptance criteria, dependencies, or implementation scope genuinely change; status and operational progress belong in `tracker/tracker.json`.
 - Never put secrets, credentials, private customer data, absolute filesystem paths, or sensitive infrastructure details in tracker notes.
 
