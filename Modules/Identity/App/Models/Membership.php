@@ -17,6 +17,8 @@ class Membership extends Model
 
     public const ROLE_OWNER = 'owner';
 
+    public const ROLE_MANAGER = 'manager';
+
     public const STATUS_ACTIVE = 'active';
 
     public const STATUS_INACTIVE = 'inactive';
@@ -41,6 +43,16 @@ class Membership extends Model
     public function isOwner(): bool
     {
         return $this->role === self::ROLE_OWNER;
+    }
+
+    public function isManager(): bool
+    {
+        return $this->role === self::ROLE_MANAGER;
+    }
+
+    public function canManageInvitations(): bool
+    {
+        return $this->isActive() && ($this->isOwner() || $this->isManager());
     }
 
     protected static function newFactory(): MembershipFactory
