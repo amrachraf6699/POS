@@ -11,11 +11,11 @@ class TrackerDashboardTest extends TestCase
         $response = $this->get('/__tracker');
 
         $response->assertOk()
-            ->assertSee('خطة POS MVP')
+            ->assertSee('Engineering progress')
             ->assertSee('12')
             ->assertSee('48')
-            ->assertSee('لم يبدأ')
-            ->assertSee('متابعة مشروع POS');
+            ->assertSee('Not started')
+            ->assertSee('Agent-maintained');
     }
 
     public function test_tracker_dashboard_has_no_write_routes(): void
