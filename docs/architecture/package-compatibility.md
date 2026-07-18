@@ -10,6 +10,8 @@ Approved foundation versions:
 | Larastan | `2.9.14` | `composer show larastan/larastan` |
 | PHPStan | Resolved by Larastan (`1.12.33` at baseline) | `composer show phpstan/phpstan` |
 
+Composer pins the dependency solver platform to PHP `8.1.0` so lockfile generation on a newer developer PHP cannot select packages that break the PHP 8.1 CI job. The runtime itself remains constrained by the root `^8.1` requirement.
+
 Repeat compatibility checks with:
 
 ```text

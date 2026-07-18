@@ -25,4 +25,4 @@ Expected outcomes:
 
 The audit is intentionally not treated as a hidden warning. Update dependencies and record the review before production release. Do not suppress, ignore, or mark these advisories as resolved without a documented compatibility decision.
 
-CI uses SQLite and does not require a MySQL service for foundation checks.
+CI uses SQLite and does not require a MySQL service for foundation checks. The CI audit step reports the known Laravel 10 advisories as an explicit warning so the quality workflow can remain actionable while the approved Laravel upgrade is pending. The local `composer security-audit` command remains fail-closed.
