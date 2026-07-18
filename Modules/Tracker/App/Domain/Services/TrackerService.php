@@ -9,8 +9,7 @@ class TrackerService
         private readonly PhaseDocumentReader $documentReader,
         private readonly TrackerValidator $validator,
         private readonly ProgressCalculator $calculator,
-    ) {
-    }
+    ) {}
 
     public function dashboard(): array
     {

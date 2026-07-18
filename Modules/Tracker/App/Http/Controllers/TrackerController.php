@@ -9,9 +9,7 @@ use Modules\Tracker\App\Domain\Services\TrackerService;
 
 class TrackerController extends Controller
 {
-    public function __construct(private readonly TrackerService $tracker)
-    {
-    }
+    public function __construct(private readonly TrackerService $tracker) {}
 
     public function index()
     {
