@@ -30,8 +30,11 @@ jobs:
       - name: Prepare SQLite database
         run: touch database/database.sqlite
 
-      - name: Generate testing application key
-        run: php artisan key:generate --force --env=testing
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          touch database/database.sqlite
+          php artisan key:generate --force
 
       - name: Pint
         run: vendor/bin/pint --test
