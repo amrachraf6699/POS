@@ -59,16 +59,21 @@ class RegistrationTest extends TestCase
     {
         Tenant::factory()->create(['slug' => 'fixed-store']);
 
-        $this->expectException(ValidationException::class);
-        app(RegisterOwnerAction::class)->execute(new RegisterOwnerData(
-            name: 'Owner',
-            email: 'owner@example.com',
-            password: 'password-123',
-            tenantName: 'New Store',
-            tenantSlug: 'fixed-store',
-        ));
+        try {
+            app(RegisterOwnerAction::class)->execute(new RegisterOwnerData(
+                name: 'Owner',
+                email: 'owner@example.com',
+                password: 'password-123',
+                tenantName: 'New Store',
+                tenantSlug: 'fixed-store',
+            ));
+            $this->fail('A duplicate explicit slug must be rejected.');
+        } catch (ValidationException) {
+            $this->assertDatabaseMissing('users', ['email' => 'owner@example.com']);
+        }
 
-        $this->assertDatabaseMissing('users', ['email' => 'owner@example.com']);
+        $this->assertDatabaseCount('users', 0);
+        $this->assertDatabaseCount('memberships', 0);
     }
 
     public function test_inactive_users_memberships_suspended_tenants_and_deleted_tenants_are_inaccessible(): void
@@ -95,5 +100,17 @@ class RegistrationTest extends TestCase
 
         $activeTenant->delete();
         $this->assertCount(0, $user->accessibleTenants()->get());
+    }
+
+    public function test_membership_pair_is_unique(): void
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+        /** @var Tenant $tenant */
+        $tenant = Tenant::factory()->create();
+        Membership::factory()->create(['user_id' => $user->id, 'tenant_id' => $tenant->id]);
+
+        $this->expectException(\Illuminate\Database\QueryException::class);
+        Membership::factory()->create(['user_id' => $user->id, 'tenant_id' => $tenant->id]);
     }
 }

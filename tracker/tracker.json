@@ -115,8 +115,8 @@
                         "php artisan migrate:status confirms users, tenants, and memberships schema",
                         "Registration route/controller/action added; full registration tests pending",
                         "php artisan route:list --path=register confirms register and register.store",
-                        "RegistrationTest passed: 5 tests including atomic registration, slug collision, rollback, lifecycle access, and Arabic RTL rendering",
-                        "Full suite passed: 24 tests, 64 assertions",
+                        "RegistrationTest passed: 6 tests including atomic registration, slug collision, rollback, lifecycle access, Arabic RTL rendering, and membership uniqueness",
+                        "Full suite passed: 25 tests, 67 assertions",
                         "vendor/bin/pint --test passed",
                         "vendor/bin/phpstan analyse --memory-limit=1G passed",
                         "composer install --dry-run --no-interaction --prefer-dist --no-progress passed"
