@@ -3,65 +3,24 @@
 namespace Modules\Tracker\App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
+use Modules\Tracker\App\Domain\Exceptions\TrackerStateException;
+use Modules\Tracker\App\Domain\Services\TrackerService;
 
 class TrackerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(private readonly TrackerService $tracker)
+    {
+    }
+
     public function index()
     {
-        return view('tracker::index');
-    }
+        try {
+            return view('tracker::index', $this->tracker->dashboard());
+        } catch (TrackerStateException $exception) {
+            Log::error('Tracker state is invalid.', ['exception' => $exception]);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('tracker::create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): RedirectResponse
-    {
-        //
-    }
-
-    /**
-     * Show the specified resource.
-     */
-    public function show($id)
-    {
-        return view('tracker::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        return view('tracker::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id): RedirectResponse
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        //
+            return response()->view('tracker::error', status: 500);
+        }
     }
 }

@@ -14,6 +14,4 @@ use Modules\Tracker\App\Http\Controllers\TrackerController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('tracker', TrackerController::class)->names('tracker');
-});
+Route::get('__tracker', [TrackerController::class, 'index'])->name('tracker.dashboard');
