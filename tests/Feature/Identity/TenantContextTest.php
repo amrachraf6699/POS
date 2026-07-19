@@ -2,48 +2,15 @@
 
 namespace Tests\Feature\Identity;
 
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Schema;
 use Modules\Identity\App\Domain\Tenancy\TenantContext;
 use Modules\Identity\App\Domain\Tenancy\TenantContextException;
 use Modules\Identity\App\Models\Membership;
 use Modules\Identity\App\Models\Tenant;
-use Modules\Identity\App\Models\User;
 use Tests\Support\Models\TenantNote;
-use Tests\TestCase;
+use Tests\Support\Tenancy\TenantIsolationTestCase;
 
-class TenantContextTest extends TestCase
+class TenantContextTest extends TenantIsolationTestCase
 {
-    use RefreshDatabase;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        Schema::create('tenant_notes', function (Blueprint $table): void {
-            $table->id();
-            $table->unsignedBigInteger('tenant_id');
-            $table->string('label');
-            $table->timestamps();
-            $table->index('tenant_id');
-        });
-
-        Route::middleware(['web', 'auth', 'tenant'])
-            ->get('/__test/tenant-notes/{tenantNote}', function (TenantNote $tenantNote) {
-                return response()->json(['id' => $tenantNote->getKey(), 'tenant_id' => $tenantNote->tenant_id]);
-            })
-            ->name('testing.tenant-notes.show');
-    }
-
-    protected function tearDown(): void
-    {
-        Schema::dropIfExists('tenant_notes');
-
-        parent::tearDown();
-    }
-
     public function test_context_service_is_fail_closed_without_context(): void
     {
         $context = app(TenantContext::class);
@@ -156,18 +123,5 @@ class TenantContextTest extends TestCase
     public function test_tracker_remains_a_central_route_without_tenant_context(): void
     {
         $this->get('/__tracker')->assertOk()->assertSee('AI agent workspace');
-    }
-
-    /** @return array{0: User, 1: Tenant, 2: Membership} */
-    private function makeMembership(): array
-    {
-        /** @var User $user */
-        $user = User::factory()->create();
-        /** @var Tenant $tenant */
-        $tenant = Tenant::factory()->create();
-        /** @var Membership $membership */
-        $membership = Membership::factory()->create(['user_id' => $user->getKey(), 'tenant_id' => $tenant->getKey()]);
-
-        return [$user, $tenant, $membership];
     }
 }

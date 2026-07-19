@@ -96,7 +96,8 @@
             "notes": [
                 "TASK-001 implementation started with the Identity module schema and lifecycle models.",
                 "TASK-002 tenant context and scoping implementation is in progress.",
-                "TASK-003 invitations and current tenant implementation is in progress."
+                "TASK-003 invitations and current tenant implementation is in progress.",
+                "TASK-004 isolation and authorization test gate is in progress."
             ],
             "conflicts": [],
             "problems": [],
@@ -192,12 +193,20 @@
                 },
                 "TASK-004-isolation-and-authorization-tests": {
                     "title": "Isolation and Authorization Tests",
-                    "status": "not_started",
-                    "notes": [],
+                    "status": "in_progress",
+                    "notes": [
+                        "Started reusable tenant-isolation test infrastructure while preserving existing coverage."
+                    ],
                     "conflicts": [],
                     "problems": [],
                     "resolutions": [],
-                    "evidence": [],
+                    "evidence": [
+                        "Step 1 started: reusable TenantIsolationTestCase will own the test-only tenant_notes fixture and implicit-binding route.",
+                        "TenantContextTest passed after migrating to the reusable fixture: 8 tests, 29 assertions.",
+                        "vendor/bin/pint --test passed.",
+                        "vendor/bin/phpstan analyse --memory-limit=1G passed.",
+                        "Tracker JSON validation passed."
+                    ],
                     "latest_commit": null
                 }
             }
