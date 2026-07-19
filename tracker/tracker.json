@@ -233,13 +233,15 @@
             "tasks": {
                 "TASK-001-business-settings": {
                     "title": "Business Settings",
-                    "status": "in_progress",
+                    "status": "done",
                     "notes": [
-                        "Started the tenant-owned Business module, settings schema, defaults service, and snapshot contract."
+                        "Implemented tenant-owned business settings, Arabic RTL configuration, owner/manager authorization, historical snapshots, and atomic receipt numbering."
                     ],
                     "conflicts": [],
                     "problems": [],
-                    "resolutions": [],
+                    "resolutions": [
+                        "Moved the Business migration after Identity migrations so tenant foreign keys are valid for MySQL and SQLite."
+                    ],
                     "evidence": [
                         "BusinessSettingsFoundationTest passed: 3 tests, 11 assertions.",
                         "Business module is enabled in modules_statuses.json and business_settings migration applies successfully.",
@@ -248,9 +250,17 @@
                         "Tracker JSON validation passed.",
                         "BusinessSettingsManagementTest passed: 4 tests, 21 assertions.",
                         "Owner and manager authorization, Arabic RTL settings UI, validation rules, and transaction-locked receipt allocation are implemented.",
-                        "ReceiptNumberAllocator is request-safe through the scoped BusinessSettingsService."
+                        "ReceiptNumberAllocator is request-safe through the scoped BusinessSettingsService.",
+                        "BusinessSettingsSnapshotTest passed: 1 test, 6 assertions.",
+                        "Business settings architecture documented in docs/architecture/business-settings.md.",
+                        "Full suite passed: 62 tests, 211 assertions.",
+                        "php artisan migrate:fresh --env=testing --force passed with business_settings migration ordered after tenants.",
+                        "vendor/bin/pint --test passed.",
+                        "vendor/bin/phpstan analyse --memory-limit=1G passed.",
+                        "composer install --dry-run --no-interaction --prefer-dist --no-progress passed.",
+                        "Final implementation commit is being created and will be pushed with this tracker update."
                     ],
-                    "latest_commit": null
+                    "latest_commit": "b3a0299"
                 },
                 "TASK-002-branches-and-assignments": {
                     "title": "Branches and Assignments",
