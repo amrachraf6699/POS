@@ -1,0 +1,17 @@
+{
+    "name": "nwidart/business",
+    "description": "Business settings module",
+    "autoload": {
+        "psr-4": {
+            "Modules\\Business\\": "",
+            "Modules\\Business\\App\\": "app/",
+            "Modules\\Business\\Database\\Factories\\": "database/factories/",
+            "Modules\\Business\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Business\\Tests\\": "tests/"
+        }
+    }
+}

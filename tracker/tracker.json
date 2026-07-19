@@ -224,7 +224,7 @@
         },
         "02-Business-Branches-and-Users": {
             "title": "Business, Branches, and Users",
-            "status": "not_started",
+            "status": "in_progress",
             "weight": 1,
             "notes": [],
             "conflicts": [],
@@ -233,12 +233,20 @@
             "tasks": {
                 "TASK-001-business-settings": {
                     "title": "Business Settings",
-                    "status": "not_started",
-                    "notes": [],
+                    "status": "in_progress",
+                    "notes": [
+                        "Started the tenant-owned Business module, settings schema, defaults service, and snapshot contract."
+                    ],
                     "conflicts": [],
                     "problems": [],
                     "resolutions": [],
-                    "evidence": [],
+                    "evidence": [
+                        "BusinessSettingsFoundationTest passed: 3 tests, 11 assertions.",
+                        "Business module is enabled in modules_statuses.json and business_settings migration applies successfully.",
+                        "vendor/bin/pint --test passed.",
+                        "vendor/bin/phpstan analyse --memory-limit=1G passed.",
+                        "Tracker JSON validation passed."
+                    ],
                     "latest_commit": null
                 },
                 "TASK-002-branches-and-assignments": {

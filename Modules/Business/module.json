@@ -1,0 +1,11 @@
+{
+    "name": "Business",
+    "alias": "business",
+    "description": "Tenant business settings and operational configuration.",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Business\\App\\Providers\\BusinessServiceProvider"
+    ],
+    "files": []
+}
