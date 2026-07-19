@@ -22,7 +22,7 @@ class BusinessServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->register(RouteServiceProvider::class);
-        $this->app->singleton(BusinessSettingsService::class);
+        $this->app->scoped(BusinessSettingsService::class);
     }
 
     protected function registerConfig(): void

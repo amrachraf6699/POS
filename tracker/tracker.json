@@ -245,7 +245,10 @@
                         "Business module is enabled in modules_statuses.json and business_settings migration applies successfully.",
                         "vendor/bin/pint --test passed.",
                         "vendor/bin/phpstan analyse --memory-limit=1G passed.",
-                        "Tracker JSON validation passed."
+                        "Tracker JSON validation passed.",
+                        "BusinessSettingsManagementTest passed: 4 tests, 21 assertions.",
+                        "Owner and manager authorization, Arabic RTL settings UI, validation rules, and transaction-locked receipt allocation are implemented.",
+                        "ReceiptNumberAllocator is request-safe through the scoped BusinessSettingsService."
                     ],
                     "latest_commit": null
                 },
