@@ -91,7 +91,7 @@
         },
         "01-Authentication-and-Tenancy": {
             "title": "Authentication and Tenancy",
-            "status": "in_progress",
+            "status": "done",
             "weight": 2,
             "notes": [
                 "TASK-001 implementation started with the Identity module schema and lifecycle models.",
@@ -193,13 +193,15 @@
                 },
                 "TASK-004-isolation-and-authorization-tests": {
                     "title": "Isolation and Authorization Tests",
-                    "status": "in_progress",
+                    "status": "done",
                     "notes": [
-                        "Started reusable tenant-isolation test infrastructure while preserving existing coverage."
+                        "Completed the reusable tenant-isolation fixture and full Phase 01 isolation and authorization regression matrix."
                     ],
                     "conflicts": [],
                     "problems": [],
-                    "resolutions": [],
+                    "resolutions": [
+                        "Kept the gate test-only; no production permission catalog or business-domain authorization was introduced."
+                    ],
                     "evidence": [
                         "Step 1 started: reusable TenantIsolationTestCase will own the test-only tenant_notes fixture and implicit-binding route.",
                         "TenantContextTest passed after migrating to the reusable fixture: 8 tests, 29 assertions.",
@@ -208,9 +210,15 @@
                         "Tracker JSON validation passed.",
                         "TenantIsolationMatrixTest passed: 6 tests, 14 assertions.",
                         "AuthorizationMatrixTest passed: 5 tests, 15 assertions.",
-                        "Expanded coverage includes inactive users/memberships, soft-deleted tenants, manager HTTP authorization, cross-tenant invitation mutations, replay/invalid acceptance, and rollback side effects."
+                        "Expanded coverage includes inactive users/memberships, soft-deleted tenants, manager HTTP authorization, cross-tenant invitation mutations, replay/invalid acceptance, and rollback side effects.",
+                        "Full suite passed: 54 tests, 173 assertions.",
+                        "php artisan migrate:fresh --env=testing --force passed.",
+                        "vendor/bin/pint --test passed.",
+                        "vendor/bin/phpstan analyse --memory-limit=1G passed.",
+                        "composer install --dry-run --no-interaction --prefer-dist --no-progress passed.",
+                        "Final implementation commit is being created and will be pushed with this tracker update."
                     ],
-                    "latest_commit": null
+                    "latest_commit": "ba45805"
                 }
             }
         },
