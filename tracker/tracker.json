@@ -205,7 +205,10 @@
                         "TenantContextTest passed after migrating to the reusable fixture: 8 tests, 29 assertions.",
                         "vendor/bin/pint --test passed.",
                         "vendor/bin/phpstan analyse --memory-limit=1G passed.",
-                        "Tracker JSON validation passed."
+                        "Tracker JSON validation passed.",
+                        "TenantIsolationMatrixTest passed: 6 tests, 14 assertions.",
+                        "AuthorizationMatrixTest passed: 5 tests, 15 assertions.",
+                        "Expanded coverage includes inactive users/memberships, soft-deleted tenants, manager HTTP authorization, cross-tenant invitation mutations, replay/invalid acceptance, and rollback side effects."
                     ],
                     "latest_commit": null
                 }
