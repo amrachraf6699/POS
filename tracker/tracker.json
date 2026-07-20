@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "last_updated_at": "2026-07-19T04:00:00+00:00",
+    "last_updated_at": "2026-07-20T00:15:00+00:00",
     "updated_by": "Codex",
     "phases": {
         "00-Project-Foundation": {
@@ -264,13 +264,18 @@
                 },
                 "TASK-002-branches-and-assignments": {
                     "title": "Branches and Assignments",
-                    "status": "not_started",
-                    "notes": [],
+                    "status": "in_progress",
+                    "notes": [
+                        "Branch and assignment implementation started with tenant-scoped schema, uppercase branch codes, lifecycle status, and owner/manager access rules."
+                    ],
                     "conflicts": [],
                     "problems": [],
                     "resolutions": [],
-                    "evidence": [],
-                    "latest_commit": null
+                    "evidence": [
+                        "Branch and branch_user migrations apply successfully after Identity and Business Settings migrations.",
+                        "Branch and BranchAssignment models, factories, lifecycle constants, relationships, and tenant-scoped access contract are implemented."
+                    ],
+                    "latest_commit": "eebbe6c"
                 },
                 "TASK-003-roles-and-permissions": {
                     "title": "Roles and Permissions",

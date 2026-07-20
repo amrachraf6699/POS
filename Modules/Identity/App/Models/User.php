@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\Business\App\Models\Branch;
+use Modules\Business\App\Models\BranchAssignment;
 use Modules\Identity\Database\Factories\UserFactory;
 
 /**
@@ -33,6 +35,19 @@ class User extends Authenticatable
     public function memberships()
     {
         return $this->hasMany(Membership::class);
+    }
+
+    public function branchAssignments()
+    {
+        return $this->hasMany(BranchAssignment::class);
+    }
+
+    public function branches()
+    {
+        return $this->belongsToMany(Branch::class, 'branch_user')
+            ->using(BranchAssignment::class)
+            ->withPivot(['id', 'tenant_id', 'status'])
+            ->withTimestamps();
     }
 
     public function tenants()
