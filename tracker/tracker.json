@@ -273,9 +273,12 @@
                     "resolutions": [],
                     "evidence": [
                         "Branch and branch_user migrations apply successfully after Identity and Business Settings migrations.",
-                        "Branch and BranchAssignment models, factories, lifecycle constants, relationships, and tenant-scoped access contract are implemented."
+                        "Branch and BranchAssignment models, factories, lifecycle constants, relationships, and tenant-scoped access contract are implemented.",
+                        "Branch management and assignment routes, actions, authorization, validation requests, and Arabic RTL views are implemented.",
+                        "vendor/bin/pint --test passed after the application slice.",
+                        "vendor/bin/phpstan analyse --memory-limit=1G passed after the application slice."
                     ],
-                    "latest_commit": "eebbe6c"
+                    "latest_commit": "7c725ee"
                 },
                 "TASK-003-roles-and-permissions": {
                     "title": "Roles and Permissions",

@@ -12,7 +12,12 @@ use Modules\Identity\App\Domain\Tenancy\BelongsToTenant;
 use Modules\Identity\App\Models\Membership;
 use Modules\Identity\App\Models\User;
 
-/** @property int $tenant_id @property string $name @property string $code @property string $status */
+/**
+ * @property int $tenant_id
+ * @property string $name
+ * @property string $code
+ * @property string $status
+ */
 class Branch extends Model
 {
     use BelongsToTenant, HasFactory;
@@ -44,14 +49,15 @@ class Branch extends Model
         return $this->status === self::STATUS_ACTIVE;
     }
 
-    /** @return Builder<self> */
     public function scopeAccessibleTo(Builder $query, User $user): Builder
     {
         if (! $user->isActive()) {
-            return $query->whereRaw('1 = 0');
+            $query->whereRaw('1 = 0');
+
+            return $query;
         }
 
-        return $query->where('status', self::STATUS_ACTIVE)
+        $query->where('status', self::STATUS_ACTIVE)
             ->where(function (Builder $accessQuery) use ($user): void {
                 $accessQuery->whereHas('tenant.memberships', function (Builder $membershipQuery) use ($user): void {
                     $membershipQuery->where('user_id', $user->getKey())
@@ -69,6 +75,8 @@ class Branch extends Model
                         });
                 });
             });
+
+        return $query;
     }
 
     protected static function newFactory(): BranchFactory

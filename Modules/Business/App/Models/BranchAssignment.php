@@ -9,7 +9,12 @@ use Modules\Business\Database\Factories\BranchAssignmentFactory;
 use Modules\Identity\App\Domain\Tenancy\BelongsToTenant;
 use Modules\Identity\App\Models\User;
 
-/** @property int $tenant_id @property int $branch_id @property int $user_id @property string $status */
+/**
+ * @property int $tenant_id
+ * @property int $branch_id
+ * @property int $user_id
+ * @property string $status
+ */
 class BranchAssignment extends Model
 {
     use BelongsToTenant, HasFactory;
