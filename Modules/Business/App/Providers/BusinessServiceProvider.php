@@ -4,6 +4,7 @@ namespace Modules\Business\App\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Modules\Business\App\Domain\Dashboard\BusinessDashboardService;
 use Modules\Business\App\Domain\Settings\BusinessSettingsService;
 
 class BusinessServiceProvider extends ServiceProvider
@@ -23,6 +24,7 @@ class BusinessServiceProvider extends ServiceProvider
     {
         $this->app->register(RouteServiceProvider::class);
         $this->app->scoped(BusinessSettingsService::class);
+        $this->app->scoped(BusinessDashboardService::class);
     }
 
     protected function registerConfig(): void

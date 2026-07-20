@@ -3,7 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Business\App\Http\Controllers\BranchAssignmentController;
 use Modules\Business\App\Http\Controllers\BranchController;
+use Modules\Business\App\Http\Controllers\BusinessDashboardController;
 use Modules\Business\App\Http\Controllers\BusinessSettingsController;
+
+Route::middleware(['auth', 'tenant'])->group(function (): void {
+    Route::get('/tenant/dashboard', BusinessDashboardController::class)->name('business.dashboard');
+    Route::get('/home', fn () => redirect()->route('business.dashboard'))->name('home');
+});
 
 Route::middleware(['auth', 'tenant'])
     ->prefix('tenant/branches')
