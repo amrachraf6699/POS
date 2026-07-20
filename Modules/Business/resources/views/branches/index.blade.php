@@ -4,7 +4,7 @@
 
 @section('navigation')
     <div class="flex w-full items-center justify-between">
-        <a href="{{ route('home') }}" class="font-bold text-slate-900">نظام نقاط البيع</a>
+        <a href="{{ route('business.settings.edit') }}" class="font-bold text-slate-900">نظام نقاط البيع</a>
         <a href="{{ route('business.branches.create') }}" class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-bold text-white">إضافة فرع</a>
     </div>
 @endsection

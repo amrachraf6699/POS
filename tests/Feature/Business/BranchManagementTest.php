@@ -28,6 +28,11 @@ class BranchManagementTest extends TenantIsolationTestCase
         $response->assertOk()->assertSee('dir="rtl"', false)->assertSee('إضافة فرع');
 
         $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])
+            ->get('/tenant/branches')
+            ->assertOk()
+            ->assertSee('الفروع');
+
+        $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])
             ->post('/tenant/branches', [
                 'name' => 'الفرع الرئيسي', 'code' => ' main-01 ', 'city' => 'Cairo',
                 'country_code' => 'eg', 'timezone' => 'Africa/Cairo', '_token' => csrf_token(),
