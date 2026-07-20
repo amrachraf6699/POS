@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Business\Database\Factories\BranchFactory;
 use Modules\Identity\App\Domain\Tenancy\BelongsToTenant;
 use Modules\Identity\App\Models\Membership;
+use Modules\Identity\App\Models\Tenant;
 use Modules\Identity\App\Models\User;
 
 /**
@@ -17,6 +18,8 @@ use Modules\Identity\App\Models\User;
  * @property string $name
  * @property string $code
  * @property string $status
+ *
+ * @method static Builder accessibleTo(User $user)
  */
 class Branch extends Model
 {
@@ -30,6 +33,11 @@ class Branch extends Model
         'name', 'code', 'phone', 'email', 'address_line_1', 'address_line_2', 'city', 'state',
         'postal_code', 'country_code', 'timezone', 'status',
     ];
+
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class);
+    }
 
     public function assignments(): HasMany
     {
