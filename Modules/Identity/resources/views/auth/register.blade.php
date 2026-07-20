@@ -1,38 +1,23 @@
 @extends('layouts.auth')
 
-@section('title', 'إنشاء حساب المالك')
-
-@section('navigation')
-    <span class="text-sm font-semibold text-slate-800">نظام نقاط البيع</span>
-@endsection
+@section('title', 'إنشاء حساب جديد')
 
 @section('content')
-    <div class="mx-auto max-w-xl">
-        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-            <p class="text-sm font-medium text-indigo-600">ابدأ مساحة العمل الخاصة بك</p>
-            <h1 class="mt-2 text-2xl font-bold text-slate-900">إنشاء حساب المالك</h1>
-            <p class="mt-2 text-sm leading-6 text-slate-500">أنشئ حسابك وبيانات نشاطك التجاري في خطوة واحدة.</p>
-
-            @if ($errors->any())
-                <div class="mt-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700" role="alert">
-                    <p class="font-semibold">يرجى مراجعة البيانات المدخلة.</p>
-                    <ul class="mt-2 list-disc space-y-1 pr-5">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            <form method="post" action="{{ route('register.store') }}" class="mt-6 space-y-5">
-                @csrf
-                <div><label for="name" class="block text-sm font-medium text-slate-700">الاسم</label><input id="name" name="name" value="{{ old('name') }}" required autocomplete="name" class="mt-2 block w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"></div>
-                <div><label for="email" class="block text-sm font-medium text-slate-700">البريد الإلكتروني</label><input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email" class="mt-2 block w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"></div>
-                <div><label for="tenant_name" class="block text-sm font-medium text-slate-700">اسم النشاط التجاري</label><input id="tenant_name" name="tenant_name" value="{{ old('tenant_name') }}" required autocomplete="organization" class="mt-2 block w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"><p class="mt-1 text-xs text-slate-500">سيتم إنشاء المعرّف الداخلي تلقائياً.</p></div>
-                <div><label for="password" class="block text-sm font-medium text-slate-700">كلمة المرور</label><input id="password" type="password" name="password" required autocomplete="new-password" class="mt-2 block w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"></div>
-                <div><label for="password_confirmation" class="block text-sm font-medium text-slate-700">تأكيد كلمة المرور</label><input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" class="mt-2 block w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"></div>
-                <button type="submit" class="w-full rounded-lg bg-indigo-600 px-4 py-3 text-sm font-semibold text-white hover:bg-indigo-500">إنشاء الحساب ومساحة العمل</button>
-            </form>
-        </div>
+    <div class="mt-8">
+        <h1 class="text-center text-3xl font-extrabold text-[#18213d]">ابدأ بإدارة نشاطك اليوم</h1>
+        <p class="mt-3 text-center text-base text-[#8a93a8]">أنشئ حسابك ومساحة العمل في دقائق</p>
+        @if ($errors->any())
+            <div class="mt-7 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700" role="alert">@foreach ($errors->all() as $error)<p>{{ $error }}</p>@endforeach</div>
+        @endif
+        <form method="post" action="{{ route('register.store') }}" class="mt-7 space-y-4">
+            @csrf
+            <label for="name" class="block text-sm font-medium text-[#25304a]">الاسم<input id="name" name="name" value="{{ old('name') }}" required autocomplete="name" class="mt-2 h-12 block w-full rounded-xl border border-[#d7dce8] px-4 outline-none focus:border-[#4450d5] focus:ring-4 focus:ring-indigo-100"></label>
+            <label for="email" class="block text-sm font-medium text-[#25304a]">البريد الإلكتروني<input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email" class="mt-2 h-12 block w-full rounded-xl border border-[#d7dce8] px-4 outline-none focus:border-[#4450d5] focus:ring-4 focus:ring-indigo-100"></label>
+            <label for="tenant_name" class="block text-sm font-medium text-[#25304a]">اسم النشاط التجاري<input id="tenant_name" name="tenant_name" value="{{ old('tenant_name') }}" required autocomplete="organization" class="mt-2 h-12 block w-full rounded-xl border border-[#d7dce8] px-4 outline-none focus:border-[#4450d5] focus:ring-4 focus:ring-indigo-100"></label>
+            <label for="password" class="block text-sm font-medium text-[#25304a]">كلمة المرور<input id="password" type="password" name="password" required autocomplete="new-password" class="mt-2 h-12 block w-full rounded-xl border border-[#d7dce8] px-4 outline-none focus:border-[#4450d5] focus:ring-4 focus:ring-indigo-100"></label>
+            <label for="password_confirmation" class="block text-sm font-medium text-[#25304a]">تأكيد كلمة المرور<input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" class="mt-2 h-12 block w-full rounded-xl border border-[#d7dce8] px-4 outline-none focus:border-[#4450d5] focus:ring-4 focus:ring-indigo-100"></label>
+            <button type="submit" class="h-14 w-full rounded-xl bg-[#4450d5] text-lg font-bold text-white shadow-lg shadow-indigo-200 transition hover:bg-[#3540c2]">إنشاء الحساب ومساحة العمل</button>
+        </form>
+        <p class="mt-6 text-center text-sm text-[#68748c]">لديك حساب بالفعل؟ <a href="{{ route('login') }}" class="font-bold text-[#4450d5]">تسجيل الدخول</a></p>
     </div>
 @endsection
