@@ -318,7 +318,7 @@
                         "Architecture documented in docs/architecture/ui-layouts-and-tenant-switching.md.",
                         "Final full suite passed: 77 tests, 304 assertions; Pint, Larastan, fresh migrations, Composer dry-run, and tracker JSON validation passed."
                     ],
-                    "latest_commit": "95cd7f2"
+                    "latest_commit": "ca6c15d"
                 },
                 "TASK-004-onboarding-flow": {
                     "title": "Business Onboarding Flow",
