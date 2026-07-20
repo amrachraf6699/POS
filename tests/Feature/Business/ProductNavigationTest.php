@@ -25,6 +25,8 @@ class ProductNavigationTest extends TenantIsolationTestCase
             ->assertSee('boxicons.min.css', false)
             ->assertSee('bx bx-menu', false)
             ->assertSee('translate-x-full', false)
+            ->assertSee('product-sidebar.is-open', false)
+            ->assertSee('overflow-visible', false)
             ->assertDontSee('<svg', false)
             ->assertSee('قريباً');
     }
