@@ -28,6 +28,7 @@ final class InvitationController extends Controller
     public function index(): View
     {
         $tenant = $this->context->tenant();
+        abort_unless($this->authorization->canManage(request()->user(), $tenant), 403);
 
         return view('identity::invitations.index', [
             'invitations' => Invitation::query()->where('tenant_id', $tenant->getKey())->latest()->get(),

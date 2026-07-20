@@ -303,9 +303,12 @@
                     "evidence": [
                         "Connected tenant dashboard route and /home compatibility redirect are implemented.",
                         "BusinessDashboardTest and branch access coverage passed: 10 tests, 52 assertions.",
-                        "Dashboard metrics use tenant context and accessible branch scope; management metrics are role-aware."
+                        "Dashboard metrics use tenant context and accessible branch scope; management metrics are role-aware.",
+                        "ProductNavigation service and shared responsive Arabic RTL shell connect dashboard, settings, branches, invitations, tenant switching, and logout.",
+                        "ProductNavigationTest passed: 3 tests, 24 assertions; management links are hidden for ordinary members.",
+                        "Management page GET actions now enforce owner/manager authorization server-side."
                     ],
-                    "latest_commit": "efa018d"
+                    "latest_commit": "99ad899"
                 },
                 "TASK-004-onboarding-flow": {
                     "title": "Business Onboarding Flow",
