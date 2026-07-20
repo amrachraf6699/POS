@@ -100,3 +100,21 @@ The local-only problem-resolution workflow is an exception for development suppo
 ## Definition of done
 
 Requirements, validation, authorization, tenant isolation, indexes, transactions, tests, error handling, documentation, and observability considerations are complete. The implementation passes the repository checks and does not weaken historical accuracy or financial consistency.
+
+## UI and Navigation Contract
+
+When a task includes routes or views, the agent must treat the UI as a complete user workflow, not as isolated pages.
+
+- Inspect the existing routes, layouts, navigation service, and related views before adding or changing a view.
+- Use the shared Arabic RTL product shell and navigation for product pages. Keep the Tracker module English-only and LTR with its own layout.
+- Ensure every implemented product route has an intentional entry point through the dashboard, shared navigation, breadcrumb, contextual action, or documented central flow.
+- Ensure every navigation link resolves to a registered route. Never leave orphaned views, dead links, missing route names, or links to unimplemented actions.
+- Add active-route highlighting, clear page headings, contextual back links, flash-message handling, validation-error presentation, and empty states.
+- Apply role-aware navigation visibility, but never treat hidden UI as authorization. Middleware, policies, Form Requests, and actions must enforce access server-side.
+- Preserve tenant isolation in dashboard queries, navigation URLs, route parameters, forms, and contextual actions. Never trust tenant IDs from UI input.
+- Use the approved Tailwind PlayCDN setup and keep layouts responsive for desktop and mobile. Mobile navigation must be keyboard accessible, closable with Escape, and labeled with appropriate ARIA attributes.
+- Add feature tests for route rendering, navigation targets, active states, role-aware visibility, tenant isolation, and important mobile-shell controls when a task changes UI.
+- Use Arabic and RTL for the main product UI. Do not introduce English product labels unless the specification explicitly requires them.
+- Do not create fake metrics, fake actions, inaccessible placeholders, or clickable links for features that do not exist. Future features must be visibly marked as unavailable and non-clickable.
+- Update the shared navigation whenever a task adds, removes, renames, or changes a route or view.
+- A task that includes views is not done until its complete navigation path, authorization behavior, responsive presentation, tests, and documentation are complete.
