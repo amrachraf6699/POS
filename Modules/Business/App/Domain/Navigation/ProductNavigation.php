@@ -15,7 +15,7 @@ final class ProductNavigation
         private readonly BusinessSettingsAuthorization $settingsAuthorization,
     ) {}
 
-    /** @return array{items: array<int, array{label: string, url: string, patterns: array<int, string>}>, future: array<int, string>, tenants: \Illuminate\Database\Eloquent\Collection<int, \Modules\Identity\App\Models\Tenant>} */
+    /** @return array{items: array<int, array{label: string, url: string, patterns: array<int, string>, icon: string}>, future: array<int, array{label: string, icon: string}>, tenants: \Illuminate\Database\Eloquent\Collection<int, \Modules\Identity\App\Models\Tenant>} */
     public function build(?User $user): array
     {
         if (! $user instanceof User || ! $this->context->hasTenant()) {
@@ -25,13 +25,13 @@ final class ProductNavigation
         $tenant = $this->context->tenant();
         $canManage = $this->branchAuthorization->canManage($user, $tenant);
         $items = [
-            ['label' => 'لوحة التحكم', 'url' => route('business.dashboard'), 'patterns' => ['business.dashboard', 'home']],
-            ['label' => $canManage ? 'الفروع وتعيينات الفريق' : 'الفروع المتاحة', 'url' => route('business.branches.index'), 'patterns' => ['business.branches.*']],
+            ['label' => 'لوحة التحكم', 'url' => route('business.dashboard'), 'patterns' => ['business.dashboard', 'home'], 'icon' => 'bx-grid-alt'],
+            ['label' => $canManage ? 'الفروع وتعيينات الفريق' : 'الفروع المتاحة', 'url' => route('business.branches.index'), 'patterns' => ['business.branches.*'], 'icon' => 'bx-store'],
         ];
 
         if ($this->settingsAuthorization->canManage($user, $tenant)) {
-            $items[] = ['label' => 'إعدادات النشاط', 'url' => route('business.settings.edit'), 'patterns' => ['business.settings.*']];
-            $items[] = ['label' => 'دعوات الفريق', 'url' => route('tenant.invitations.index'), 'patterns' => ['tenant.invitations.*']];
+            $items[] = ['label' => 'إعدادات النشاط', 'url' => route('business.settings.edit'), 'patterns' => ['business.settings.*'], 'icon' => 'bx-cog'];
+            $items[] = ['label' => 'دعوات الفريق', 'url' => route('tenant.invitations.index'), 'patterns' => ['tenant.invitations.*'], 'icon' => 'bx-envelope'];
         }
 
         return [
@@ -41,9 +41,15 @@ final class ProductNavigation
         ];
     }
 
-    /** @return array<int, string> */
+    /** @return array<int, array{label: string, icon: string}> */
     private function futureItems(): array
     {
-        return ['المنتجات والكتالوج', 'المخزون والتحويلات', 'نقطة البيع والمدفوعات', 'التقارير والتحليلات', 'الاشتراكات والفوترة'];
+        return [
+            ['label' => 'المنتجات والكتالوج', 'icon' => 'bx-package'],
+            ['label' => 'المخزون والتحويلات', 'icon' => 'bx-transfer-alt'],
+            ['label' => 'نقطة البيع والمدفوعات', 'icon' => 'bx-cart'],
+            ['label' => 'التقارير والتحليلات', 'icon' => 'bx-bar-chart-alt-2'],
+            ['label' => 'الاشتراكات والفوترة', 'icon' => 'bx-credit-card'],
+        ];
     }
 }

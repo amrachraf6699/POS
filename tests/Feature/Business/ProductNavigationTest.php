@@ -22,6 +22,10 @@ class ProductNavigationTest extends TenantIsolationTestCase
             ->assertSee(route('tenant.selection'))
             ->assertSee('data-mobile-toggle', false)
             ->assertSee('data-mobile-close', false)
+            ->assertSee('boxicons.min.css', false)
+            ->assertSee('bx bx-menu', false)
+            ->assertSee('translate-x-full', false)
+            ->assertDontSee('<svg', false)
             ->assertSee('قريباً');
     }
 
