@@ -320,7 +320,7 @@
                      "Approved visual direction applied: centered branded Arabic auth card, compact RTL tenant shell with right rail, workspace navbar control, visual summary cards, quick actions, and centered tenant switcher modal.",
                      "Dashboard continues to use only real tenant-scoped branch, assignment, invitation, and settings data; no sales or revenue placeholders were introduced."
                     ],
-                    "latest_commit": "ca6c15d"
+                    "latest_commit": "55100ce"
                 },
                 "TASK-004-onboarding-flow": {
                     "title": "Business Onboarding Flow",
