@@ -34,6 +34,6 @@ final class TenantSelectionController extends Controller
         $request->session()->put('current_tenant_id', $selectedTenant->getKey());
         $this->context->clear();
 
-        return redirect()->intended('/home');
+        return redirect()->intended(route('business.dashboard'));
     }
 }

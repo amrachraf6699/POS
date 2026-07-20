@@ -76,7 +76,7 @@ class TenantContextTest extends TenantIsolationTestCase
             ->assertForbidden();
 
         $this->actingAs($user)->post(route('tenant.selection.store', $tenant), ['_token' => csrf_token()])
-            ->assertRedirect('/home')
+            ->assertRedirect(route('business.dashboard'))
             ->assertSessionHas('current_tenant_id', $tenant->id);
     }
 

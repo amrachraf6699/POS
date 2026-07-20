@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "last_updated_at": "2026-07-20T20:40:00+00:00",
+    "last_updated_at": "2026-07-20T20:55:00+00:00",
     "updated_by": "Codex",
     "phases": {
         "00-Project-Foundation": {
@@ -311,9 +311,10 @@
                         "TASK-003 now documents dashboard/navigation authorization as a transitional foundation for the future permission catalog.",
                         "Full suite passed: 75 tests, 287 assertions; Pint, Larastan, fresh migrations, Composer dry-run, and tracker JSON validation passed.",
                         "Central auth and tenant-selection views now use a dedicated sidebar-free Arabic RTL layout; tenant product pages remain on the application shell.",
-                        "Authentication, tenant-selection, invitation-acceptance, and dashboard regression tests passed: 21 tests, 91 assertions."
+                        "Authentication, tenant-selection, invitation-acceptance, and dashboard regression tests passed: 21 tests, 91 assertions.",
+                        "Navbar tenant switcher modal now lists accessible tenants, supports search/keyboard dismissal, and uses the existing secure tenant-selection route."
                     ],
-                    "latest_commit": "3a17d70"
+                    "latest_commit": "d3c3159"
                 },
                 "TASK-004-onboarding-flow": {
                     "title": "Business Onboarding Flow",

@@ -15,11 +15,11 @@ final class ProductNavigation
         private readonly BusinessSettingsAuthorization $settingsAuthorization,
     ) {}
 
-    /** @return array{items: array<int, array{label: string, url: string, patterns: array<int, string>}>, future: array<int, string>} */
+    /** @return array{items: array<int, array{label: string, url: string, patterns: array<int, string>}>, future: array<int, string>, tenants: \Illuminate\Database\Eloquent\Collection<int, \Modules\Identity\App\Models\Tenant>} */
     public function build(?User $user): array
     {
         if (! $user instanceof User || ! $this->context->hasTenant()) {
-            return ['items' => [], 'future' => $this->futureItems()];
+            return ['items' => [], 'future' => $this->futureItems(), 'tenants' => new \Illuminate\Database\Eloquent\Collection];
         }
 
         $tenant = $this->context->tenant();
@@ -34,9 +34,11 @@ final class ProductNavigation
             $items[] = ['label' => 'دعوات الفريق', 'url' => route('tenant.invitations.index'), 'patterns' => ['tenant.invitations.*']];
         }
 
-        $items[] = ['label' => 'تبديل مساحة العمل', 'url' => route('tenant.selection'), 'patterns' => ['tenant.selection*']];
-
-        return ['items' => $items, 'future' => $this->futureItems()];
+        return [
+            'items' => $items,
+            'future' => $this->futureItems(),
+            'tenants' => $user->accessibleTenants()->orderBy('name')->get(),
+        ];
     }
 
     /** @return array<int, string> */
