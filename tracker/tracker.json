@@ -311,7 +311,7 @@
                         "TASK-003 now documents dashboard/navigation authorization as a transitional foundation for the future permission catalog.",
                         "Full suite passed: 75 tests, 287 assertions; Pint, Larastan, fresh migrations, Composer dry-run, and tracker JSON validation passed."
                     ],
-                    "latest_commit": "5048186"
+                    "latest_commit": "9e37ce7"
                 },
                 "TASK-004-onboarding-flow": {
                     "title": "Business Onboarding Flow",
