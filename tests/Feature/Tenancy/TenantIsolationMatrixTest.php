@@ -63,7 +63,7 @@ class TenantIsolationMatrixTest extends TenantIsolationTestCase
         app(TenantContext::class)->set($firstTenant, $firstMembership);
         $this->actingAs($user)->withSession(['current_tenant_id' => $firstTenant->getKey()])
             ->post('/tenant/select/'.$secondTenant->getKey(), ['_token' => csrf_token()])
-            ->assertRedirect('/home');
+            ->assertRedirect(route('business.dashboard'));
 
         $this->assertFalse(app(TenantContext::class)->hasTenant());
 

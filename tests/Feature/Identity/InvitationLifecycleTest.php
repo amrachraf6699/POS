@@ -84,7 +84,7 @@ class InvitationLifecycleTest extends TestCase
 
         $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])
             ->post('/tenant/select/'.$secondTenant->getKey(), ['_token' => csrf_token()])
-            ->assertRedirect('/home')
+            ->assertRedirect(route('business.dashboard'))
             ->assertSessionHas('current_tenant_id', $secondTenant->getKey());
 
         $this->assertFalse(app(TenantContext::class)->hasTenant());
