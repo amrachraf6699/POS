@@ -11,7 +11,7 @@ jobs:
       APP_ENV: testing
       APP_DEBUG: false
       DB_CONNECTION: sqlite
-      DB_DATABASE: database/database.sqlite
+      DB_DATABASE: ':memory:'
 
     steps:
       - name: Checkout
