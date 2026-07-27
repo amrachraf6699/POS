@@ -349,7 +349,7 @@
                         "OnboardingFlowTest passed after the visual refresh: 5 tests, 35 assertions; Pint and Larastan passed.",
                         "Full suite reached 76 passing tests; the remaining run was blocked by an external SQLite development-database lock, without flushing the local database."
                     ],
-                    "latest_commit": "b998e26"
+                    "latest_commit": "3a50097"
                 }
             }
         },
