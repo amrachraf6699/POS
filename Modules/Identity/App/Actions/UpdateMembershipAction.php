@@ -21,9 +21,8 @@ final class UpdateMembershipAction
         }
 
         DB::transaction(function () use ($actor, $tenant, $target, $role, $status): void {
-            /** @var Membership $target */
             $target = Membership::query()->whereKey($target->getKey())->where('tenant_id', $tenant->getKey())->lockForUpdate()->first();
-            if ($target === null) {
+            if (! $target instanceof Membership) {
                 abort(404);
             }
             $actorMembership = Membership::query()->where('tenant_id', $tenant->getKey())->where('user_id', $actor->getKey())->lockForUpdate()->first();

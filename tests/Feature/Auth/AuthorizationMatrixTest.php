@@ -29,7 +29,7 @@ class AuthorizationMatrixTest extends TenantIsolationTestCase
         Notification::fake();
 
         $this->actingAs($manager)->withSession(['current_tenant_id' => $tenant->getKey()])
-            ->post('/tenant/invitations', ['_token' => csrf_token(), 'email' => 'manager-created@example.com'])
+            ->post('/tenant/invitations', ['_token' => csrf_token(), 'email' => 'manager-created@example.com', 'role' => Membership::ROLE_CASHIER])
             ->assertRedirect();
 
         $invitation = Invitation::query()->where('email', 'manager-created@example.com')->firstOrFail();
@@ -49,7 +49,7 @@ class AuthorizationMatrixTest extends TenantIsolationTestCase
         [$user, $tenant] = $this->makeMembership(membershipStatus: Membership::STATUS_INACTIVE);
 
         $this->actingAs($user)->withSession(['current_tenant_id' => $tenant->getKey()])
-            ->post('/tenant/invitations', ['_token' => csrf_token(), 'email' => 'blocked@example.com'])
+            ->post('/tenant/invitations', ['_token' => csrf_token(), 'email' => 'blocked@example.com', 'role' => Membership::ROLE_CASHIER])
             ->assertForbidden();
         $this->assertDatabaseCount('invitations', 0);
     }

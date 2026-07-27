@@ -31,9 +31,8 @@ class BranchManagementTest extends TenantIsolationTestCase
             ->get('/tenant/branches')
             ->assertOk()
             ->assertSee('الفروع')
-            ->assertSee('<table', false)
-            ->assertSee('<thead', false)
-            ->assertSee('branches-table-title', false);
+            ->assertSee('branches-table-title', false)
+            ->assertSee('لا توجد فروع بعد');
 
         $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])
             ->post('/tenant/branches', [

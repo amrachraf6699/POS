@@ -3,28 +3,28 @@
 @section('title', 'دعوات الفريق')
 
 @section('content')
-    <div class="space-y-7">
-        <div class="flex flex-col gap-4 border-b border-slate-200 pb-6 sm:flex-row sm:items-end sm:justify-between">
-            <div><p class="text-sm font-bold text-indigo-600">إدارة الفريق</p><h1 class="mt-2 text-3xl font-extrabold text-slate-900">دعوات الفريق</h1><p class="mt-2 text-sm text-slate-600">أرسل دعوات للمديرين وتابع حالتها.</p></div>
-            <button type="button" class="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-200" data-invitation-open aria-haspopup="dialog" aria-controls="invitation-modal"><i class="bx bx-plus text-xl" aria-hidden="true"></i>دعوة جديدة</button>
+    <div class="space-y-6">
+        <div class="flex items-end justify-between border-b border-slate-200 pb-5">
+            <div><p class="text-sm font-bold text-indigo-600">إدارة الفريق</p><h1 class="mt-1 text-3xl font-extrabold text-slate-900">دعوات الفريق</h1></div>
+            <a href="{{ route('tenant.staff.index') }}" class="text-sm font-bold text-indigo-600 hover:underline">أعضاء الفريق</a>
         </div>
-        @if(session('status'))<div class="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-semibold text-emerald-700" role="status">{{ session('status') }}</div>@endif
-        @if($errors->any())<div class="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700" role="alert"><p class="font-bold">تعذر إرسال الدعوة:</p><ul class="mt-2 list-disc space-y-1 pr-5">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
-
-        <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm" aria-labelledby="invitation-list-title">
-            <div class="border-b border-slate-100 px-5 py-4 sm:px-6"><h2 id="invitation-list-title" class="text-lg font-extrabold text-slate-900">الدعوات المرسلة</h2><p class="mt-1 text-sm text-slate-500">راجع الدعوات المعلقة أو أعد إرسالها.</p></div>
+        @if(session('status'))<div class="rounded-xl bg-emerald-50 p-4 text-emerald-700" role="status">{{ session('status') }}</div>@endif
+        @if($errors->any())<div class="rounded-xl bg-red-50 p-4 text-red-700" role="alert">{{ $errors->first() }}</div>@endif
+        <section class="rounded-2xl border border-slate-200 bg-white p-6">
+            <h2 class="text-lg font-extrabold">دعوة عضو جديد</h2>
+            <form method="POST" action="{{ route('tenant.invitations.store') }}" class="mt-5 grid gap-4 sm:grid-cols-[1fr_220px_auto] sm:items-end">
+                @csrf
+                <label class="block text-sm font-bold">البريد الإلكتروني<input name="email" type="email" value="{{ old('email') }}" required dir="ltr" class="mt-2 block w-full rounded-lg border-slate-300"></label>
+                <label class="block text-sm font-bold">الدور<select name="role" required class="mt-2 block w-full rounded-lg border-slate-300">@foreach($assignableRoles as $role)<option value="{{ $role }}" @selected(old('role') === $role)>{{ $role }}</option>@endforeach</select></label>
+                <button class="rounded-lg bg-indigo-600 px-5 py-2.5 font-bold text-white">إرسال الدعوة</button>
+            </form>
+        </section>
+        <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
             @forelse($invitations as $invitation)
-                <div class="flex flex-col gap-4 border-b border-slate-100 p-5 last:border-0 sm:flex-row sm:items-center sm:justify-between sm:px-6"><div class="min-w-0"><p class="truncate font-bold text-slate-900" dir="ltr">{{ $invitation->email }}</p><p class="mt-1 text-sm text-slate-500">{{ $invitation->status }} · تنتهي في {{ optional($invitation->expires_at)->format('Y-m-d H:i') }}</p></div><div class="flex shrink-0 gap-2">@if($invitation->status === 'pending')<form method="POST" action="{{ route('tenant.invitations.resend', $invitation) }}">@csrf<button class="rounded-lg bg-slate-100 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500">إعادة إرسال</button></form><form method="POST" action="{{ route('tenant.invitations.revoke', $invitation) }}">@csrf<button class="rounded-lg bg-red-50 px-3 py-2 text-sm font-semibold text-red-700 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500">إلغاء</button></form>@endif</div></div>
+                <div class="flex items-center justify-between gap-4 border-b border-slate-100 p-5 last:border-0"><div><p class="font-bold" dir="ltr">{{ $invitation->email }}</p><p class="text-sm text-slate-500">{{ $invitation->role }} · {{ $invitation->status }}</p></div>@if($invitation->isPending())<div class="flex gap-2"><form method="POST" action="{{ route('tenant.invitations.resend', $invitation) }}">@csrf<button class="rounded-lg bg-slate-100 px-3 py-2 text-sm font-bold">إعادة إرسال</button></form><form method="POST" action="{{ route('tenant.invitations.revoke', $invitation) }}">@csrf<button class="rounded-lg bg-red-50 px-3 py-2 text-sm font-bold text-red-700">إلغاء</button></form></div>@endif</div>
             @empty
-                <div class="px-6 py-16 text-center"><i class="bx bx-envelope-open text-4xl text-slate-300" aria-hidden="true"></i><p class="mt-3 font-semibold text-slate-600">لا توجد دعوات بعد.</p><button type="button" data-invitation-open-secondary class="mt-4 font-bold text-indigo-600 hover:underline">إرسال أول دعوة</button></div>
+                <p class="p-10 text-center text-slate-500">لا توجد دعوات بعد.</p>
             @endforelse
         </section>
     </div>
-
-    <div id="invitation-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/50 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="invitation-modal-title" data-invitation-modal @if($errors->any()) data-open-on-load @endif>
-        <div class="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl sm:p-8" role="document"><div class="flex items-start justify-between gap-4"><div><h2 id="invitation-modal-title" class="text-2xl font-extrabold text-slate-900">دعوة عضو جديد</h2><p class="mt-2 text-sm text-slate-500">أدخل البريد الإلكتروني لإرسال دعوة للانضمام إلى مساحة العمل.</p></div><button type="button" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg text-2xl text-slate-500 hover:bg-slate-100 focus:outline-none focus:ring-4 focus:ring-indigo-100" aria-label="إغلاق" data-invitation-close><i class="bx bx-x" aria-hidden="true"></i></button></div><form method="POST" action="{{ route('tenant.invitations.store') }}" class="mt-7"><label for="invitation-email" class="text-sm font-bold text-slate-700">البريد الإلكتروني</label><div class="relative mt-2"><i class="bx bx-envelope pointer-events-none absolute right-4 top-3.5 text-xl text-slate-400" aria-hidden="true"></i><input id="invitation-email" name="email" type="email" value="{{ old('email') }}" required autocomplete="email" placeholder="name@example.com" dir="ltr" class="h-12 w-full rounded-xl border border-slate-300 bg-white px-4 pr-11 text-left text-slate-900 shadow-sm outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"></div><div class="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-start"><button type="button" class="rounded-xl border border-slate-300 px-5 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-slate-100" data-invitation-close>إلغاء</button><button type="submit" class="rounded-xl bg-indigo-600 px-5 py-3 text-sm font-bold text-white hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-200">إرسال الدعوة</button></div>@csrf</form></div>
-    </div>
-    <script>
-        (() => { const modal = document.querySelector('[data-invitation-modal]'); const openers = document.querySelectorAll('[data-invitation-open], [data-invitation-open-secondary]'); const closers = document.querySelectorAll('[data-invitation-close]'); const email = document.getElementById('invitation-email'); let lastFocused = null; const open = () => { lastFocused = document.activeElement; modal?.classList.remove('hidden'); modal?.classList.add('flex'); document.body.classList.add('overflow-hidden'); email?.focus(); }; const close = () => { modal?.classList.add('hidden'); modal?.classList.remove('flex'); document.body.classList.remove('overflow-hidden'); lastFocused?.focus(); }; openers.forEach((button) => button.addEventListener('click', open)); closers.forEach((button) => button.addEventListener('click', close)); modal?.addEventListener('click', (event) => { if (event.target === modal) close(); }); document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !modal?.classList.contains('hidden')) close(); }); if (modal?.hasAttribute('data-open-on-load')) open(); })();
-    </script>
 @endsection

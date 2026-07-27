@@ -23,7 +23,7 @@ class CreateInvitationRequest extends FormRequest
     {
         return [
             'email' => ['required', 'email', 'max:255'],
-            'role' => ['nullable', 'string', Rule::in(Membership::roles())],
+            'role' => ['required', 'string', Rule::in(Membership::roles())],
         ];
     }
 }

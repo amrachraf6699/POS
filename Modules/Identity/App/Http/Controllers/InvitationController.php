@@ -33,17 +33,16 @@ final class InvitationController extends Controller
 
         return view('identity::invitations.index', [
             'invitations' => Invitation::query()->where('tenant_id', $tenant->getKey())->latest()->get(),
+            'assignableRoles' => $this->context->membership()->isOwner()
+                ? Membership::roles()
+                : [Membership::ROLE_CASHIER, Membership::ROLE_INVENTORY_STAFF],
         ]);
     }
 
     public function store(CreateInvitationRequest $request): RedirectResponse
     {
         $tenant = $this->context->tenant();
-        $role = $request->string('role')->toString();
-        if ($role === '') {
-            $role = $this->context->membership()->isOwner() ? Membership::ROLE_MANAGER : Membership::ROLE_CASHIER;
-        }
-        $result = $this->createInvitation->execute($request->user(), $tenant, $request->string('email')->toString(), $role);
+        $result = $this->createInvitation->execute($request->user(), $tenant, $request->string('email')->toString(), $request->string('role')->toString());
         $this->notify($result->invitation, $result->plainToken);
 
         return back()->with('status', 'تم إرسال الدعوة.');
@@ -56,7 +55,7 @@ final class InvitationController extends Controller
         abort_unless($this->authorization->canManage($request->user(), $tenant), 403);
         abort_unless($invitation->isPending(), 422);
 
-        $result = $this->createInvitation->execute($request->user(), $tenant, $invitation->email);
+        $result = $this->createInvitation->execute($request->user(), $tenant, $invitation->email, $invitation->role);
         $this->notify($result->invitation, $result->plainToken);
 
         return back()->with('status', 'تم إرسال الدعوة مرة أخرى.');
