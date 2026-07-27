@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Business;
 
+use Illuminate\Support\Facades\DB;
 use Modules\Identity\App\Models\Membership;
 use Modules\Identity\App\Models\User;
 use Tests\Support\Tenancy\TenantIsolationTestCase;
@@ -11,6 +12,8 @@ class ProductNavigationTest extends TenantIsolationTestCase
     public function test_owner_shell_links_current_product_surfaces_and_exposes_mobile_controls(): void
     {
         [$owner, $tenant] = $this->makeMembership();
+        $branchId = DB::table('branches')->insertGetId(['tenant_id' => $tenant->getKey(), 'name' => 'Navigation Branch', 'code' => 'NAV', 'country_code' => 'EG', 'timezone' => 'Africa/Cairo', 'status' => 'active', 'created_at' => now(), 'updated_at' => now()]);
+        DB::table('tenant_onboardings')->insert(['tenant_id' => $tenant->getKey(), 'first_branch_id' => $branchId, 'settings_completed_at' => now(), 'staff_setup_completed_at' => now(), 'completed_at' => now(), 'created_at' => now(), 'updated_at' => now()]);
 
         $response = $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])->get('/tenant/dashboard');
 

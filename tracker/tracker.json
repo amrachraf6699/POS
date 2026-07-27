@@ -334,15 +334,19 @@
                 },
                 "TASK-004-onboarding-flow": {
                     "title": "Business Onboarding Flow",
-                    "status": "in_progress",
+                    "status": "done",
                     "notes": [
-                        "Tenant-scoped onboarding state, owner-only wizard routes, dashboard redirect, and setup-flow progress integration are in implementation."
+                        "Tenant-scoped onboarding state, owner-only wizard routes, dashboard redirect, and setup-flow progress integration are implemented."
                     ],
                     "conflicts": [],
                     "problems": [],
                     "resolutions": [],
-                    "evidence": [],
-                    "latest_commit": null
+                    "evidence": [
+                        "OnboardingFlowTest passed: owner wizard, skip, authorization, existing completion paths, and tenant isolation.",
+                        "BusinessDashboardTest passed with incomplete-owner redirect coverage.",
+                        "Pint and Larastan passed for the onboarding implementation."
+                    ],
+                    "latest_commit": "pending"
                 }
             }
         },

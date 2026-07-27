@@ -3,6 +3,7 @@
 namespace Tests\Feature\Identity;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Modules\Identity\App\Models\Membership;
 use Modules\Identity\App\Models\Tenant;
 use Modules\Identity\App\Models\User;
@@ -62,6 +63,8 @@ class UiLayoutTest extends TestCase
 
         Membership::factory()->create(['user_id' => $user->getKey(), 'tenant_id' => $currentTenant->getKey()]);
         Membership::factory()->create(['user_id' => $user->getKey(), 'tenant_id' => $otherTenant->getKey()]);
+        $branchId = DB::table('branches')->insertGetId(['tenant_id' => $currentTenant->getKey(), 'name' => 'Shell Branch', 'code' => 'SHELL', 'country_code' => 'EG', 'timezone' => 'Africa/Cairo', 'status' => 'active', 'created_at' => now(), 'updated_at' => now()]);
+        DB::table('tenant_onboardings')->insert(['tenant_id' => $currentTenant->getKey(), 'first_branch_id' => $branchId, 'settings_completed_at' => now(), 'staff_setup_completed_at' => now(), 'completed_at' => now(), 'created_at' => now(), 'updated_at' => now()]);
         $response = $this->actingAs($user)
             ->withSession(['current_tenant_id' => $currentTenant->getKey()])
             ->get('/tenant/dashboard');
