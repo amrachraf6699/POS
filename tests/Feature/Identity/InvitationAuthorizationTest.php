@@ -39,7 +39,15 @@ class InvitationAuthorizationTest extends TestCase
             'role' => Membership::ROLE_MANAGER,
         ]);
 
-        app(CreateInvitationAction::class)->execute($manager, $tenant, 'manager@example.com');
+        $result = app(CreateInvitationAction::class)->execute($manager, $tenant, 'cashier@example.com', Membership::ROLE_CASHIER);
+        $this->assertSame(Membership::ROLE_CASHIER, $result->invitation->role);
+
+        try {
+            app(CreateInvitationAction::class)->execute($manager, $tenant, 'manager@example.com', Membership::ROLE_MANAGER);
+            $this->fail('Managers must not invite managers.');
+        } catch (ValidationException) {
+            // Expected hierarchy protection.
+        }
 
         /** @var User $outsider */
         $outsider = User::factory()->create();

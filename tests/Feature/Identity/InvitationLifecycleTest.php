@@ -30,7 +30,7 @@ class InvitationLifecycleTest extends TestCase
         Notification::fake();
 
         $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])
-            ->post('/tenant/invitations', ['_token' => csrf_token(), 'email' => 'staff@example.com'])
+            ->post('/tenant/invitations', ['_token' => csrf_token(), 'email' => 'staff@example.com', 'role' => Membership::ROLE_MANAGER])
             ->assertRedirect();
 
         Notification::assertSentOnDemand(InvitationNotification::class);
