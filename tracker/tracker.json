@@ -344,9 +344,10 @@
                     "evidence": [
                         "OnboardingFlowTest passed: owner wizard, skip, authorization, existing completion paths, and tenant isolation.",
                         "BusinessDashboardTest passed with incomplete-owner redirect coverage.",
-                        "Pint and Larastan passed for the onboarding implementation."
+                        "Pint and Larastan passed for the onboarding implementation.",
+                        "Full suite reached 76 passing tests; the remaining run was blocked by an external SQLite development-database lock, without flushing the local database."
                     ],
-                    "latest_commit": "pending"
+                    "latest_commit": "b998e26"
                 }
             }
         },
