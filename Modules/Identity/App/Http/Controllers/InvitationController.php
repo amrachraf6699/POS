@@ -44,6 +44,7 @@ final class InvitationController extends Controller
         $tenant = $this->context->tenant();
         $result = $this->createInvitation->execute($request->user(), $tenant, $request->string('email')->toString(), $request->string('role')->toString());
         $this->notify($result->invitation, $result->plainToken);
+        app(\Modules\Business\App\Domain\Onboarding\OnboardingService::class)->markStaffSetupCompleted();
 
         return back()->with('status', 'تم إرسال الدعوة.');
     }

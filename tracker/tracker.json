@@ -334,8 +334,10 @@
                 },
                 "TASK-004-onboarding-flow": {
                     "title": "Business Onboarding Flow",
-                    "status": "not_started",
-                    "notes": [],
+                    "status": "in_progress",
+                    "notes": [
+                        "Tenant-scoped onboarding state, owner-only wizard routes, dashboard redirect, and setup-flow progress integration are in implementation."
+                    ],
                     "conflicts": [],
                     "problems": [],
                     "resolutions": [],

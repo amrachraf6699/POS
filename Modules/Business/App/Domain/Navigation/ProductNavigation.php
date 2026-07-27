@@ -3,6 +3,7 @@
 namespace Modules\Business\App\Domain\Navigation;
 
 use Modules\Business\App\Domain\Branches\BranchAuthorization;
+use Modules\Business\App\Domain\Onboarding\OnboardingService;
 use Modules\Business\App\Domain\Settings\BusinessSettingsAuthorization;
 use Modules\Identity\App\Domain\Authorization\TenantAuthorization;
 use Modules\Identity\App\Domain\Tenancy\TenantContext;
@@ -15,6 +16,7 @@ final class ProductNavigation
         private readonly BranchAuthorization $branchAuthorization,
         private readonly BusinessSettingsAuthorization $settingsAuthorization,
         private readonly TenantAuthorization $authorization,
+        private readonly OnboardingService $onboarding,
     ) {}
 
     /** @return array{items: array<int, array{label: string, url: string, patterns: array<int, string>, icon: string}>, future: array<int, array{label: string, icon: string}>, tenants: \Illuminate\Database\Eloquent\Collection<int, \Modules\Identity\App\Models\Tenant>} */
@@ -30,6 +32,9 @@ final class ProductNavigation
             ['label' => 'لوحة التحكم', 'url' => route('business.dashboard'), 'patterns' => ['business.dashboard', 'home'], 'icon' => 'bx-grid-alt'],
             ['label' => $canManage ? 'الفروع وتعيينات الفريق' : 'الفروع المتاحة', 'url' => route('business.branches.index'), 'patterns' => ['business.branches.*'], 'icon' => 'bx-store'],
         ];
+        if ($this->context->membership()->isOwner() && ! $this->onboarding->isComplete()) {
+            $items[] = ['label' => 'إكمال إعداد النشاط', 'url' => route('business.onboarding.index'), 'patterns' => ['business.onboarding.*'], 'icon' => 'bx-list-check'];
+        }
 
         if ($this->settingsAuthorization->canManage($user, $tenant)) {
             $items[] = ['label' => 'إعدادات النشاط', 'url' => route('business.settings.edit'), 'patterns' => ['business.settings.*'], 'icon' => 'bx-cog'];

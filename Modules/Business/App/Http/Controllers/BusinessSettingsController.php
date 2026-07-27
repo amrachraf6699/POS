@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Modules\Business\App\Data\BusinessSettingsData;
+use Modules\Business\App\Domain\Onboarding\OnboardingService;
 use Modules\Business\App\Domain\Settings\BusinessSettingsAuthorization;
 use Modules\Business\App\Domain\Settings\BusinessSettingsService;
 use Modules\Business\App\Http\Requests\UpdateBusinessSettingsRequest;
@@ -17,6 +18,7 @@ final class BusinessSettingsController extends Controller
         private readonly BusinessSettingsService $settings,
         private readonly BusinessSettingsAuthorization $authorization,
         private readonly TenantContext $context,
+        private readonly OnboardingService $onboarding,
     ) {}
 
     public function edit(): View
@@ -32,6 +34,7 @@ final class BusinessSettingsController extends Controller
     public function update(UpdateBusinessSettingsRequest $request): RedirectResponse
     {
         $this->settings->update(BusinessSettingsData::fromArray($request->validated()));
+        $this->onboarding->markSettingsCompleted();
 
         return back()->with('status', 'تم حفظ إعدادات النشاط التجاري.');
     }

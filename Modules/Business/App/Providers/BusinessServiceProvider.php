@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Modules\Business\App\Domain\Dashboard\BusinessDashboardService;
 use Modules\Business\App\Domain\Navigation\ProductNavigation;
+use Modules\Business\App\Domain\Onboarding\OnboardingService;
 use Modules\Business\App\Domain\Settings\BusinessSettingsService;
 
 class BusinessServiceProvider extends ServiceProvider
@@ -25,6 +26,7 @@ class BusinessServiceProvider extends ServiceProvider
     {
         $this->app->register(RouteServiceProvider::class);
         $this->app->scoped(BusinessSettingsService::class);
+        $this->app->scoped(OnboardingService::class);
         $this->app->scoped(BusinessDashboardService::class);
         $this->app->scoped(ProductNavigation::class);
     }

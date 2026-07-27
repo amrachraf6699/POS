@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Business;
 
+use Modules\Business\App\Domain\Onboarding\OnboardingService;
 use Modules\Business\App\Models\Branch;
 use Modules\Business\App\Models\BranchAssignment;
 use Modules\Identity\App\Models\Membership;
@@ -16,6 +17,8 @@ class BusinessDashboardTest extends TenantIsolationTestCase
         $this->establishContext($tenant, $membership);
         Branch::factory()->create(['code' => 'MAIN']);
         Branch::factory()->create(['code' => 'CLOSED', 'status' => Branch::STATUS_INACTIVE]);
+        app(OnboardingService::class)->markSettingsCompleted();
+        app(OnboardingService::class)->markStaffSetupCompleted();
         $response = $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])->get('/tenant/dashboard');
         $response->assertOk()->assertSee('مرحباً بك')->assertSee('إعدادات النشاط التجاري')->assertSee('إضافة فرع جديد')->assertSee('دعوة مستخدم')->assertSee('قريباً');
     }
@@ -43,16 +46,20 @@ class BusinessDashboardTest extends TenantIsolationTestCase
 
     public function test_home_is_a_compatibility_redirect_to_the_tenant_dashboard(): void
     {
-        [$owner, $tenant] = $this->makeMembership();
+        [$owner, $tenant, $membership] = $this->makeMembership();
         $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])->get('/home')->assertRedirect(route('business.dashboard'));
     }
 
     public function test_dashboard_is_tenant_isolated(): void
     {
-        [$owner, $tenant] = $this->makeMembership();
+        [$owner, $tenant, $membership] = $this->makeMembership();
         [$otherOwner, $otherTenant, $otherMembership] = $this->makeMembership();
         $this->establishContext($otherTenant, $otherMembership);
         Branch::factory()->create(['name' => 'Other Tenant Branch', 'code' => 'OTHER']);
+        $this->establishContext($tenant, $membership);
+        Branch::factory()->create(['name' => 'Main Tenant Branch', 'code' => 'MAIN-TENANT']);
+        app(OnboardingService::class)->markSettingsCompleted();
+        app(OnboardingService::class)->markStaffSetupCompleted();
         $response = $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])->get('/tenant/dashboard');
         $response->assertOk()->assertDontSee('Other Tenant Branch');
         $this->assertTrue($otherOwner->isActive());

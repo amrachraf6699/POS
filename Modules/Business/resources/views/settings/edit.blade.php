@@ -7,7 +7,8 @@
         <div><p class="text-sm font-bold text-indigo-600">إعدادات مساحة العمل</p><h1 class="mt-2 text-3xl font-extrabold text-slate-900">إعدادات النشاط التجاري</h1><p class="mt-2 text-sm text-slate-600">اضبط هوية النشاط والضرائب والإيصالات والإعدادات التشغيلية.</p></div>
         @if($errors->any())<div class="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700" role="alert"><p class="font-bold">يرجى مراجعة البيانات التالية:</p><ul class="mt-2 list-disc space-y-1 pr-5">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
 
-        <form method="POST" action="{{ route('business.settings.update') }}" class="space-y-6">
+        @if(($onboarding ?? false))<div class="rounded-xl border border-indigo-200 bg-indigo-50 p-4 text-sm font-bold text-indigo-800">الخطوة ١ من ٣: أكمِل إعدادات نشاطك التجاري.</div>@endif
+        <form method="POST" action="{{ $formAction ?? route('business.settings.update') }}" class="space-y-6">
             @csrf @method('PUT')
             <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7" aria-labelledby="identity-heading">
                 <div class="flex items-start gap-3"><span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-indigo-50 text-2xl text-indigo-600"><i class="bx bx-buildings" aria-hidden="true"></i></span><div><h2 id="identity-heading" class="text-xl font-extrabold text-slate-900">هوية النشاط</h2><p class="mt-1 text-sm text-slate-500">المعلومات التي تظهر على شاشات النظام والإيصالات.</p></div></div>
@@ -25,7 +26,7 @@
                 <div class="mt-6 grid gap-5 md:grid-cols-3">
                     <div><label for="timezone" class="text-sm font-bold text-slate-700">المنطقة الزمنية</label><input id="timezone" name="timezone" value="{{ old('timezone', $settings->timezone) }}" required autocomplete="off" class="settings-input" dir="ltr"></div>
                     <div><label for="currency-code" class="text-sm font-bold text-slate-700">العملة</label><select id="currency-code" name="currency_code" class="settings-input">@foreach($currencies as $currency)<option value="{{ $currency }}" @selected(old('currency_code', $settings->currency_code) === $currency)>{{ $currency }}</option>@endforeach</select></div>
-                    <div><label for="vat-rate" class="text-sm font-bold text-slate-700">نسبة ضريبة القيمة المضافة</label><div class="relative"><input id="vat-rate" name="vat_rate" type="number" min="0" max="100" step="0.01" value="{{ old('vat_rate', $settings->vat_rate) }}" required class="settings-input pl-12" dir="ltr"><span class="pointer-events-none absolute left-4 top-3.5 text-sm font-bold text-slate-400">%</span></div></div>
+                    <div><label for="vat-rate" class="text-sm font-bold text-slate-700">نسبة ضريبة القيمة المضافة</label><div class="relative"><input id="vat-rate" name="vat_rate" type="number" min="0" max="100" step="0.01" value="{{ old('vat_rate', $settings->vat_rate) }}" required class="settings-input text-right" dir="ltr"><span class="pointer-events-none absolute left-4 top-3.5 text-sm font-bold text-slate-400">%</span></div></div>
                 </div>
                 <input type="hidden" name="vat_enabled" value="1"><input type="hidden" name="vat_mode" value="inclusive"><p class="mt-5 flex items-center gap-2 rounded-xl bg-slate-50 p-4 text-sm text-slate-600"><i class="bx bx-info-circle text-lg text-indigo-500" aria-hidden="true"></i>الأسعار شاملة الضريبة في هذا الإصدار.</p>
             </section>
