@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "last_updated_at": "2026-07-20T22:10:00+00:00",
+    "last_updated_at": "2026-07-27T01:40:44+00:00",
     "updated_by": "Codex",
     "phases": {
         "00-Project-Foundation": {
@@ -293,13 +293,16 @@
                 },
                 "TASK-003-roles-and-permissions": {
                     "title": "Roles and Permissions",
-                    "status": "in_progress",
+                    "status": "review",
                     "notes": [
                         "Dashboard role-aware navigation foundation started; the complete permission catalog and staff role matrix remain for this task.",
-                        "Tenant-scoped Spatie permission foundation is implemented with a full catalog, four fixed roles, and synchronized role assignment."
+                        "Tenant-scoped Spatie permission foundation is implemented with a full catalog, four fixed roles, and synchronized role assignment.",
+                        "Functional implementation is complete: invitation role selection, staff hierarchy enforcement, tenant-scoped role assignments, and final-owner protection are covered by feature tests."
                     ],
                     "conflicts": [],
-                    "problems": [],
+                    "problems": [
+                        "Composer audit reports three unresolved Laravel framework advisories affecting the required Laravel 10 line; no compatible patched Laravel 10 release is available in the audit result. This is a release-gate issue, not a TASK-003 behavior failure."
+                    ],
                     "resolutions": [],
                     "evidence": [
                         "Connected tenant dashboard route and /home compatibility redirect are implemented.",
@@ -320,9 +323,13 @@
                      "Final full suite passed: 77 tests, 304 assertions; Pint, Larastan, fresh migrations, Composer dry-run, and tracker JSON validation passed.",
                      "Approved visual direction applied: centered branded Arabic auth card, compact RTL tenant shell with right rail, workspace navbar control, visual summary cards, quick actions, and centered tenant switcher modal.",
                         "Dashboard continues to use only real tenant-scoped branch, assignment, invitation, and settings data; no sales or revenue placeholders were introduced.",
-                        "Permission foundation committed as 177fafd and pushed to origin/main; invitation acceptance and registration regression tests passed."
+                        "Permission foundation committed as 177fafd and pushed to origin/main; invitation acceptance and registration regression tests passed.",
+                        "Full suite passed: 80 tests, 331 assertions.",
+                        "vendor/bin/pint and vendor/bin/phpstan analyse --memory-limit=1G passed.",
+                        "Targeted tenant role tests passed: 3 tests, 12 assertions, covering tenant isolation, final-owner protection, direct staff-route authorization, hierarchy enforcement, and cross-tenant membership concealment.",
+                        "Composer install --dry-run passed; composer audit reported the documented Laravel framework advisories."
                     ],
-                    "latest_commit": "55100ce"
+                    "latest_commit": "cb8702a"
                 },
                 "TASK-004-onboarding-flow": {
                     "title": "Business Onboarding Flow",
