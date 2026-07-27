@@ -26,7 +26,6 @@
         </form>
 
         <div class="my-7 flex items-center gap-4 text-sm text-[#9aa3b5]"><span class="h-px flex-1 bg-[#e5e8ef]"></span><span>أو</span><span class="h-px flex-1 bg-[#e5e8ef]"></span></div>
-        <button type="button" class="flex h-14 w-full items-center justify-center gap-3 rounded-xl border border-[#d7dce8] text-base text-[#25304a]"><span class="text-xl font-bold text-[#4285f4]">G</span>المتابعة باستخدام Google</button>
         <p class="mt-7 text-center text-sm text-[#68748c]">ليس لديك حساب؟ <a href="{{ route('register') }}" class="font-bold text-[#4450d5]">إنشاء حساب جديد</a></p>
     </div>
 @endsection

@@ -20,7 +20,11 @@ class BusinessSettingsManagementTest extends TenantIsolationTestCase
             ->get('/tenant/settings/business')
             ->assertOk()
             ->assertSee('إعدادات النشاط التجاري')
-            ->assertSee('dir="rtl"', false);
+            ->assertSee('dir="rtl"', false)
+            ->assertSee('id="display-name"', false)
+            ->assertSee('id="currency-code"', false)
+            ->assertSee('aria-labelledby="identity-heading"', false)
+            ->assertSee('settings-input', false);
 
         $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])
             ->put('/tenant/settings/business', $this->validPayload(['display_name' => 'Updated Business', '_token' => csrf_token()]))

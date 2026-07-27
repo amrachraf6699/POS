@@ -2,9 +2,6 @@
 
 @section('title', 'اختيار مساحة العمل')
 
-@section('navigation')
-    <div class="text-lg font-bold text-slate-900">نظام نقاط البيع</div>
-@endsection
 
 @section('content')
     <div class="mx-auto max-w-2xl">

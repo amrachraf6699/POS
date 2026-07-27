@@ -2,7 +2,6 @@
 
 @section('title', 'قبول الدعوة')
 
-@section('navigation')<div class="text-lg font-bold text-slate-900">نظام نقاط البيع</div>@endsection
 
 @section('content')
     <div class="mx-auto max-w-md rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">

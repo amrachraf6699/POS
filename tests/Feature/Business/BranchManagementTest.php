@@ -25,12 +25,15 @@ class BranchManagementTest extends TenantIsolationTestCase
         $response = $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])
             ->get('/tenant/branches/create');
 
-        $response->assertOk()->assertSee('dir="rtl"', false)->assertSee('إضافة فرع');
+        $response->assertOk()->assertSee('dir="rtl"', false)->assertSee('إضافة فرع')->assertSee('id="branch-name"', false)->assertSee('data-mobile-toggle', false);
 
         $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])
             ->get('/tenant/branches')
             ->assertOk()
-            ->assertSee('الفروع');
+            ->assertSee('الفروع')
+            ->assertSee('<table', false)
+            ->assertSee('<thead', false)
+            ->assertSee('branches-table-title', false);
 
         $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])
             ->post('/tenant/branches', [
