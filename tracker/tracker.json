@@ -295,7 +295,8 @@
                     "title": "Roles and Permissions",
                     "status": "in_progress",
                     "notes": [
-                        "Dashboard role-aware navigation foundation started; the complete permission catalog and staff role matrix remain for this task."
+                        "Dashboard role-aware navigation foundation started; the complete permission catalog and staff role matrix remain for this task.",
+                        "Tenant-scoped Spatie permission foundation is implemented with a full catalog, four fixed roles, and synchronized role assignment."
                     ],
                     "conflicts": [],
                     "problems": [],
@@ -318,7 +319,8 @@
                         "Architecture documented in docs/architecture/ui-layouts-and-tenant-switching.md.",
                      "Final full suite passed: 77 tests, 304 assertions; Pint, Larastan, fresh migrations, Composer dry-run, and tracker JSON validation passed.",
                      "Approved visual direction applied: centered branded Arabic auth card, compact RTL tenant shell with right rail, workspace navbar control, visual summary cards, quick actions, and centered tenant switcher modal.",
-                     "Dashboard continues to use only real tenant-scoped branch, assignment, invitation, and settings data; no sales or revenue placeholders were introduced."
+                        "Dashboard continues to use only real tenant-scoped branch, assignment, invitation, and settings data; no sales or revenue placeholders were introduced.",
+                        "Permission foundation committed as 177fafd and pushed to origin/main; invitation acceptance and registration regression tests passed."
                     ],
                     "latest_commit": "55100ce"
                 },

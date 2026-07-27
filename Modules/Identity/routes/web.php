@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Identity\App\Http\Controllers\InvitationAcceptanceController;
 use Modules\Identity\App\Http\Controllers\InvitationController;
 use Modules\Identity\App\Http\Controllers\LoginController;
+use Modules\Identity\App\Http\Controllers\MembershipController;
 use Modules\Identity\App\Http\Controllers\RegistrationController;
 use Modules\Identity\App\Http\Controllers\TenantSelectionController;
 
@@ -31,4 +32,9 @@ Route::middleware(['auth', 'tenant'])->prefix('tenant/invitations')->name('tenan
     Route::post('/', [InvitationController::class, 'store'])->name('store');
     Route::post('/{invitation}/resend', [InvitationController::class, 'resend'])->name('resend');
     Route::post('/{invitation}/revoke', [InvitationController::class, 'revoke'])->name('revoke');
+});
+
+Route::middleware(['auth', 'tenant'])->prefix('tenant/staff')->name('tenant.staff.')->group(function (): void {
+    Route::get('/', [MembershipController::class, 'index'])->name('index');
+    Route::patch('/{membership}', [MembershipController::class, 'update'])->name('update');
 });
