@@ -19,7 +19,7 @@ final class MembershipController extends Controller
     {
         abort_unless($this->authorization->allows(request()->user(), $this->context->tenant(), 'users.view'), 403);
 
-        return view('identity::memberships.index', ['memberships' => Membership::query()->where('tenant_id', $this->context->id())->with('user')->where()->orderBy('created_at')->get()]);
+        return view('identity::memberships.index', ['memberships' => Membership::query()->where('tenant_id', $this->context->id())->with('user')->where('user_id', '<>', auth()->id())->orderBy('created_at')->get()]);
     }
 
     public function update(UpdateMembershipRequest $request, Membership $membership, UpdateMembershipAction $action): RedirectResponse
