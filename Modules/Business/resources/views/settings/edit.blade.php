@@ -3,7 +3,13 @@
 @section('title', 'إعدادات النشاط التجاري')
 
 @section('content')
-    <div class="mx-auto max-w-5xl space-y-7">
+    <div @class(['mx-auto space-y-7', 'max-w-6xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_18px_55px_rgba(30,41,59,.08)]' => ($onboarding ?? false), 'max-w-5xl' => ! ($onboarding ?? false)])>
+        @if($onboarding ?? false)
+            <x-business::onboarding-progress :step="1" />
+            <div class="px-6 pb-8 sm:px-10 sm:pb-10">
+                <h2 class="text-2xl font-extrabold text-slate-900">بيانات نشاطك الأساسية</h2>
+                <p class="mt-2 text-sm leading-6 text-slate-500">ستظهر هذه البيانات في الإيصالات والتقارير. يمكنك تعديل جميع الإعدادات لاحقاً.</p>
+        @endif
         <div><p class="text-sm font-bold text-indigo-600">إعدادات مساحة العمل</p><h1 class="mt-2 text-3xl font-extrabold text-slate-900">إعدادات النشاط التجاري</h1><p class="mt-2 text-sm text-slate-600">اضبط هوية النشاط والضرائب والإيصالات والإعدادات التشغيلية.</p></div>
         @if($errors->any())<div class="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700" role="alert"><p class="font-bold">يرجى مراجعة البيانات التالية:</p><ul class="mt-2 list-disc space-y-1 pr-5">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
 
@@ -43,6 +49,7 @@
             </section>
             <div class="flex justify-end"><button class="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-7 py-3.5 text-sm font-bold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-200"><i class="bx bx-save" aria-hidden="true"></i>حفظ الإعدادات</button></div>
         </form>
+        @if($onboarding ?? false)</div>@endif
     </div>
     <style>.settings-input{margin-top:.5rem;display:block;width:100%;min-height:3rem;border-radius:.75rem;border:1px solid rgb(203 213 225);background:#fff;padding:.75rem 1rem;color:rgb(15 23 42);box-shadow:0 1px 2px rgb(15 23 42 / .04);outline:2px solid transparent;outline-offset:2px;transition:border-color .15s,box-shadow .15s}.settings-input:focus{border-color:rgb(99 102 241);box-shadow:0 0 0 4px rgb(224 231 255)}.settings-input::placeholder{color:rgb(148 163 184)}select.settings-input{padding-left:1rem;padding-right:1rem}</style>
 @endsection

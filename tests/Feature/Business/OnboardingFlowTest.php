@@ -36,6 +36,15 @@ class OnboardingFlowTest extends TenantIsolationTestCase
         $this->actingAs($owner)->withSession(['current_tenant_id' => $ownerTenant->getKey()])->get('/tenant/onboarding/settings')->assertForbidden();
     }
 
+    public function test_wizard_steps_render_arabic_progress_and_actionable_controls(): void
+    {
+        [$owner, $tenant] = $this->makeMembership();
+        $session = ['current_tenant_id' => $tenant->getKey()];
+        $this->actingAs($owner)->withSession($session)->get('/tenant/onboarding/settings')->assertOk()->assertSee('لنجهّز نشاطك التجاري')->assertSee('بيانات نشاطك الأساسية')->assertSee('حفظ ومتابعة');
+        $this->actingAs($owner)->withSession($session)->put('/tenant/onboarding/settings', $this->settingsPayload(['_token' => csrf_token()]))->assertRedirect();
+        $this->actingAs($owner)->withSession($session)->get('/tenant/onboarding/branch')->assertOk()->assertSee('الفرع الأول')->assertSee('أنشئ أول فرع نشط')->assertSee('حفظ ومتابعة');
+    }
+
     public function test_existing_settings_and_branch_routes_advance_the_owner_progress(): void
     {
         [$owner, $tenant] = $this->makeMembership();
