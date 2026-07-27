@@ -6,6 +6,7 @@
     <title>@yield('title', config('app.name'))</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
     <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Tajawal', 'ui-sans-serif', 'system-ui', 'sans-serif'] }, colors: { brand: '#414bd3' } } } };</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,12 +32,12 @@
                 </a>
                 <p class="mt-3 text-center text-sm text-[#8a93a8]">نظام نقاط بيع سحابي مصمم للأعمال في مصر</p>
 
-                @if(session('status'))<div class="mt-6 rounded-xl bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700">{{ session('status') }}</div>@endif
                 @yield('content')
             </div>
             <p class="mt-6 flex items-center justify-center gap-2 text-center text-sm text-[#7b859d]"><i class="bx bx-shield-quarter text-xl text-[#4450d5]" aria-hidden="true"></i>بياناتك آمنة ومحفوظة وفق أعلى معايير الأمان</p>
         </main>
     </div>
+    @if(session('status'))<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>@include('components.success-toast')@endif
     @stack('scripts')
 </body>
 </html>

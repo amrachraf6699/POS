@@ -8,7 +8,6 @@
             <div><p class="text-sm font-bold text-indigo-600">إدارة الفريق</p><h1 class="mt-1 text-3xl font-extrabold text-slate-900">دعوات الفريق</h1></div>
             <a href="{{ route('tenant.staff.index') }}" class="text-sm font-bold text-indigo-600 hover:underline">أعضاء الفريق</a>
         </div>
-        @if(session('status'))<div class="rounded-xl bg-emerald-50 p-4 text-emerald-700" role="status">{{ session('status') }}</div>@endif
         @if($errors->any())<div class="rounded-xl bg-red-50 p-4 text-red-700" role="alert">{{ $errors->first() }}</div>@endif
         <section class="rounded-2xl border border-slate-200 bg-white p-6">
             <h2 class="text-lg font-extrabold">دعوة عضو جديد</h2>

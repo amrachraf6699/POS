@@ -39,6 +39,16 @@ class UiLayoutTest extends TestCase
             ->assertSee($tenant->name);
     }
 
+    public function test_success_flash_uses_the_shared_toast_notification(): void
+    {
+        $this->withSession(['status' => 'تم الحفظ بنجاح'])->get('/login')
+            ->assertOk()
+            ->assertSee('toastify-js', false)
+            ->assertSee('تم الحفظ بنجاح')
+            ->assertSee('aria-live="polite"', false)
+            ->assertDontSee('bg-emerald-50 px-4 py-3', false);
+    }
+
     public function test_tenant_shell_places_switcher_in_the_navbar_and_lists_only_accessible_tenants(): void
     {
         /** @var User $user */

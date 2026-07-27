@@ -6,7 +6,6 @@
 @section('content')
     <div class="mx-auto max-w-4xl space-y-6">
         <div class="flex items-center justify-between gap-4"><div><a href="{{ route('business.branches.index') }}" class="inline-flex items-center gap-1 text-sm font-bold text-indigo-600 hover:underline"><i class="bx bx-arrow-forward" aria-hidden="true"></i>الفروع</a><p class="mt-4 text-sm font-bold text-indigo-600">إدارة الفروع</p><h1 class="mt-2 text-3xl font-extrabold text-slate-900">{{ $editing ? 'تعديل بيانات الفرع' : 'إضافة فرع جديد' }}</h1></div></div>
-        @if (session('status'))<div class="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700" role="status">{{ session('status') }}</div>@endif
         @if ($errors->any())<div class="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700" role="alert"><p class="font-bold">يرجى مراجعة البيانات التالية:</p><ul class="mt-2 list-disc space-y-1 pr-5">@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
         <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
             <form method="POST" action="{{ $editing ? route('business.branches.update', $branch) : route('business.branches.store') }}" class="grid gap-5 md:grid-cols-2">@csrf @if($editing) @method('PUT') @endif

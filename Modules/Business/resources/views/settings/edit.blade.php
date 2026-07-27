@@ -5,7 +5,6 @@
 @section('content')
     <div class="mx-auto max-w-5xl space-y-7">
         <div><p class="text-sm font-bold text-indigo-600">إعدادات مساحة العمل</p><h1 class="mt-2 text-3xl font-extrabold text-slate-900">إعدادات النشاط التجاري</h1><p class="mt-2 text-sm text-slate-600">اضبط هوية النشاط والضرائب والإيصالات والإعدادات التشغيلية.</p></div>
-        @if(session('status'))<div class="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-semibold text-emerald-700" role="status">{{ session('status') }}</div>@endif
         @if($errors->any())<div class="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700" role="alert"><p class="font-bold">يرجى مراجعة البيانات التالية:</p><ul class="mt-2 list-disc space-y-1 pr-5">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
 
         <form method="POST" action="{{ route('business.settings.update') }}" class="space-y-6">
