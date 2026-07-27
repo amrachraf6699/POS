@@ -2,12 +2,15 @@
 
 namespace Modules\Identity\App\Domain\Invitations;
 
+use Modules\Identity\App\Domain\Authorization\TenantAuthorization;
 use Modules\Identity\App\Models\Membership;
 use Modules\Identity\App\Models\Tenant;
 use Modules\Identity\App\Models\User;
 
 final class InvitationAuthorization
 {
+    public function __construct(private readonly TenantAuthorization $authorization) {}
+
     public function membershipFor(User $user, Tenant $tenant): ?Membership
     {
         if (! $user->isActive() || ! $tenant->isActive()) {
@@ -23,6 +26,6 @@ final class InvitationAuthorization
 
     public function canManage(User $user, Tenant $tenant): bool
     {
-        return $this->membershipFor($user, $tenant)?->canManageInvitations() ?? false;
+        return $this->authorization->allows($user, $tenant, 'users.invite');
     }
 }

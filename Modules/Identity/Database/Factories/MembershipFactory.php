@@ -3,6 +3,7 @@
 namespace Modules\Identity\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Identity\App\Domain\Authorization\TenantRoleService;
 use Modules\Identity\App\Models\Membership;
 use Modules\Identity\App\Models\Tenant;
 use Modules\Identity\App\Models\User;
@@ -20,6 +21,15 @@ class MembershipFactory extends Factory
             'role' => Membership::ROLE_OWNER,
             'status' => Membership::STATUS_ACTIVE,
         ];
+    }
+
+    public function configure(): static
+    {
+        return $this->afterCreating(function (Membership $membership): void {
+            if ($membership->isActive() && in_array($membership->role, Membership::roles(), true)) {
+                app(TenantRoleService::class)->assign($membership->user, $membership->tenant, $membership->role);
+            }
+        });
     }
 
     public function inactive(): static

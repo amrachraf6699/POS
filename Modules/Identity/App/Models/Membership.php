@@ -19,6 +19,10 @@ class Membership extends Model
 
     public const ROLE_MANAGER = 'manager';
 
+    public const ROLE_CASHIER = 'cashier';
+
+    public const ROLE_INVENTORY_STAFF = 'inventory_staff';
+
     public const STATUS_ACTIVE = 'active';
 
     public const STATUS_INACTIVE = 'inactive';
@@ -48,6 +52,12 @@ class Membership extends Model
     public function isManager(): bool
     {
         return $this->role === self::ROLE_MANAGER;
+    }
+
+    /** @return array<int, string> */
+    public static function roles(): array
+    {
+        return [self::ROLE_OWNER, self::ROLE_MANAGER, self::ROLE_CASHIER, self::ROLE_INVENTORY_STAFF];
     }
 
     public function canManageInvitations(): bool

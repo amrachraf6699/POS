@@ -4,6 +4,7 @@ namespace Modules\Identity\App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Modules\Identity\App\Domain\Authorization\TenantAuthorization;
 use Modules\Identity\App\Domain\Tenancy\TenantContext;
 use Modules\Identity\App\Models\Membership;
 use Modules\Identity\App\Models\Tenant;
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class ResolveTenantContext
 {
-    public function __construct(private readonly TenantContext $context) {}
+    public function __construct(private readonly TenantContext $context, private readonly TenantAuthorization $authorization) {}
 
     public function handle(Request $request, Closure $next): Response
     {
@@ -50,6 +51,7 @@ final class ResolveTenantContext
         }
 
         $this->context->set($membership->tenant, $membership);
+        $this->authorization->forTenant($membership->tenant);
 
         return $next($request);
     }

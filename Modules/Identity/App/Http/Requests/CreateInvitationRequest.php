@@ -3,8 +3,10 @@
 namespace Modules\Identity\App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Modules\Identity\App\Domain\Invitations\InvitationAuthorization;
 use Modules\Identity\App\Domain\Tenancy\TenantContext;
+use Modules\Identity\App\Models\Membership;
 use Modules\Identity\App\Models\User;
 
 class CreateInvitationRequest extends FormRequest
@@ -19,6 +21,9 @@ class CreateInvitationRequest extends FormRequest
 
     public function rules(): array
     {
-        return ['email' => ['required', 'email', 'max:255']];
+        return [
+            'email' => ['required', 'email', 'max:255'],
+            'role' => ['nullable', 'string', Rule::in(Membership::roles())],
+        ];
     }
 }

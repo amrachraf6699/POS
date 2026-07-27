@@ -5,6 +5,7 @@ namespace Modules\Identity\App\Actions;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use Modules\Identity\App\Domain\Authorization\TenantRoleService;
 use Modules\Identity\App\Domain\Invitations\InvitationTokenService;
 use Modules\Identity\App\Models\Invitation;
 use Modules\Identity\App\Models\Membership;
@@ -12,7 +13,7 @@ use Modules\Identity\App\Models\User;
 
 final class AcceptInvitationAction
 {
-    public function __construct(private readonly InvitationTokenService $tokens) {}
+    public function __construct(private readonly InvitationTokenService $tokens, private readonly TenantRoleService $roles) {}
 
     public function execute(Invitation $invitation, string $plainToken, User $user): void
     {
@@ -38,15 +39,16 @@ final class AcceptInvitationAction
                 Membership::query()->create([
                     'tenant_id' => $invitation->tenant_id,
                     'user_id' => $user->getKey(),
-                    'role' => Membership::ROLE_MANAGER,
+                    'role' => $invitation->role,
                     'status' => Membership::STATUS_ACTIVE,
                 ]);
             } else {
                 $membership->update([
-                    'role' => Membership::ROLE_MANAGER,
+                    'role' => $invitation->role,
                     'status' => Membership::STATUS_ACTIVE,
                 ]);
             }
+            $this->roles->assign($user, $invitation->tenant, $invitation->role);
 
             $invitation->update([
                 'status' => Invitation::STATUS_ACCEPTED,
@@ -81,9 +83,10 @@ final class AcceptInvitationAction
             Membership::query()->create([
                 'tenant_id' => $invitation->tenant_id,
                 'user_id' => $user->getKey(),
-                'role' => Membership::ROLE_MANAGER,
+                'role' => $invitation->role,
                 'status' => Membership::STATUS_ACTIVE,
             ]);
+            $this->roles->assign($user, $invitation->tenant, $invitation->role);
 
             $invitation->update([
                 'status' => Invitation::STATUS_ACCEPTED,

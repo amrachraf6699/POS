@@ -4,6 +4,7 @@ namespace Modules\Business\App\Domain\Navigation;
 
 use Modules\Business\App\Domain\Branches\BranchAuthorization;
 use Modules\Business\App\Domain\Settings\BusinessSettingsAuthorization;
+use Modules\Identity\App\Domain\Authorization\TenantAuthorization;
 use Modules\Identity\App\Domain\Tenancy\TenantContext;
 use Modules\Identity\App\Models\User;
 
@@ -13,6 +14,7 @@ final class ProductNavigation
         private readonly TenantContext $context,
         private readonly BranchAuthorization $branchAuthorization,
         private readonly BusinessSettingsAuthorization $settingsAuthorization,
+        private readonly TenantAuthorization $authorization,
     ) {}
 
     /** @return array{items: array<int, array{label: string, url: string, patterns: array<int, string>, icon: string}>, future: array<int, array{label: string, icon: string}>, tenants: \Illuminate\Database\Eloquent\Collection<int, \Modules\Identity\App\Models\Tenant>} */
@@ -32,6 +34,10 @@ final class ProductNavigation
         if ($this->settingsAuthorization->canManage($user, $tenant)) {
             $items[] = ['label' => 'إعدادات النشاط', 'url' => route('business.settings.edit'), 'patterns' => ['business.settings.*'], 'icon' => 'bx-cog'];
             $items[] = ['label' => 'دعوات الفريق', 'url' => route('tenant.invitations.index'), 'patterns' => ['tenant.invitations.*'], 'icon' => 'bx-envelope'];
+        }
+
+        if ($this->authorization->allows($user, $tenant, 'users.view')) {
+            $items[] = ['label' => 'أعضاء الفريق', 'url' => route('tenant.staff.index'), 'patterns' => ['tenant.staff.*'], 'icon' => 'bx-group'];
         }
 
         return [

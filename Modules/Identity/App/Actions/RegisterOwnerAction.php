@@ -8,12 +8,15 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Modules\Identity\App\Data\RegisterOwnerData;
 use Modules\Identity\App\Data\RegistrationResult;
+use Modules\Identity\App\Domain\Authorization\TenantRoleService;
 use Modules\Identity\App\Models\Membership;
 use Modules\Identity\App\Models\Tenant;
 use Modules\Identity\App\Models\User;
 
 class RegisterOwnerAction
 {
+    public function __construct(private readonly TenantRoleService $roles) {}
+
     public function execute(RegisterOwnerData $data): RegistrationResult
     {
         $result = DB::transaction(function () use ($data): RegistrationResult {
@@ -41,6 +44,7 @@ class RegisterOwnerAction
                 'role' => Membership::ROLE_OWNER,
                 'status' => Membership::STATUS_ACTIVE,
             ]);
+            $this->roles->assign($user, $tenant, Membership::ROLE_OWNER);
 
             return new RegistrationResult($user, $tenant, $membership);
         });

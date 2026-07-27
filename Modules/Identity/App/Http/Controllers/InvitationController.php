@@ -13,6 +13,7 @@ use Modules\Identity\App\Http\Requests\CreateInvitationRequest;
 use Modules\Identity\App\Http\Requests\ResendInvitationRequest;
 use Modules\Identity\App\Http\Requests\RevokeInvitationRequest;
 use Modules\Identity\App\Models\Invitation;
+use Modules\Identity\App\Models\Membership;
 use Modules\Identity\App\Notifications\InvitationNotification;
 
 final class InvitationController extends Controller
@@ -38,7 +39,11 @@ final class InvitationController extends Controller
     public function store(CreateInvitationRequest $request): RedirectResponse
     {
         $tenant = $this->context->tenant();
-        $result = $this->createInvitation->execute($request->user(), $tenant, $request->string('email')->toString());
+        $role = $request->string('role')->toString();
+        if ($role === '') {
+            $role = $this->context->membership()->isOwner() ? Membership::ROLE_MANAGER : Membership::ROLE_CASHIER;
+        }
+        $result = $this->createInvitation->execute($request->user(), $tenant, $request->string('email')->toString(), $role);
         $this->notify($result->invitation, $result->plainToken);
 
         return back()->with('status', 'تم إرسال الدعوة.');

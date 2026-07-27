@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Modules\Identity\App\Data\InvitationCreationResult;
+use Modules\Identity\App\Domain\Authorization\TenantAuthorization;
 use Modules\Identity\App\Domain\Invitations\InvitationAuthorization;
 use Modules\Identity\App\Domain\Invitations\InvitationTokenService;
 use Modules\Identity\App\Models\Invitation;
@@ -18,14 +19,19 @@ final class CreateInvitationAction
     public function __construct(
         private readonly InvitationAuthorization $authorization,
         private readonly InvitationTokenService $tokens,
+        private readonly TenantAuthorization $tenantAuthorization,
     ) {}
 
-    public function execute(User $inviter, Tenant $tenant, string $email): InvitationCreationResult
+    public function execute(User $inviter, Tenant $tenant, string $email, string $role = Membership::ROLE_MANAGER): InvitationCreationResult
     {
         $email = Str::lower(trim($email));
 
         if (! $this->authorization->canManage($inviter, $tenant)) {
             throw ValidationException::withMessages(['email' => 'You are not authorized to invite users to this tenant.']);
+        }
+
+        if (! in_array($role, Membership::roles(), true) || ! $this->canAssignRole($inviter, $tenant, $role)) {
+            throw ValidationException::withMessages(['role' => 'You are not authorized to assign the selected role.']);
         }
 
         $existingUser = User::query()->where('email', $email)->first();
@@ -38,7 +44,7 @@ final class CreateInvitationAction
             throw ValidationException::withMessages(['email' => 'This user is already a member of the tenant.']);
         }
 
-        return DB::transaction(function () use ($inviter, $tenant, $email): InvitationCreationResult {
+        return DB::transaction(function () use ($inviter, $tenant, $email, $role): InvitationCreationResult {
             Invitation::query()
                 ->where('tenant_id', $tenant->getKey())
                 ->where('email', $email)
@@ -55,7 +61,7 @@ final class CreateInvitationAction
                 'tenant_id' => $tenant->getKey(),
                 'invited_by' => $inviter->getKey(),
                 'email' => $email,
-                'role' => Invitation::ROLE_MANAGER,
+                'role' => $role,
                 'token_hash' => $token['hash'],
                 'status' => Invitation::STATUS_PENDING,
                 'expires_at' => now()->addHours((int) config('identity.invitation_lifetime_hours', 72)),
@@ -63,5 +69,16 @@ final class CreateInvitationAction
 
             return new InvitationCreationResult($invitation, $token['plain']);
         });
+    }
+
+    private function canAssignRole(User $actor, Tenant $tenant, string $role): bool
+    {
+        if (! $this->tenantAuthorization->allows($actor, $tenant, 'users.invite')) {
+            return false;
+        }
+
+        $membership = $this->authorization->membershipFor($actor, $tenant);
+
+        return $membership?->isOwner() || in_array($role, [Membership::ROLE_CASHIER, Membership::ROLE_INVENTORY_STAFF], true);
     }
 }

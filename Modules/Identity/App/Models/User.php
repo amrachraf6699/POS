@@ -9,6 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Modules\Business\App\Models\Branch;
 use Modules\Business\App\Models\BranchAssignment;
 use Modules\Identity\Database\Factories\UserFactory;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @property int $id
@@ -17,7 +18,7 @@ use Modules\Identity\Database\Factories\UserFactory;
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, HasRoles, Notifiable;
 
     public const STATUS_ACTIVE = 'active';
 
