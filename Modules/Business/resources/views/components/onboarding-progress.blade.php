@@ -3,9 +3,8 @@
 @php($steps = [1 => 'بيانات النشاط', 2 => 'الفرع الأول', 3 => 'دعوة الفريق'])
 <div class="border-b border-slate-100 px-5 py-7 sm:px-10">
     <div class="mx-auto max-w-3xl text-center">
-        <p class="text-sm font-bold text-indigo-600">إعداد سريع وآمن</p>
-        <h1 class="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">لنجهّز نشاطك التجاري</h1>
-        <p class="mt-3 text-sm text-slate-500 sm:text-base">ثلاث خطوات بسيطة لتبدأ العمل على نقطة البيع الخاصة بك.</p>
+        <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">لنجهّز نشاطك التجاري</h1>
+        <p class="mt-3 text-sm text-slate-500 sm:text-base">بضع خطوات بسيطة لإنشاء متجرك وإعداد نقطة البيع الخاصة بك.</p>
     </div>
     <ol class="mx-auto mt-8 flex max-w-3xl items-start justify-between" aria-label="تقدم إعداد النشاط">
         @foreach($steps as $number => $label)

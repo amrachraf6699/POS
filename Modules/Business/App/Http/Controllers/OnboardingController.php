@@ -30,7 +30,7 @@ final class OnboardingController extends Controller
     {
         $this->owner();
 
-        return view('business::settings.edit', ['settings' => $this->settings->settingsForCurrentTenant(), 'currencies' => config('business.supported_currencies', []), 'formAction' => route('business.onboarding.settings.save'), 'onboarding' => true]);
+        return view('business::onboarding.settings', ['settings' => $this->settings->settingsForCurrentTenant(), 'currencies' => config('business.supported_currencies', [])]);
     }
 
     public function saveSettings(UpdateBusinessSettingsRequest $request): RedirectResponse
