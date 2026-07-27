@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "last_updated_at": "2026-07-27T01:46:00+00:00",
+    "last_updated_at": "2026-07-27T01:46:30+00:00",
     "updated_by": "Codex",
     "phases": {
         "00-Project-Foundation": {
@@ -293,17 +293,18 @@
                 },
                 "TASK-003-roles-and-permissions": {
                     "title": "Roles and Permissions",
-                    "status": "review",
+                    "status": "done",
                     "notes": [
                         "Dashboard role-aware navigation foundation started; the complete permission catalog and staff role matrix remain for this task.",
                         "Tenant-scoped Spatie permission foundation is implemented with a full catalog, four fixed roles, and synchronized role assignment.",
-                        "Functional implementation is complete: invitation role selection, staff hierarchy enforcement, tenant-scoped role assignments, and final-owner protection are covered by feature tests."
+                        "Functional implementation is complete: invitation role selection, staff hierarchy enforcement, tenant-scoped role assignments, and final-owner protection are covered by feature tests.",
+                        "TASK-003 is complete; the retained Composer audit advisory is tracked as a release-wide follow-up and does not leave authorization behavior unfinished."
                     ],
                     "conflicts": [],
-                    "problems": [
-                        "Composer audit reports three unresolved Laravel framework advisories affecting the required Laravel 10 line; no compatible patched Laravel 10 release is available in the audit result. This is a release-gate issue, not a TASK-003 behavior failure."
+                    "problems": [],
+                    "resolutions": [
+                        "[2026-07-27T01:44:18+00:00] MOD"
                     ],
-                    "resolutions": [],
                     "evidence": [
                         "Connected tenant dashboard route and /home compatibility redirect are implemented.",
                         "BusinessDashboardTest and branch access coverage passed: 10 tests, 52 assertions.",
