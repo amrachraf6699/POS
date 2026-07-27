@@ -28,20 +28,30 @@
         @media (min-width: 1024px) {
             #product-sidebar { transform: translateX(0); visibility: visible; }
         }
+        .onboarding-locked [data-tenant-switcher-open] { cursor: not-allowed; opacity: .58; pointer-events: none; }
     </style>
     @stack('head')
 </head>
-<body class="min-h-screen bg-[#f4f6fb] p-0 font-sans text-[#1d2741] antialiased sm:p-4">
+<body @class(['min-h-screen bg-[#f4f6fb] p-0 font-sans text-[#1d2741] antialiased sm:p-4', 'onboarding-locked' => $productNavigation['onboarding_locked']])>
     <div class="relative mx-auto min-h-[calc(100vh-2rem)] max-w-[1540px] overflow-visible rounded-none border border-[#e3e7ef] bg-white shadow-[0_8px_30px_rgba(38,52,86,.06)] sm:rounded-2xl lg:overflow-hidden">
         <div id="mobile-backdrop" class="fixed inset-0 z-30 hidden bg-[#1d2741]/40 lg:hidden" data-mobile-close></div>
         <aside id="product-sidebar" class="fixed inset-y-0 right-0 z-40 flex w-[min(86vw,320px)] translate-x-full flex-col border-l border-[#e6e9f0] bg-white shadow-2xl transition-transform duration-200 lg:absolute lg:inset-y-4 lg:right-4 lg:w-[278px] lg:translate-x-0 lg:rounded-r-2xl lg:shadow-none" aria-label="التنقل الرئيسي" aria-hidden="true">
             <div class="flex h-[88px] items-center justify-between gap-3 border-b border-[#edf0f5] px-5 sm:px-7"><div class="flex items-center gap-3"><span class="grid h-12 w-12 place-items-center rounded-xl bg-[#3446c7] text-white"><i class="bx bx-store-alt text-3xl" aria-hidden="true"></i></span><div><p class="text-xl font-extrabold text-[#25366f]">كاشير مصر</p><p class="text-xs text-[#6f7b96]">نقطة بيع سحابية</p></div></div><button type="button" class="grid h-10 w-10 place-items-center rounded-lg text-2xl text-[#52617d] hover:bg-[#f2f4fa] lg:hidden" aria-label="إغلاق القائمة" data-mobile-close><i class="bx bx-x" aria-hidden="true"></i></button></div>
             <nav class="flex-1 space-y-2 overflow-y-auto px-4 py-6" aria-label="روابط مساحة العمل">
+                @if($productNavigation['onboarding_locked'])
+                    <div class="mx-2 mb-5 rounded-xl border border-indigo-100 bg-indigo-50 p-4 text-sm text-indigo-800" data-onboarding-locked>
+                        <div class="flex items-start gap-2"><i class="bx bx-lock-alt mt-0.5 text-lg" aria-hidden="true"></i><p class="font-bold">أكمل إعداد النشاط أولاً</p></div><p class="mt-1 pr-7 text-xs leading-5 text-indigo-700">ستُفتح أدوات نقطة البيع بعد إتمام الخطوات الثلاث.</p>
+                    </div>
+                @endif
                 @foreach($productNavigation['items'] as $item)
                     @php($active = request()->routeIs(...$item['patterns']))
-                    <a href="{{ $item['url'] }}" @class(['flex items-center gap-4 rounded-xl px-5 py-3.5 text-[15px] font-bold transition', 'bg-[#eef0ff] text-[#3548c9]' => $active, 'text-[#263149] hover:bg-[#f6f7fc]' => ! $active])>
-                        <i class="bx {{ $item['icon'] }} text-xl opacity-85" aria-hidden="true"></i><span>{{ $item['label'] }}</span>
-                    </a>
+                    @if($productNavigation['onboarding_locked'])
+                        <span class="flex cursor-not-allowed items-center gap-4 rounded-xl px-5 py-3.5 text-[15px] font-bold text-slate-400 opacity-70" aria-disabled="true"><i class="bx {{ $item['icon'] }} text-xl" aria-hidden="true"></i><span>{{ $item['label'] }}</span><i class="bx bx-lock-alt mr-auto text-base" aria-hidden="true"></i></span>
+                    @else
+                        <a href="{{ $item['url'] }}" @class(['flex items-center gap-4 rounded-xl px-5 py-3.5 text-[15px] font-bold transition', 'bg-[#eef0ff] text-[#3548c9]' => $active, 'text-[#263149] hover:bg-[#f6f7fc]' => ! $active])>
+                            <i class="bx {{ $item['icon'] }} text-xl opacity-85" aria-hidden="true"></i><span>{{ $item['label'] }}</span>
+                        </a>
+                    @endif
                 @endforeach
                 @if($currentTenant)
                     <div class="mt-8 border-t border-[#edf0f5] pt-6"><p class="px-5 text-xs font-bold text-[#a0a8ba]">قريباً</p>@foreach($productNavigation['future'] as $future)<span class="mt-3 flex items-center gap-4 px-5 text-[15px] font-semibold text-[#a9b0bf]"><i class="bx {{ $future['icon'] }} text-lg" aria-hidden="true"></i>{{ $future['label'] }}</span>@endforeach</div>

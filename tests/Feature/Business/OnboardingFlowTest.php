@@ -45,6 +45,19 @@ class OnboardingFlowTest extends TenantIsolationTestCase
         $this->actingAs($owner)->withSession($session)->get('/tenant/onboarding/branch')->assertOk()->assertSee('الفرع الأول')->assertSee('أنشئ أول فرع نشط')->assertSee('حفظ ومتابعة');
     }
 
+    public function test_incomplete_owner_sees_locked_sidebar_without_product_navigation_links(): void
+    {
+        [$owner, $tenant] = $this->makeMembership();
+
+        $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])->get('/tenant/onboarding/settings')
+            ->assertOk()
+            ->assertSee('data-onboarding-locked', false)
+            ->assertSee('aria-disabled="true"', false)
+            ->assertSee('onboarding-locked', false)
+            ->assertDontSee('href="http://localhost/tenant/dashboard"', false)
+            ->assertDontSee('href="http://localhost/tenant/branches"', false);
+    }
+
     public function test_existing_settings_and_branch_routes_advance_the_owner_progress(): void
     {
         [$owner, $tenant] = $this->makeMembership();

@@ -58,6 +58,8 @@ class ProductNavigationTest extends TenantIsolationTestCase
     public function test_existing_tenant_pages_share_dashboard_navigation(): void
     {
         [$owner, $tenant] = $this->makeMembership();
+        $branchId = DB::table('branches')->insertGetId(['tenant_id' => $tenant->getKey(), 'name' => 'Complete Tenant Branch', 'code' => 'COMPLETE', 'country_code' => 'EG', 'timezone' => 'Africa/Cairo', 'status' => 'active', 'created_at' => now(), 'updated_at' => now()]);
+        DB::table('tenant_onboardings')->insert(['tenant_id' => $tenant->getKey(), 'first_branch_id' => $branchId, 'settings_completed_at' => now(), 'staff_setup_completed_at' => now(), 'completed_at' => now(), 'created_at' => now(), 'updated_at' => now()]);
         $session = ['current_tenant_id' => $tenant->getKey()];
 
         $this->actingAs($owner)->withSession($session)->get('/tenant/settings/business')

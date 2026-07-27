@@ -19,20 +19,21 @@ final class ProductNavigation
         private readonly OnboardingService $onboarding,
     ) {}
 
-    /** @return array{items: array<int, array{label: string, url: string, patterns: array<int, string>, icon: string}>, future: array<int, array{label: string, icon: string}>, tenants: \Illuminate\Database\Eloquent\Collection<int, \Modules\Identity\App\Models\Tenant>} */
+    /** @return array{items: array<int, array{label: string, url: string, patterns: array<int, string>, icon: string}>, future: array<int, array{label: string, icon: string}>, tenants: \Illuminate\Database\Eloquent\Collection<int, \Modules\Identity\App\Models\Tenant>, onboarding_locked: bool} */
     public function build(?User $user): array
     {
         if (! $user instanceof User || ! $this->context->hasTenant()) {
-            return ['items' => [], 'future' => $this->futureItems(), 'tenants' => new \Illuminate\Database\Eloquent\Collection];
+            return ['items' => [], 'future' => $this->futureItems(), 'tenants' => new \Illuminate\Database\Eloquent\Collection, 'onboarding_locked' => false];
         }
 
         $tenant = $this->context->tenant();
         $canManage = $this->branchAuthorization->canManage($user, $tenant);
+        $onboardingLocked = $this->context->membership()->isOwner() && ! $this->onboarding->isComplete();
         $items = [
             ['label' => 'لوحة التحكم', 'url' => route('business.dashboard'), 'patterns' => ['business.dashboard', 'home'], 'icon' => 'bx-grid-alt'],
             ['label' => $canManage ? 'الفروع وتعيينات الفريق' : 'الفروع المتاحة', 'url' => route('business.branches.index'), 'patterns' => ['business.branches.*'], 'icon' => 'bx-store'],
         ];
-        if ($this->context->membership()->isOwner() && ! $this->onboarding->isComplete()) {
+        if ($onboardingLocked) {
             $items[] = ['label' => 'إكمال إعداد النشاط', 'url' => route('business.onboarding.index'), 'patterns' => ['business.onboarding.*'], 'icon' => 'bx-list-check'];
         }
 
@@ -49,6 +50,7 @@ final class ProductNavigation
             'items' => $items,
             'future' => $this->futureItems(),
             'tenants' => $user->accessibleTenants()->orderBy('name')->get(),
+            'onboarding_locked' => $onboardingLocked,
         ];
     }
 
