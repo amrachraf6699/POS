@@ -346,7 +346,7 @@
                         "BusinessDashboardTest passed with incomplete-owner redirect coverage.",
                         "Pint and Larastan passed for the onboarding implementation.",
                         "Arabic RTL wizard visual refresh adds a shared stepper, responsive completion cards, and tested actionable controls.",
-                        "OnboardingFlowTest passed after the visual refresh: 5 tests, 35 assertions; Pint and Larastan passed."
+                        "OnboardingFlowTest passed after the visual refresh: 5 tests, 35 assertions; Pint and Larastan passed.",
                         "Full suite reached 76 passing tests; the remaining run was blocked by an external SQLite development-database lock, without flushing the local database."
                     ],
                     "latest_commit": "b998e26"
