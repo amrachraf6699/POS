@@ -22,7 +22,10 @@ final class UpdateMembershipAction
 
         DB::transaction(function () use ($actor, $tenant, $target, $role, $status): void {
             /** @var Membership $target */
-            $target = Membership::query()->whereKey($target->getKey())->where('tenant_id', $tenant->getKey())->lockForUpdate()->firstOrFail();
+            $target = Membership::query()->whereKey($target->getKey())->where('tenant_id', $tenant->getKey())->lockForUpdate()->first();
+            if ($target === null) {
+                abort(404);
+            }
             $actorMembership = Membership::query()->where('tenant_id', $tenant->getKey())->where('user_id', $actor->getKey())->lockForUpdate()->first();
             if ($actorMembership === null || ! $this->authorization->allows($actor, $tenant, 'users.update') || ! $this->canManage($actorMembership, $target, $role)) {
                 throw ValidationException::withMessages(['membership' => 'You are not authorized to manage this membership.']);

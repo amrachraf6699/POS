@@ -19,6 +19,8 @@ final class TenantAuthorization
         }
 
         $this->forTenant($tenant);
+        $user->unsetRelation('roles');
+        $user->unsetRelation('permissions');
 
         if (! Permission::query()->where('name', $permission)->where('guard_name', 'web')->exists()) {
             return false;

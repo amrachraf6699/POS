@@ -8,8 +8,12 @@ use Modules\Identity\Database\Factories\MembershipFactory;
 
 /**
  * @property int $id
+ * @property int $tenant_id
+ * @property int $user_id
  * @property string $role
  * @property string $status
+ * @property-read User $user
+ * @property-read Tenant $tenant
  */
 class Membership extends Model
 {
