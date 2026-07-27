@@ -38,6 +38,9 @@ class InvitationLifecycleTest extends TestCase
             ->get('/tenant/invitations')
             ->assertOk()
             ->assertSee('staff@example.com')
+            ->assertSee('data-invitation-open', false)
+            ->assertSee('id="invitation-modal"', false)
+            ->assertSee('invitation-role', false)
             ->assertDontSee($otherInvitation->invitation->email);
     }
 
