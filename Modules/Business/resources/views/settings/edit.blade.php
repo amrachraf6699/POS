@@ -13,7 +13,6 @@
         <div><p class="text-sm font-bold text-indigo-600">إعدادات مساحة العمل</p><h1 class="mt-2 text-3xl font-extrabold text-slate-900">إعدادات النشاط التجاري</h1><p class="mt-2 text-sm text-slate-600">اضبط هوية النشاط والضرائب والإيصالات والإعدادات التشغيلية.</p></div>
         @if($errors->any())<div class="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700" role="alert"><p class="font-bold">يرجى مراجعة البيانات التالية:</p><ul class="mt-2 list-disc space-y-1 pr-5">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
 
-        @if(($onboarding ?? false))<div class="rounded-xl border border-indigo-200 bg-indigo-50 p-4 text-sm font-bold text-indigo-800">الخطوة ١ من ٣: أكمِل إعدادات نشاطك التجاري.</div>@endif
         <form method="POST" action="{{ $formAction ?? route('business.settings.update') }}" class="space-y-6">
             @csrf @method('PUT')
             <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7" aria-labelledby="identity-heading">
@@ -47,7 +46,7 @@
                 </div>
                 <fieldset class="mt-6 grid gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700 sm:grid-cols-2"><legend class="px-2 text-sm font-bold text-slate-800">خيارات الإيصال</legend>@foreach([['receipt_show_cashier','إظهار الكاشير',$settings->receipt_show_cashier],['receipt_show_date','إظهار التاريخ',$settings->receipt_show_date],['receipt_show_tax_breakdown','إظهار تفاصيل الضريبة',$settings->receipt_show_tax_breakdown],['allow_negative_stock','السماح بالمخزون السالب',$settings->allow_negative_stock]] as [$name,$label,$checked])<label class="flex min-h-11 items-center gap-3 rounded-lg px-2 font-medium hover:bg-white"><input type="hidden" name="{{ $name }}" value="0"><input type="checkbox" name="{{ $name }}" value="1" @checked(old($name, $checked)) class="h-5 w-5 rounded border-slate-300 text-indigo-600 focus:ring-4 focus:ring-indigo-100">{{ $label }}</label>@endforeach</fieldset>
             </section>
-            <div class="flex justify-end"><button class="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-7 py-3.5 text-sm font-bold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-200"><i class="bx bx-save" aria-hidden="true"></i>حفظ الإعدادات</button></div>
+            <div class="flex items-center justify-between gap-4"><p @class(['text-xs text-slate-400' => ($onboarding ?? false), 'hidden' => ! ($onboarding ?? false)])>يمكنك تعديل هذه الإعدادات لاحقاً من صفحة النشاط.</p><button class="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-7 py-3.5 text-sm font-bold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-200"><i class="bx {{ ($onboarding ?? false) ? 'bx-left-arrow-alt' : 'bx-save' }} text-xl" aria-hidden="true"></i>{{ ($onboarding ?? false) ? 'حفظ ومتابعة' : 'حفظ الإعدادات' }}</button></div>
         </form>
         @if($onboarding ?? false)</div>@endif
     </div>
