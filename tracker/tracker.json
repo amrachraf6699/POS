@@ -387,13 +387,18 @@
                 },
                 "TASK-002-simple-products": {
                     "title": "Simple Products",
-                    "status": "not_started",
-                    "notes": [],
+                    "status": "done",
+                    "notes": [
+                        "Tenant-scoped simple products support integer minor-unit prices, category/tax references, inventory overrides, activation, and soft deletion."
+                    ],
                     "conflicts": [],
                     "problems": [],
                     "resolutions": [],
-                    "evidence": [],
-                    "latest_commit": null
+                    "evidence": [
+                        "ProductManagementTest passed: lifecycle, soft delete, tenant-scoped identifiers, and source records.",
+                        "vendor/bin/phpstan analyse --memory-limit=1G passed."
+                    ],
+                    "latest_commit": "90b83f7"
                 },
                 "TASK-003-pricing-and-vat-calculation": {
                     "title": "Pricing and VAT Calculation",
