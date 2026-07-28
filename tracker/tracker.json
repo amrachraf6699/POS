@@ -226,7 +226,7 @@
         },
         "02-Business-Branches-and-Users": {
             "title": "Business, Branches, and Users",
-            "status": "in_progress",
+            "status": "done",
             "weight": 1,
             "notes": [],
             "conflicts": [],
