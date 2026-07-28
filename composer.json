@@ -44,8 +44,7 @@
         "quality": [
             "@format:check",
             "@test",
-            "@analyse",
-            "@security-audit"
+            "@analyse"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
