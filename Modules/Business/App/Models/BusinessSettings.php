@@ -27,6 +27,8 @@ use Modules\Identity\App\Domain\Tenancy\BelongsToTenant;
  * @property bool $receipt_show_cashier
  * @property bool $receipt_show_date
  * @property bool $receipt_show_tax_breakdown
+ * @property int $low_stock_threshold
+ * @property bool $allow_negative_stock
  */
 class BusinessSettings extends Model
 {

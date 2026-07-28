@@ -6,6 +6,7 @@ use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Catalog\Database\Factories\TaxRateFactory;
 use Modules\Identity\App\Domain\Tenancy\BelongsToTenant;
 use Modules\Identity\App\Models\Tenant;
@@ -31,6 +32,11 @@ final class TaxRate extends Model
     public function tenant(): BelongsTo
     {
         return $this->belongsTo(Tenant::class);
+    }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
     }
 
     public function isActive(): bool

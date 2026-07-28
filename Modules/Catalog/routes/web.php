@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Catalog\App\Http\Controllers\CategoryController;
+use Modules\Catalog\App\Http\Controllers\ProductController;
 use Modules\Catalog\App\Http\Controllers\TaxRateController;
 
 Route::middleware(['auth', 'tenant'])->prefix('tenant/catalog')->name('catalog.')->group(function (): void {
@@ -18,4 +19,11 @@ Route::middleware(['auth', 'tenant'])->prefix('tenant/catalog')->name('catalog.'
     Route::match(['put', 'patch'], '/tax-rates/{taxRate}', [TaxRateController::class, 'update'])->name('tax-rates.update');
     Route::post('/tax-rates/{taxRate}/versions', [TaxRateController::class, 'storeVersion'])->name('tax-rates.versions.store');
     Route::post('/tax-rates/{taxRate}/deactivate', [TaxRateController::class, 'deactivate'])->name('tax-rates.deactivate');
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+    Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+    Route::match(['put', 'patch'], '/products/{product}', [ProductController::class, 'update'])->name('products.update');
+    Route::post('/products/{product}/deactivate', [ProductController::class, 'deactivate'])->name('products.deactivate');
+    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 });

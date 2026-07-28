@@ -14,4 +14,9 @@ final class CatalogAuthorization
     {
         return $this->authorization->allows($user, $tenant, 'business.update');
     }
+
+    public function allows(User $user, Tenant $tenant, string $permission): bool
+    {
+        return $this->authorization->allows($user, $tenant, $permission);
+    }
 }
