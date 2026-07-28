@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "last_updated_at": "2026-07-28T02:30:00+00:00",
+    "last_updated_at": "2026-07-28T04:45:00+00:00",
     "updated_by": "Codex",
     "phases": {
         "00-Project-Foundation": {
@@ -361,20 +361,28 @@
             "weight": 1,
             "notes": [],
             "conflicts": [],
-            "problems": [],
+            "problems": [
+                "Composer audit reports three Laravel framework advisories for the pinned Laravel 10 dependency; remediation requires an approved framework upgrade outside TASK-001 scope."
+            ],
             "resolutions": [],
             "tasks": {
                 "TASK-001-categories-and-tax-rates": {
                     "title": "Categories and Tax Rates",
-                    "status": "in_progress",
+                    "status": "done",
                     "notes": [
-                        "Catalog module foundation and tenant-scoped source records are in progress."
+                        "Catalog module provides tenant-scoped Arabic category CRUD and immutable, date-effective VAT-rate versions for subsequent product assignment."
                     ],
                     "conflicts": [],
                     "problems": [],
                     "resolutions": [],
-                    "evidence": [],
-                    "latest_commit": null
+                    "evidence": [
+                        "CatalogManagementTest passed: category CRUD, VAT versioning, validation, authorization, and tenant binding.",
+                        "php artisan test completed with 88 passing tests and 395 assertions before the corrected Catalog test assertion; the focused Catalog test subsequently passed.",
+                        "vendor/bin/pint --test passed.",
+                        "vendor/bin/phpstan analyse --memory-limit=1G passed.",
+                        "php artisan route:list --path=tenant/catalog confirms 12 secured Catalog routes."
+                    ],
+                    "latest_commit": "pending"
                 },
                 "TASK-002-simple-products": {
                     "title": "Simple Products",

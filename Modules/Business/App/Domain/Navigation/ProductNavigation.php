@@ -39,6 +39,7 @@ final class ProductNavigation
 
         if ($this->settingsAuthorization->canManage($user, $tenant)) {
             $items[] = ['label' => 'إعدادات النشاط', 'url' => route('business.settings.edit'), 'patterns' => ['business.settings.*'], 'icon' => 'bx-cog'];
+            $items[] = ['label' => 'الكتالوج والضرائب', 'url' => route('catalog.index'), 'patterns' => ['catalog.*'], 'icon' => 'bx-package'];
             $items[] = ['label' => 'دعوات الفريق', 'url' => route('tenant.invitations.index'), 'patterns' => ['tenant.invitations.*'], 'icon' => 'bx-envelope'];
         }
 
