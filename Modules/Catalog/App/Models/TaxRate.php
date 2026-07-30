@@ -13,6 +13,7 @@ use Modules\Identity\App\Models\Tenant;
 
 /**
  * @property string $status
+ * @property string $name
  * @property int $rate_basis_points
  * @property CarbonImmutable $effective_from
  * @property CarbonImmutable|null $effective_to

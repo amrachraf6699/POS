@@ -12,8 +12,20 @@ use Modules\Identity\App\Domain\Tenancy\BelongsToTenant;
 
 /**
  * @property int $id
+ * @property int $category_id
+ * @property int $tax_rate_id
+ * @property string $name
+ * @property string|null $sku
+ * @property string|null $barcode
+ * @property string|null $description
  * @property string $status
+ * @property int $cost_price_minor
  * @property int $selling_price_minor
+ * @property bool $track_inventory
+ * @property int $low_stock_threshold
+ * @property bool $allow_negative_stock
+ * @property-read Category $category
+ * @property-read TaxRate $taxRate
  */
 final class Product extends Model
 {

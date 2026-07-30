@@ -10,6 +10,7 @@ use Modules\Catalog\Database\Factories\CategoryFactory;
 use Modules\Identity\App\Domain\Tenancy\BelongsToTenant;
 use Modules\Identity\App\Models\Tenant;
 
+/** @property string $name */
 final class Category extends Model
 {
     use BelongsToTenant, HasFactory;
