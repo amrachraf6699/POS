@@ -59,6 +59,27 @@ class InventoryTransferTest extends TenantIsolationTestCase
         $this->assertDatabaseCount('inventory_movements', 2);
     }
 
+    public function test_transfer_detail_page_renders_for_an_authorized_tenant_user(): void
+    {
+        [$owner, $tenant, $source, $destination, $product] = $this->fixture();
+        $balance = new InventoryBalance;
+        $balance->forceFill(['branch_id' => $source->getKey(), 'product_id' => $product->getKey(), 'quantity_on_hand' => 1]);
+        $balance->save();
+        $transfer = app(CreateInventoryTransferAction::class)->execute($owner, $tenant, new CreateInventoryTransferData(
+            (int) $source->getKey(),
+            (int) $destination->getKey(),
+            'عرض التفاصيل',
+            [['product_id' => (int) $product->getKey(), 'quantity' => 1]],
+            'transfer-detail-page',
+        ))->transfer;
+
+        $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])
+            ->get(route('inventory.transfers.show', $transfer))
+            ->assertOk()
+            ->assertSee('تفاصيل التحويل')
+            ->assertSee($product->name);
+    }
+
     /** @return array{0: User, 1: Tenant, 2: Branch, 3: Branch, 4: Product} */
     private function fixture(): array
     {
