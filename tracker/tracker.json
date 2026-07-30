@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "last_updated_at": "2026-07-28T04:55:00+00:00",
+    "last_updated_at": "2026-07-30T00:24:39Z",
     "updated_by": "Codex",
     "phases": {
         "00-Project-Foundation": {
@@ -362,7 +362,9 @@
             "title": "Catalog and Taxes",
             "status": "in_progress",
             "weight": 1,
-            "notes": [],
+            "notes": [
+                "TASK-003 now provides the tenant-safe, VAT-inclusive line-pricing contract for later checkout workflows without introducing sale persistence."
+            ],
             "conflicts": [],
             "problems": [],
             "resolutions": [
@@ -405,13 +407,20 @@
                 },
                 "TASK-003-pricing-and-vat-calculation": {
                     "title": "Pricing and VAT Calculation",
-                    "status": "not_started",
-                    "notes": [],
+                    "status": "done",
+                    "notes": [
+                        "Catalog owns an immutable in-memory line snapshot and the sole VAT-inclusive calculation service; no route, UI, migration, sale schema, or Finance-module dependency was introduced.",
+                        "The service validates tenant context, fresh product availability, displayed-price freshness, tax-rate effectiveness, and integer bounds before calculating per-line VAT."
+                    ],
                     "conflicts": [],
                     "problems": [],
                     "resolutions": [],
-                    "evidence": [],
-                    "latest_commit": null
+                    "evidence": [
+                        "VatInclusivePricingServiceTest passed: 10 tests and 33 assertions covering zero, 100%, 14%, half-up/per-line rounding, validation, tenant isolation, overflow, and immutable snapshots.",
+                        "php artisan test passed: 102 tests and 445 assertions using the protected in-memory SQLite test database.",
+                        "vendor/bin/pint --test and vendor/bin/phpstan analyse --memory-limit=1G passed."
+                    ],
+                    "latest_commit": "fe444fc"
                 },
                 "TASK-004-catalog-import-export-boundaries": {
                     "title": "Catalog Import and Export Boundaries",
