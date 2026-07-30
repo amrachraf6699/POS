@@ -45,6 +45,7 @@ class InventoryBalancePageTest extends TenantIsolationTestCase
             ->assertSee('Coffee')
             ->assertSee('12')
             ->assertSee(route('inventory.balances.index'))
+            ->assertSee(route('inventory.low-stock.index'))
             ->assertSee('bg-[#eef0ff] text-[#3548c9]', false)
             ->assertSee(route('inventory.adjustments.opening.create'), false)
             ->assertSee(route('inventory.adjustments.index'), false);
@@ -62,6 +63,8 @@ class InventoryBalancePageTest extends TenantIsolationTestCase
         $this->actingAs($member)->withSession(['current_tenant_id' => $tenant->getKey()])->get('/tenant/dashboard')
             ->assertOk()
             ->assertDontSee(route('inventory.balances.index'));
+        $this->actingAs($member)->withSession(['current_tenant_id' => $tenant->getKey()])->get('/tenant/dashboard')
+            ->assertDontSee(route('inventory.low-stock.index'));
         $this->actingAs($member)->withSession(['current_tenant_id' => $tenant->getKey()])->get(route('inventory.balances.index'))->assertForbidden();
 
         app(TenantContext::class)->set($tenant, $membership);

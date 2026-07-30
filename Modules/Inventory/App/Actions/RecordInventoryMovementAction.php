@@ -14,6 +14,7 @@ use Modules\Identity\App\Models\User;
 use Modules\Inventory\App\Domain\Data\InventoryMovementResult;
 use Modules\Inventory\App\Domain\Data\RecordInventoryMovementData;
 use Modules\Inventory\App\Domain\Exceptions\InventoryMovementException;
+use Modules\Inventory\App\Domain\Services\LowStockDetectionService;
 use Modules\Inventory\App\Models\InventoryBalance;
 use Modules\Inventory\App\Models\InventoryMovement;
 
@@ -22,6 +23,7 @@ final class RecordInventoryMovementAction
     public function __construct(
         private readonly TenantContext $context,
         private readonly TenantAuthorization $authorization,
+        private readonly LowStockDetectionService $lowStock,
     ) {}
 
     public function execute(User $actor, Tenant $tenant, RecordInventoryMovementData $data): InventoryMovementResult
@@ -78,7 +80,8 @@ final class RecordInventoryMovementAction
             }
 
             $quantityDelta = $data->type->signedQuantityDelta($data->quantity);
-            $resultingBalance = (int) $balance->quantity_on_hand + $quantityDelta;
+            $previousBalance = (int) $balance->quantity_on_hand;
+            $resultingBalance = $previousBalance + $quantityDelta;
             if (! is_int($resultingBalance)) {
                 throw new InventoryMovementException('The resulting inventory balance is outside the supported range.');
             }
@@ -103,6 +106,7 @@ final class RecordInventoryMovementAction
 
             $balance->forceFill(['quantity_on_hand' => $resultingBalance]);
             $balance->save();
+            $this->lowStock->detectCrossing($this->context->id(), (int) $branch->getKey(), $product, $previousBalance, $resultingBalance);
 
             return InventoryMovementResult::fromMovement($movement, false);
         }, 3);

@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "last_updated_at": "2026-07-30T12:00:00Z",
+    "last_updated_at": "2026-07-30T03:16:09Z",
     "updated_by": "Codex",
     "phases": {
         "00-Project-Foundation": {
@@ -450,11 +450,12 @@
         },
         "04-Inventory-and-Transfers": {
             "title": "Inventory and Transfers",
-            "status": "in_progress",
+            "status": "done",
             "weight": 2,
             "notes": [
                 "TASK-001 is complete: the enabled Inventory module provides an immutable tenant-scoped movement ledger, transactional branch-product balances, and an authorized read-only balance page.",
-                "TASK-002 is complete: opening stock and stock-adjustment documents are immutable, tenant-scoped, permission-gated, and posted atomically through the ledger."
+                "TASK-002 is complete: opening stock and stock-adjustment documents are immutable, tenant-scoped, permission-gated, and posted atomically through the ledger.",
+                "TASK-004 is complete: low-stock reporting and commit-aware threshold-crossing events cover ordinary movements, adjustments, and transfers."
             ],
             "conflicts": [],
             "problems": [],
@@ -519,12 +520,20 @@
                 },
                 "TASK-004-low-stock-and-inventory-tests": {
                     "title": "Low Stock and Inventory Tests",
-                    "status": "not_started",
-                    "notes": [],
+                    "status": "done",
+                    "notes": [
+                        "Low-stock reporting is tenant and branch scoped, includes only active tracked products with a positive threshold and a persisted balance at or below that threshold, and excludes products without balance rows.",
+                        "LowStockDetected is an internal, post-commit event that snapshots tenant, branch, product, resulting balance, and threshold only when a balance crosses down into low stock."
+                    ],
                     "conflicts": [],
                     "problems": [],
                     "resolutions": [],
-                    "evidence": [],
+                    "evidence": [
+                        "Focused low-stock, inventory action, transfer, page, and navigation tests passed: 28 tests, 134 assertions.",
+                        "Full protected in-memory SQLite suite passed: 144 tests, 668 assertions.",
+                        "Blade compilation, Pint, PHPStan, route registration, and tracker JSON validation passed.",
+                        "Composer audit completed and reported the three existing Laravel framework advisories already tracked for Phase 04; no dependency changes were made."
+                    ],
                     "latest_commit": null
                 }
             }

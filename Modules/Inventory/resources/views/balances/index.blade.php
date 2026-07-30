@@ -8,7 +8,7 @@
             <div><a href="{{ route('business.dashboard') }}" class="text-sm font-bold text-indigo-600">لوحة التحكم</a>
                 <h1 class="mt-3 text-3xl font-extrabold text-slate-900">أرصدة المخزون</h1>
                 <p class="mt-2 text-sm text-slate-600">عرض للقراءة فقط للأرصدة الحالية للمنتجات التي تتبع المخزون.</p></div>
-            <a href="{{ route('inventory.transfers.index') }}" class="rounded-xl border border-indigo-200 px-4 py-2 text-sm font-bold text-indigo-700">تحويلات الفروع</a>
+            <div class="flex flex-wrap gap-3"><a href="{{ route('inventory.low-stock.index') }}" class="rounded-xl border border-amber-200 px-4 py-2 text-sm font-bold text-amber-700">الأصناف منخفضة المخزون</a><a href="{{ route('inventory.transfers.index') }}" class="rounded-xl border border-indigo-200 px-4 py-2 text-sm font-bold text-indigo-700">تحويلات الفروع</a></div>
             @if ($canAdjust)
                 <div class="flex flex-wrap gap-3"><a href="{{ route('inventory.adjustments.opening.create') }}" class="rounded-xl border border-indigo-200 px-4 py-2 text-sm font-bold text-indigo-700">رصيد افتتاحي</a><a href="{{ route('inventory.adjustments.index') }}" class="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-bold text-white">حركات المخزون</a></div>
             @endif

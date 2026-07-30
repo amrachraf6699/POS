@@ -12,6 +12,7 @@ use Modules\Identity\App\Models\User;
 use Modules\Inventory\App\Domain\Enums\InventoryTransferStatus;
 
 /**
+ * @property int $tenant_id
  * @property int $source_branch_id
  * @property int $destination_branch_id
  * @property InventoryTransferStatus $status

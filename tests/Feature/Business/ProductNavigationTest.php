@@ -23,6 +23,7 @@ class ProductNavigationTest extends TenantIsolationTestCase
             ->assertSee(route('business.branches.index'))
             ->assertSee(route('catalog.index'))
             ->assertSee(route('tenant.invitations.index'))
+            ->assertSee(route('inventory.low-stock.index'))
             ->assertSee(route('tenant.selection'))
             ->assertSee('data-mobile-toggle', false)
             ->assertSee('data-mobile-close', false)

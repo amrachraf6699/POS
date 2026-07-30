@@ -8,6 +8,7 @@ use Modules\Identity\App\Models\User;
 use Modules\Inventory\App\Domain\Enums\InventoryMovementType;
 use Modules\Inventory\App\Domain\Enums\InventoryTransferStatus;
 use Modules\Inventory\App\Domain\Exceptions\InventoryTransferException;
+use Modules\Inventory\App\Domain\Services\LowStockDetectionService;
 use Modules\Inventory\App\Models\InventoryBalance;
 use Modules\Inventory\App\Models\InventoryMovement;
 use Modules\Inventory\App\Models\InventoryTransfer;
@@ -15,6 +16,8 @@ use Modules\Inventory\App\Models\InventoryTransferItem;
 
 final class PostInventoryTransferAction
 {
+    public function __construct(private readonly LowStockDetectionService $lowStock) {}
+
     public function post(InventoryTransfer $transfer, User $actor): InventoryTransfer
     {
         if ($transfer->status === InventoryTransferStatus::Posted) {
@@ -78,15 +81,19 @@ final class PostInventoryTransferAction
             if (! $source instanceof InventoryBalance || ! $destination instanceof InventoryBalance) {
                 throw new InventoryTransferException('Could not lock transfer inventory balances.');
             }
-            $sourceAfter = (int) $source->quantity_on_hand - $quantity;
+            $sourceBefore = (int) $source->quantity_on_hand;
+            $destinationBefore = (int) $destination->quantity_on_hand;
+            $sourceAfter = $sourceBefore - $quantity;
             if (! $product->allow_negative_stock && $sourceAfter < 0) {
                 throw new InventoryTransferException('The source branch has insufficient stock for this transfer.');
             }
-            $destinationAfter = (int) $destination->quantity_on_hand + $quantity;
+            $destinationAfter = $destinationBefore + $quantity;
             $out = InventoryMovement::record(['branch_id' => $source->branch_id, 'product_id' => $item->product_id, 'type' => InventoryMovementType::TransferOut, 'quantity' => $quantity, 'quantity_delta' => -$quantity, 'balance_after' => $sourceAfter, 'idempotency_key' => 'transfer:'.$transfer->getKey().':out:'.$item->getKey(), 'source_type' => 'inventory_transfer_item', 'source_id' => (string) $item->getKey(), 'actor_user_id' => $actor->getKey()]);
             $in = InventoryMovement::record(['branch_id' => $destination->branch_id, 'product_id' => $item->product_id, 'type' => InventoryMovementType::TransferIn, 'quantity' => $quantity, 'quantity_delta' => $quantity, 'balance_after' => $destinationAfter, 'idempotency_key' => 'transfer:'.$transfer->getKey().':in:'.$item->getKey(), 'source_type' => 'inventory_transfer_item', 'source_id' => (string) $item->getKey(), 'actor_user_id' => $actor->getKey()]);
             $source->forceFill(['quantity_on_hand' => $sourceAfter])->save();
             $destination->forceFill(['quantity_on_hand' => $destinationAfter])->save();
+            $this->lowStock->detectCrossing((int) $transfer->tenant_id, (int) $source->branch_id, $product, $sourceBefore, $sourceAfter);
+            $this->lowStock->detectCrossing((int) $transfer->tenant_id, (int) $destination->branch_id, $product, $destinationBefore, $destinationAfter);
             $item->forceFill(['transfer_out_movement_id' => $out->getKey(), 'transfer_in_movement_id' => $in->getKey()])->save();
         }
         $transfer->forceFill(['status' => InventoryTransferStatus::Posted, 'posted_by_user_id' => $actor->getKey(), 'posted_at' => now()])->save();
