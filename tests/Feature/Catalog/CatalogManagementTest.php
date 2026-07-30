@@ -32,6 +32,7 @@ class CatalogManagementTest extends TenantIsolationTestCase
         app(TenantContext::class)->set($tenant, $membership);
         /** @var TaxRate $rate */
         $rate = TaxRate::query()->firstOrFail();
+        $this->actingAs($owner)->withSession($session)->get('/tenant/catalog/tax-rates/'.$rate->getKey().'/edit')->assertOk()->assertSee('إدارة نسبة الضريبة');
         $this->actingAs($owner)->withSession($session)->post('/tenant/catalog/tax-rates/'.$rate->getKey().'/versions', ['name' => 'ضريبة القيمة المضافة', 'rate_basis_points' => 1500, 'effective_from' => '2026-02-01'])->assertRedirect();
 
         $this->assertSame('2026-02-01', $rate->fresh()->effective_to?->toDateString());
