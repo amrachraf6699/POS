@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "last_updated_at": "2026-07-30T04:00:00Z",
+    "last_updated_at": "2026-07-30T12:00:00Z",
     "updated_by": "Codex",
     "phases": {
         "00-Project-Foundation": {
@@ -450,7 +450,7 @@
         },
         "04-Inventory-and-Transfers": {
             "title": "Inventory and Transfers",
-            "status": "review",
+            "status": "in_progress",
             "weight": 2,
             "notes": [
                 "TASK-001 is complete: the enabled Inventory module provides an immutable tenant-scoped movement ledger, transactional branch-product balances, and an authorized read-only balance page.",
@@ -500,7 +500,7 @@
                 },
                 "TASK-003-branch-transfers": {
                     "title": "Branch Transfers",
-            "status": "in_progress",
+            "status": "done",
             "notes": [
               "Transfer approval is now a tenant setting, defaulting to immediate posting for newly created documents.",
               "Tenant-scoped transfer documents, immutable lines, paired ledger movements, approval and cancellation actions, and Arabic RTL transfer pages are implemented."
@@ -510,12 +510,12 @@
                     "resolutions": [],
             "evidence": [
               "Focused approval-setting tests passed: 5 tests, 29 assertions.",
-              "Focused transfer action tests passed: 2 tests, 13 assertions.",
-              "Full protected in-memory SQLite suite passed: 132 tests, 623 assertions.",
+              "Focused transfer action tests passed: 5 tests, 25 assertions, including immediate posting, approval, cancellation, detail rendering, insufficient stock rollback, and forced ledger failure rollback.",
+              "Full protected in-memory SQLite suite passed: 135 tests, 635 assertions.",
               "Transfer route registration, Blade compilation, Pint, PHPStan, and tracker JSON validation passed.",
               "Composer audit reported the three existing Laravel framework advisories tracked for Phase 04; no dependency changes were made."
             ],
-                    "latest_commit": null
+                    "latest_commit": "83ec84a"
                 },
                 "TASK-004-low-stock-and-inventory-tests": {
                     "title": "Low Stock and Inventory Tests",

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Inventory;
 
+use Illuminate\Support\Facades\DB;
 use Modules\Business\App\Domain\Settings\BusinessSettingsService;
 use Modules\Business\App\Models\Branch;
 use Modules\Catalog\App\Models\Category;
@@ -15,7 +16,9 @@ use Modules\Inventory\App\Actions\CancelInventoryTransferAction;
 use Modules\Inventory\App\Actions\CreateInventoryTransferAction;
 use Modules\Inventory\App\Domain\Data\CreateInventoryTransferData;
 use Modules\Inventory\App\Domain\Enums\InventoryTransferStatus;
+use Modules\Inventory\App\Domain\Exceptions\InventoryTransferException;
 use Modules\Inventory\App\Models\InventoryBalance;
+use RuntimeException;
 use Tests\Support\Tenancy\TenantIsolationTestCase;
 
 class InventoryTransferTest extends TenantIsolationTestCase
@@ -78,6 +81,49 @@ class InventoryTransferTest extends TenantIsolationTestCase
             ->assertOk()
             ->assertSee('تفاصيل التحويل')
             ->assertSee($product->name);
+    }
+
+    public function test_invalid_source_stock_rolls_back_the_transfer_document_and_lines(): void
+    {
+        [$owner, $tenant, $source, $destination, $product] = $this->fixture();
+
+        $this->expectException(InventoryTransferException::class);
+        try {
+            app(CreateInventoryTransferAction::class)->execute($owner, $tenant, new CreateInventoryTransferData(
+                (int) $source->getKey(), (int) $destination->getKey(), 'لا يوجد رصيد',
+                [['product_id' => (int) $product->getKey(), 'quantity' => 1]], 'transfer-no-stock',
+            ));
+        } finally {
+            $this->assertDatabaseCount('inventory_transfers', 0);
+            $this->assertDatabaseCount('inventory_transfer_items', 0);
+            $this->assertDatabaseCount('inventory_movements', 0);
+        }
+    }
+
+    public function test_ledger_failure_rolls_back_transfer_document_items_and_balances(): void
+    {
+        [$owner, $tenant, $source, $destination, $product] = $this->fixture();
+        $balance = new InventoryBalance;
+        $balance->forceFill(['branch_id' => $source->getKey(), 'product_id' => $product->getKey(), 'quantity_on_hand' => 2]);
+        $balance->save();
+        DB::listen(static function ($query): void {
+            if (str_contains(strtolower($query->sql), 'insert into "inventory_movements"')) {
+                throw new RuntimeException('Forced transfer ledger failure.');
+            }
+        });
+
+        $this->expectException(RuntimeException::class);
+        try {
+            app(CreateInventoryTransferAction::class)->execute($owner, $tenant, new CreateInventoryTransferData(
+                (int) $source->getKey(), (int) $destination->getKey(), 'فشل مقصود',
+                [['product_id' => (int) $product->getKey(), 'quantity' => 1]], 'transfer-rollback',
+            ));
+        } finally {
+            $this->assertDatabaseCount('inventory_transfers', 0);
+            $this->assertDatabaseCount('inventory_transfer_items', 0);
+            $this->assertDatabaseCount('inventory_movements', 0);
+            $this->assertSame(2, InventoryBalance::query()->where('branch_id', $source->getKey())->value('quantity_on_hand'));
+        }
     }
 
     /** @return array{0: User, 1: Tenant, 2: Branch, 3: Branch, 4: Product} */
