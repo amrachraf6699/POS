@@ -481,8 +481,10 @@
                 },
                 "TASK-002-opening-stock-and-adjustments": {
                     "title": "Opening Stock and Adjustments",
-                    "status": "not_started",
-                    "notes": [],
+                    "status": "in_progress",
+                    "notes": [
+                        "The tenant-scoped immutable adjustment document, item records, and atomic posting boundary are implemented; the Arabic web workflow remains in progress."
+                    ],
                     "conflicts": [],
                     "problems": [],
                     "resolutions": [],
