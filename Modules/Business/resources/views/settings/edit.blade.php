@@ -131,7 +131,7 @@
                 <fieldset
                     class="mt-6 grid gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700 sm:grid-cols-2">
                     <legend class="px-2 text-sm font-bold text-slate-800">خيارات الإيصال</legend>
-                    @foreach ([['receipt_show_cashier', 'إظهار الكاشير', $settings->receipt_show_cashier], ['receipt_show_date', 'إظهار التاريخ', $settings->receipt_show_date], ['receipt_show_tax_breakdown', 'إظهار تفاصيل الضريبة', $settings->receipt_show_tax_breakdown], ['allow_negative_stock', 'السماح بالمخزون السالب', $settings->allow_negative_stock]] as [$name, $label, $checked])
+                    @foreach ([['receipt_show_cashier', 'إظهار الكاشير', $settings->receipt_show_cashier], ['receipt_show_date', 'إظهار التاريخ', $settings->receipt_show_date], ['receipt_show_tax_breakdown', 'إظهار تفاصيل الضريبة', $settings->receipt_show_tax_breakdown], ['allow_negative_stock', 'السماح بالمخزون السالب', $settings->allow_negative_stock], ['transfer_requires_manager_approval', 'التحويلات تحتاج اعتماد المدير', $settings->transfer_requires_manager_approval]] as [$name, $label, $checked])
                         <label class="flex min-h-11 items-center gap-3 rounded-lg px-2 font-medium hover:bg-white"><input
                                 type="hidden" name="{{ $name }}" value="0"><input type="checkbox"
                                 name="{{ $name }}" value="1" @checked(old($name, $checked))

@@ -29,6 +29,7 @@ use Modules\Identity\App\Domain\Tenancy\BelongsToTenant;
  * @property bool $receipt_show_tax_breakdown
  * @property int $low_stock_threshold
  * @property bool $allow_negative_stock
+ * @property bool $transfer_requires_manager_approval
  */
 class BusinessSettings extends Model
 {
@@ -40,7 +41,7 @@ class BusinessSettings extends Model
         'display_name', 'legal_name', 'address', 'phone', 'email', 'timezone', 'currency_code',
         'vat_enabled', 'vat_mode', 'vat_rate', 'receipt_prefix', 'next_receipt_number',
         'receipt_header', 'receipt_footer', 'receipt_show_cashier', 'receipt_show_date',
-        'receipt_show_tax_breakdown', 'low_stock_threshold', 'allow_negative_stock',
+        'receipt_show_tax_breakdown', 'low_stock_threshold', 'allow_negative_stock', 'transfer_requires_manager_approval',
     ];
 
     protected $casts = [
@@ -52,6 +53,7 @@ class BusinessSettings extends Model
         'receipt_show_tax_breakdown' => 'boolean',
         'low_stock_threshold' => 'integer',
         'allow_negative_stock' => 'boolean',
+        'transfer_requires_manager_approval' => 'boolean',
     ];
 
     public static function defaults(string $displayName): array
@@ -70,6 +72,7 @@ class BusinessSettings extends Model
             'receipt_show_tax_breakdown' => true,
             'low_stock_threshold' => 0,
             'allow_negative_stock' => false,
+            'transfer_requires_manager_approval' => false,
         ];
     }
 

@@ -23,6 +23,7 @@ class BusinessSettingsManagementTest extends TenantIsolationTestCase
             ->assertSee('dir="rtl"', false)
             ->assertSee('id="display-name"', false)
             ->assertSee('id="currency-code"', false)
+            ->assertSee('name="transfer_requires_manager_approval"', false)
             ->assertSee('aria-labelledby="identity-heading"', false)
             ->assertSee('settings-input', false);
 
@@ -91,6 +92,24 @@ class BusinessSettingsManagementTest extends TenantIsolationTestCase
         $this->assertSame('POS-000001', $allocator->next());
     }
 
+    public function test_transfer_approval_setting_defaults_to_immediate_posting_and_can_be_updated(): void
+    {
+        [$owner, $tenant] = $this->makeMembership();
+        $session = ['current_tenant_id' => $tenant->getKey()];
+
+        $this->actingAs($owner)->withSession($session)->get('/tenant/settings/business');
+        $this->assertFalse(app(BusinessSettingsService::class)->settingsForCurrentTenant()->transfer_requires_manager_approval);
+
+        $this->actingAs($owner)->withSession($session)
+            ->put('/tenant/settings/business', $this->validPayload([
+                'transfer_requires_manager_approval' => '1',
+                '_token' => csrf_token(),
+            ]))
+            ->assertRedirect();
+
+        $this->assertTrue(app(BusinessSettingsService::class)->settingsForCurrentTenant()->transfer_requires_manager_approval);
+    }
+
     /** @return array<string, mixed> */
     private function validPayload(array $overrides = []): array
     {
@@ -113,6 +132,7 @@ class BusinessSettingsManagementTest extends TenantIsolationTestCase
             'receipt_show_tax_breakdown' => '1',
             'low_stock_threshold' => '5',
             'allow_negative_stock' => '0',
+            'transfer_requires_manager_approval' => '0',
         ], $overrides);
     }
 }
