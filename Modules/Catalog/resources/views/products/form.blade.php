@@ -62,10 +62,11 @@
         @if ($editing && $product->isSaleAvailable())
             <form method="POST" action="{{ route('catalog.products.deactivate', $product) }}">@csrf<button
                     class="rounded-xl border border-red-200 px-5 py-3 text-red-600">تعطيل المنتج</button></form>
-            @endif@if ($editing)
+        @endif
+        @if ($editing)
                 <form method="POST" action="{{ route('catalog.products.destroy', $product) }}">@csrf
                     @method('DELETE')<button class="rounded-xl border border-red-200 px-5 py-3 text-red-600">حذف
                         المنتج</button></form>
-            @endif
+        @endif
     </div>
 @endsection

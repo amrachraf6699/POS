@@ -21,6 +21,7 @@ class ProductNavigationTest extends TenantIsolationTestCase
             ->assertSee(route('business.dashboard'))
             ->assertSee(route('business.settings.edit'))
             ->assertSee(route('business.branches.index'))
+            ->assertSee(route('catalog.index'))
             ->assertSee(route('tenant.invitations.index'))
             ->assertSee(route('tenant.selection'))
             ->assertSee('data-mobile-toggle', false)
@@ -48,9 +49,25 @@ class ProductNavigationTest extends TenantIsolationTestCase
             ->assertSee(route('business.branches.index'))
             ->assertSee(route('tenant.selection'))
             ->assertDontSee(route('business.settings.edit'))
+            ->assertDontSee(route('catalog.index'))
             ->assertDontSee(route('tenant.invitations.index'))
             ->assertDontSee('إعدادات النشاط')
             ->assertDontSee('دعوات الفريق');
+
+        $this->assertTrue($owner->isActive());
+    }
+
+    public function test_inventory_staff_sees_the_catalog_link_when_product_access_is_authorised(): void
+    {
+        [$owner, $tenant] = $this->makeMembership();
+        /** @var User $inventoryStaff */
+        $inventoryStaff = User::factory()->create();
+        Membership::factory()->create(['tenant_id' => $tenant->getKey(), 'user_id' => $inventoryStaff->getKey(), 'role' => Membership::ROLE_INVENTORY_STAFF]);
+
+        $this->actingAs($inventoryStaff)->withSession(['current_tenant_id' => $tenant->getKey()])->get('/tenant/dashboard')
+            ->assertOk()
+            ->assertSee(route('catalog.index'))
+            ->assertDontSee(route('business.settings.edit'));
 
         $this->assertTrue($owner->isActive());
     }

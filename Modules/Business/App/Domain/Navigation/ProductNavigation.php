@@ -39,8 +39,11 @@ final class ProductNavigation
 
         if ($this->settingsAuthorization->canManage($user, $tenant)) {
             $items[] = ['label' => 'إعدادات النشاط', 'url' => route('business.settings.edit'), 'patterns' => ['business.settings.*'], 'icon' => 'bx-cog'];
-            $items[] = ['label' => 'الكتالوج والضرائب', 'url' => route('catalog.index'), 'patterns' => ['catalog.*'], 'icon' => 'bx-package'];
             $items[] = ['label' => 'دعوات الفريق', 'url' => route('tenant.invitations.index'), 'patterns' => ['tenant.invitations.*'], 'icon' => 'bx-envelope'];
+        }
+
+        if ($this->authorization->allows($user, $tenant, 'products.view')) {
+            $items[] = ['label' => 'المنتجات والكتالوج', 'url' => route('catalog.index'), 'patterns' => ['catalog.*'], 'icon' => 'bx-package'];
         }
 
         if ($this->authorization->allows($user, $tenant, 'users.view')) {
@@ -63,7 +66,6 @@ final class ProductNavigation
     private function futureItems(): array
     {
         return [
-            ['label' => 'المنتجات والكتالوج', 'icon' => 'bx-package'],
             ['label' => 'نقطة البيع والمدفوعات', 'icon' => 'bx-cart'],
             ['label' => 'التقارير والتحليلات', 'icon' => 'bx-bar-chart-alt-2'],
             ['label' => 'الاشتراكات والفوترة', 'icon' => 'bx-credit-card'],

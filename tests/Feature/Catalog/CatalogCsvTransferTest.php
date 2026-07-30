@@ -145,6 +145,7 @@ class CatalogCsvTransferTest extends TenantIsolationTestCase
 
         [$cashier, $cashierTenant] = $this->makeMembership(Membership::ROLE_CASHIER);
         $this->actingAs($cashier)->withSession(['current_tenant_id' => $cashierTenant->getKey()])->get(route('catalog.products.import.form'))->assertForbidden();
+        $this->actingAs($cashier)->withSession(['current_tenant_id' => $cashierTenant->getKey()])->get(route('catalog.products.import.sample'))->assertForbidden();
         $this->actingAs($cashier)->withSession(['current_tenant_id' => $cashierTenant->getKey()])->get(route('catalog.products.export'))->assertForbidden();
     }
 
@@ -154,11 +155,30 @@ class CatalogCsvTransferTest extends TenantIsolationTestCase
         $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])->get(route('catalog.products.index'))
             ->assertOk()->assertSee(route('catalog.products.import.form'))->assertSee(route('catalog.products.export'));
         $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])->get(route('catalog.products.import.form'))
-            ->assertOk()->assertSee('name,category_name,tax_rate_name');
+            ->assertOk()->assertSee('تنزيل نموذج CSV')->assertDontSee(route('catalog.products.import.sample'));
 
         [$cashier, $cashierTenant] = $this->makeMembership(Membership::ROLE_CASHIER);
         $this->actingAs($cashier)->withSession(['current_tenant_id' => $cashierTenant->getKey()])->get(route('catalog.products.index'))
             ->assertOk()->assertDontSee(route('catalog.products.import.form'))->assertDontSee(route('catalog.products.export'));
+    }
+
+    public function test_authorized_user_can_download_a_tenant_valid_product_import_sample(): void
+    {
+        [$owner, $tenant, $membership] = $this->makeMembership();
+        $this->catalogSources($tenant, $membership, 'Sample category', 'Sample VAT');
+
+        $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])->get(route('catalog.products.import.form'))
+            ->assertOk()
+            ->assertSee(route('catalog.products.import.sample'))
+            ->assertDontSee('تنسيق الملف المعتمد');
+
+        $response = $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])->get(route('catalog.products.import.sample'));
+
+        $response->assertOk()->assertHeader('content-type', 'text/csv; charset=UTF-8');
+        $content = $response->streamedContent();
+        $this->assertStringStartsWith("\xEF\xBB\xBF".implode(',', ImportProductsFromCsvAction::HEADER), $content);
+        $this->assertStringContainsString('"Sample category","Sample VAT"', $content);
+        $this->assertStringContainsString('active', $content);
     }
 
     /** @return array{0: Category, 1: TaxRate} */

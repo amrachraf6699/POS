@@ -3,6 +3,7 @@
 namespace Tests\Feature\Catalog;
 
 use App\Http\Middleware\VerifyCsrfToken;
+use Modules\Business\App\Models\BusinessSettings;
 use Modules\Catalog\App\Models\Category;
 use Modules\Catalog\App\Models\Product;
 use Modules\Catalog\App\Models\TaxRate;
@@ -40,6 +41,23 @@ class ProductManagementTest extends TenantIsolationTestCase
         $this->assertFalse($inactive->isSaleAvailable());
         $this->actingAs($owner)->withSession($session)->delete('/tenant/catalog/products/'.$product->getKey())->assertRedirect();
         $this->assertSoftDeleted('products', ['id' => $product->getKey()]);
+    }
+
+    public function test_product_create_form_renders_without_a_blade_parse_error(): void
+    {
+        [$owner, $tenant, $membership] = $this->makeMembership();
+        app(TenantContext::class)->set($tenant, $membership);
+        BusinessSettings::factory()->create();
+        /** @var Category $category */
+        $category = Category::query()->create(['name' => 'مشروبات']);
+        /** @var TaxRate $taxRate */
+        $taxRate = TaxRate::query()->create(['name' => 'ضريبة', 'rate_basis_points' => 1400, 'effective_from' => today(), 'status' => TaxRate::STATUS_ACTIVE]);
+
+        $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])->get(route('catalog.products.create'))
+            ->assertOk()
+            ->assertSee('إضافة منتج جديد')
+            ->assertSee($category->name)
+            ->assertSee($taxRate->name);
     }
 
     public function test_product_identifiers_and_source_records_are_tenant_scoped(): void

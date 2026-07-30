@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Modules\Business\App\Models\BusinessSettings;
 use Modules\Catalog\App\Actions\DeactivateProductAction;
 use Modules\Catalog\App\Actions\DeleteProductAction;
+use Modules\Catalog\App\Actions\DownloadProductImportSampleAction;
 use Modules\Catalog\App\Actions\ExportProductsToCsvAction;
 use Modules\Catalog\App\Actions\ImportProductsFromCsvAction;
 use Modules\Catalog\App\Actions\SaveProductAction;
@@ -85,7 +86,15 @@ final class ProductController extends Controller
     {
         $this->allow('products.import');
 
-        return view('catalog::products.import');
+        return view('catalog::products.import', ['sampleAvailable' => $this->hasImportSampleSources()]);
+    }
+
+    public function downloadImportSample(DownloadProductImportSampleAction $action): StreamedResponse
+    {
+        $this->allow('products.import');
+        abort_unless($this->hasImportSampleSources(), 404);
+
+        return $action->execute(request()->user(), $this->context->tenant());
     }
 
     public function import(CatalogCsvImportRequest $request, ImportProductsFromCsvAction $action): RedirectResponse
@@ -105,6 +114,11 @@ final class ProductController extends Controller
     private function rates()
     {
         return TaxRate::query()->where('status', 'active')->whereDate('effective_from', '<=', today())->where(fn ($query) => $query->whereNull('effective_to')->orWhereDate('effective_to', '>', today()))->orderBy('name')->get();
+    }
+
+    private function hasImportSampleSources(): bool
+    {
+        return Category::query()->exists() && $this->rates()->isNotEmpty();
     }
 
     private function can(string $permission): bool

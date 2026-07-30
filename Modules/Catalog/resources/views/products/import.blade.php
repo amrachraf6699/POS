@@ -13,14 +13,16 @@
                 CSV صالح لا يتجاوز 1 ميغابايت.</div>
         @endif
         <section class="rounded-2xl border border-slate-200 bg-white p-6">
-            <h2 class="text-lg font-extrabold">تنسيق الملف المعتمد</h2>
-            <p class="mt-2 text-sm text-slate-600">UTF-8، وبحد أقصى 500 صف. يجب أن يكون الصف الأول مطابقاً تماماً لهذا
-                الترتيب:</p>
-            <code dir="ltr"
-                class="mt-4 block overflow-x-auto rounded-lg bg-slate-900 p-4 text-xs text-slate-100">name,category_name,tax_rate_name,sku,barcode,description,cost_price_minor,selling_price_minor,track_inventory,low_stock_threshold,allow_negative_stock,status</code>
-            <p class="mt-3 text-sm text-slate-600">استخدم أسماء الفئات ونِسَب الضريبة الموجودة في نشاطك. الأسعار والحدود
-                بالقرش، العلامات 0 أو 1، والحالة <span dir="ltr">active</span> أو <span dir="ltr">inactive</span>.
-            </p>
+            <h2 class="text-lg font-extrabold">تنزيل نموذج CSV</h2>
+            @if ($sampleAvailable)
+                <p class="mt-2 text-sm text-slate-600">نزّل نموذجاً جاهزاً يستخدم فئة ونسبة ضريبة نشطتين من نشاطك، ثم عدّل بيانات المنتج قبل الاستيراد.</p>
+                <a href="{{ route('catalog.products.import.sample') }}"
+                    class="mt-5 inline-flex items-center gap-2 rounded-xl border border-indigo-200 px-5 py-3 text-sm font-bold text-indigo-700 transition hover:bg-indigo-50 focus:outline-none focus:ring-4 focus:ring-indigo-100">
+                    <i class="bx bx-download text-xl" aria-hidden="true"></i><span>تنزيل نموذج CSV</span>
+                </a>
+            @else
+                <p class="mt-2 text-sm text-slate-600">أنشئ فئة واحدة على الأقل ونسبة ضريبة نشطة لإتاحة نموذج CSV صالح للاستيراد.</p>
+            @endif
         </section>
         <form method="POST" action="{{ route('catalog.products.import.store') }}" enctype="multipart/form-data"
             class="rounded-2xl border border-slate-200 bg-white p-6">

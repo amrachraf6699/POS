@@ -21,6 +21,7 @@ Route::middleware(['auth', 'tenant'])->prefix('tenant/catalog')->name('catalog.'
     Route::post('/tax-rates/{taxRate}/deactivate', [TaxRateController::class, 'deactivate'])->name('tax-rates.deactivate');
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/products/import', [ProductController::class, 'importForm'])->name('products.import.form');
+    Route::get('/products/import/sample', [ProductController::class, 'downloadImportSample'])->name('products.import.sample');
     Route::post('/products/import', [ProductController::class, 'import'])->name('products.import.store');
     Route::get('/products/export', [ProductController::class, 'export'])->name('products.export');
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
