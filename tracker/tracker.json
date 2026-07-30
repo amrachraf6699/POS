@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "last_updated_at": "2026-07-30T00:45:43Z",
+    "last_updated_at": "2026-07-30T01:06:07Z",
     "updated_by": "Codex",
     "phases": {
         "00-Project-Foundation": {
@@ -377,7 +377,8 @@
                     "title": "Categories and Tax Rates",
                     "status": "done",
                     "notes": [
-                        "Catalog module provides tenant-scoped Arabic category CRUD and immutable, date-effective VAT-rate versions for subsequent product assignment."
+                        "Catalog module provides tenant-scoped Arabic category CRUD and immutable, date-effective VAT-rate versions for subsequent product assignment.",
+                        "Tax-rate edit Blade directives are separated to compile safely; the edit route now has direct rendering regression coverage."
                     ],
                     "conflicts": [],
                     "problems": [],
@@ -387,9 +388,10 @@
                         "php artisan test completed with 88 passing tests and 395 assertions before the corrected Catalog test assertion; the focused Catalog test subsequently passed.",
                         "vendor/bin/pint --test passed.",
                         "vendor/bin/phpstan analyse --memory-limit=1G passed.",
-                        "php artisan route:list --path=tenant/catalog confirms 12 secured Catalog routes."
+                        "php artisan route:list --path=tenant/catalog confirms 12 secured Catalog routes.",
+                        "CatalogManagementTest passed after the tax-rate edit compilation fix: 2 tests and 18 assertions; Pint and PHPStan passed."
                     ],
-                    "latest_commit": "efa78b8"
+                    "latest_commit": "a6b4055"
                 },
                 "TASK-002-simple-products": {
                     "title": "Simple Products",
