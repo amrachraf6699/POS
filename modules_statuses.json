@@ -2,5 +2,6 @@
     "Tracker": true,
     "Identity": true,
     "Business": true,
-    "Catalog": true
+    "Catalog": true,
+    "Inventory": true
 }

@@ -51,11 +51,13 @@ class OnboardingFlowTest extends TenantIsolationTestCase
 
         $this->actingAs($owner)->withSession(['current_tenant_id' => $tenant->getKey()])->get('/tenant/onboarding/settings')
             ->assertOk()
-            ->assertSeeText('data-onboarding-locked', false)
-            ->assertSeeText('aria-disabled="true"', false)
-            ->assertSeeText('onboarding-locked', false)
+            ->assertSee('data-onboarding-locked', false)
+            ->assertSee('aria-disabled="true"', false)
+            ->assertSee('onboarding-locked', false)
+            ->assertSeeText('أرصدة المخزون')
             ->assertDontSee('href="http://localhost/tenant/dashboard"', false)
-            ->assertDontSee('href="http://localhost/tenant/branches"', false);
+            ->assertDontSee('href="http://localhost/tenant/branches"', false)
+            ->assertDontSee(route('inventory.balances.index'), false);
     }
 
     public function test_existing_settings_and_branch_routes_advance_the_owner_progress(): void

@@ -47,6 +47,10 @@ final class ProductNavigation
             $items[] = ['label' => 'أعضاء الفريق', 'url' => route('tenant.staff.index'), 'patterns' => ['tenant.staff.*'], 'icon' => 'bx-group'];
         }
 
+        if ($this->authorization->allows($user, $tenant, 'inventory.view')) {
+            $items[] = ['label' => 'أرصدة المخزون', 'url' => route('inventory.balances.index'), 'patterns' => ['inventory.*'], 'icon' => 'bx-archive-in'];
+        }
+
         return [
             'items' => $items,
             'future' => $this->futureItems(),
@@ -60,7 +64,6 @@ final class ProductNavigation
     {
         return [
             ['label' => 'المنتجات والكتالوج', 'icon' => 'bx-package'],
-            ['label' => 'المخزون والتحويلات', 'icon' => 'bx-transfer-alt'],
             ['label' => 'نقطة البيع والمدفوعات', 'icon' => 'bx-cart'],
             ['label' => 'التقارير والتحليلات', 'icon' => 'bx-bar-chart-alt-2'],
             ['label' => 'الاشتراكات والفوترة', 'icon' => 'bx-credit-card'],

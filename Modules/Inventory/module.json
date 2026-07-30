@@ -1,0 +1,11 @@
+{
+    "name": "Inventory",
+    "alias": "inventory",
+    "description": "Tenant-safe inventory ledger and balances.",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Inventory\\App\\Providers\\InventoryServiceProvider"
+    ],
+    "files": []
+}

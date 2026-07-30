@@ -12,6 +12,7 @@ use Modules\Identity\App\Domain\Tenancy\BelongsToTenant;
 
 /**
  * @property int $id
+ * @property int $tenant_id
  * @property int $category_id
  * @property int $tax_rate_id
  * @property string $name
