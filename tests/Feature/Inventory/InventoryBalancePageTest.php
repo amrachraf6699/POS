@@ -46,7 +46,8 @@ class InventoryBalancePageTest extends TenantIsolationTestCase
             ->assertSee('12')
             ->assertSee(route('inventory.balances.index'))
             ->assertSee('bg-[#eef0ff] text-[#3548c9]', false)
-            ->assertDontSee('تسوية المخزون');
+            ->assertSee(route('inventory.adjustments.opening.create'), false)
+            ->assertSee(route('inventory.adjustments.index'), false);
     }
 
     public function test_page_is_forbidden_without_inventory_view_and_never_exposes_another_tenant_balance(): void

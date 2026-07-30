@@ -4,10 +4,13 @@
 
 @section('content')
     <div class="space-y-7">
-        <div class="border-b border-slate-200 pb-6">
-            <a href="{{ route('business.dashboard') }}" class="text-sm font-bold text-indigo-600">لوحة التحكم</a>
-            <h1 class="mt-3 text-3xl font-extrabold text-slate-900">أرصدة المخزون</h1>
-            <p class="mt-2 text-sm text-slate-600">عرض للقراءة فقط للأرصدة الحالية للمنتجات التي تتبع المخزون.</p>
+        <div class="flex flex-col gap-4 border-b border-slate-200 pb-6 sm:flex-row sm:items-end sm:justify-between">
+            <div><a href="{{ route('business.dashboard') }}" class="text-sm font-bold text-indigo-600">لوحة التحكم</a>
+                <h1 class="mt-3 text-3xl font-extrabold text-slate-900">أرصدة المخزون</h1>
+                <p class="mt-2 text-sm text-slate-600">عرض للقراءة فقط للأرصدة الحالية للمنتجات التي تتبع المخزون.</p></div>
+            @if ($canAdjust)
+                <div class="flex flex-wrap gap-3"><a href="{{ route('inventory.adjustments.opening.create') }}" class="rounded-xl border border-indigo-200 px-4 py-2 text-sm font-bold text-indigo-700">رصيد افتتاحي</a><a href="{{ route('inventory.adjustments.index') }}" class="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-bold text-white">حركات المخزون</a></div>
+            @endif
         </div>
 
         <form method="GET" action="{{ route('inventory.balances.index') }}"

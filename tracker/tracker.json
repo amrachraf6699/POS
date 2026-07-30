@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "last_updated_at": "2026-07-30T03:20:00Z",
+    "last_updated_at": "2026-07-30T04:00:00Z",
     "updated_by": "Codex",
     "phases": {
         "00-Project-Foundation": {
@@ -453,7 +453,8 @@
             "status": "in_progress",
             "weight": 2,
             "notes": [
-                "TASK-001 is complete: the enabled Inventory module provides an immutable tenant-scoped movement ledger, transactional branch-product balances, and an authorized read-only balance page."
+                "TASK-001 is complete: the enabled Inventory module provides an immutable tenant-scoped movement ledger, transactional branch-product balances, and an authorized read-only balance page.",
+                "TASK-002 is complete: opening stock and stock-adjustment documents are immutable, tenant-scoped, permission-gated, and posted atomically through the ledger."
             ],
             "conflicts": [],
             "problems": [],
@@ -481,14 +482,20 @@
                 },
                 "TASK-002-opening-stock-and-adjustments": {
                     "title": "Opening Stock and Adjustments",
-                    "status": "in_progress",
+                    "status": "done",
                     "notes": [
-                        "The tenant-scoped immutable adjustment document, item records, and atomic posting boundary are implemented; the Arabic web workflow remains in progress."
+                        "Tenant-scoped immutable opening-stock and adjustment documents post atomically through the inventory ledger, including idempotency, opening-once enforcement, branch access controls, and negative-stock protection.",
+                        "Arabic RTL inventory pages provide balances entry points, document history, fixed opening stock and single-direction adjustment forms, validation feedback, and immutable detail views."
                     ],
                     "conflicts": [],
                     "problems": [],
                     "resolutions": [],
-                    "evidence": [],
+                    "evidence": [
+                        "Inventory-focused tests passed: 20 tests and 109 assertions.",
+                        "Full protected in-memory SQLite suite passed: 129 tests and 606 assertions.",
+                        "Blade compilation, Pint, PHPStan, and tracker JSON validation passed.",
+                        "Composer audit completed and reported the pre-existing three Laravel framework advisories recorded for TASK-001."
+                    ],
                     "latest_commit": null
                 },
                 "TASK-003-branch-transfers": {

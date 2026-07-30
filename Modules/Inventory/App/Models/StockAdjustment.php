@@ -13,6 +13,7 @@ use Modules\Inventory\App\Domain\Enums\StockAdjustmentType;
 
 /**
  * @property StockAdjustmentType $type
+ * @property int $branch_id
  * @property \Illuminate\Database\Eloquent\Collection<int, StockAdjustmentItem> $items
  */
 final class StockAdjustment extends Model
