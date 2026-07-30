@@ -19,7 +19,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
-    <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Tajawal', 'ui-sans-serif', 'system-ui', 'sans-serif'] } } } };</script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Tajawal', 'ui-sans-serif', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -50,7 +60,10 @@
     @stack('head')
 </head>
 
-<body @class(['min-h-screen bg-[#f4f6fb] p-0 font-sans text-[#1d2741] antialiased sm:p-4', 'onboarding-locked' => $productNavigation['onboarding_locked']])>
+<body @class([
+    'min-h-screen bg-[#f4f6fb] p-0 font-sans text-[#1d2741] antialiased sm:p-4',
+    'onboarding-locked' => $productNavigation['onboarding_locked'],
+])>
     <div
         class="relative mx-auto min-h-[calc(100vh-2rem)] max-w-[1540px] overflow-visible rounded-none border border-[#e3e7ef] bg-white shadow-[0_8px_30px_rgba(38,52,86,.06)] sm:rounded-2xl lg:overflow-hidden">
         <div id="mobile-backdrop" class="fixed inset-0 z-30 hidden bg-[#1d2741]/40 lg:hidden" data-mobile-close></div>
@@ -70,45 +83,52 @@
                     aria-label="إغلاق القائمة" data-mobile-close><i class="bx bx-x" aria-hidden="true"></i></button>
             </div>
             <nav class="flex-1 space-y-2 overflow-y-auto px-4 py-6" aria-label="روابط مساحة العمل">
-                @if($productNavigation['onboarding_locked'])
+                @if ($productNavigation['onboarding_locked'])
                     <div class="mx-2 mb-5 rounded-xl border border-indigo-100 bg-indigo-50 p-4 text-sm text-indigo-800"
                         data-onboarding-locked>
-                        <div class="flex items-start gap-2"><i class="bx bx-lock-alt mt-0.5 text-lg" aria-hidden="true"></i>
+                        <div class="flex items-start gap-2"><i class="bx bx-lock-alt mt-0.5 text-lg"
+                                aria-hidden="true"></i>
                             <p class="font-bold">إعداد النشاط</p>
                         </div>
                     </div>
                 @endif
-                @foreach($productNavigation['items'] as $item)
-                @php($active = request()->routeIs(...$item['patterns']))
-                @if($productNavigation['onboarding_locked'])
-                    <span
-                        class="flex cursor-not-allowed items-center gap-4 rounded-xl px-5 py-3.5 text-[15px] font-bold text-slate-400 opacity-70"
-                        aria-disabled="true"><i class="bx {{ $item['icon'] }} text-xl"
-                            aria-hidden="true"></i><span>{{ $item['label'] }}</span><i
-                            class="bx bx-lock-alt mr-auto text-base" aria-hidden="true"></i></span>
-                @else
-                    <a href="{{ $item['url'] }}" @class(['flex items-center gap-4 rounded-xl px-5 py-3.5 text-[15px] font-bold transition', 'bg-[#eef0ff] text-[#3548c9]' => $active, 'text-[#263149] hover:bg-[#f6f7fc]' => !$active])>
-                        <i class="bx {{ $item['icon'] }} text-xl opacity-85"
-                            aria-hidden="true"></i><span>{{ $item['label'] }}</span>
-                    </a>
-                @endif
+                @foreach ($productNavigation['items'] as $item)
+                    @php($active = request()->routeIs(...$item['patterns']))
+                    @if ($productNavigation['onboarding_locked'])
+                        <span
+                            class="flex cursor-not-allowed items-center gap-4 rounded-xl px-5 py-3.5 text-[15px] font-bold text-slate-400 opacity-70"
+                            aria-disabled="true"><i class="bx {{ $item['icon'] }} text-xl"
+                                aria-hidden="true"></i><span>{{ $item['label'] }}</span><i
+                                class="bx bx-lock-alt mr-auto text-base" aria-hidden="true"></i></span>
+                    @else
+                        <a href="{{ $item['url'] }}" @class([
+                            'flex items-center gap-4 rounded-xl px-5 py-3.5 text-[15px] font-bold transition',
+                            'bg-[#eef0ff] text-[#3548c9]' => $active,
+                            'text-[#263149] hover:bg-[#f6f7fc]' => !$active,
+                        ])>
+                            <i class="bx {{ $item['icon'] }} text-xl opacity-85"
+                                aria-hidden="true"></i><span>{{ $item['label'] }}</span>
+                        </a>
+                    @endif
                 @endforeach
-                @if($currentTenant)
+                @if ($currentTenant)
                     <div class="mt-8 border-t border-[#edf0f5] pt-6">
                         <p class="px-5 text-xs font-bold text-[#a0a8ba]">قريباً</p>
-                        @foreach($productNavigation['future'] as $future)<span
-                            class="mt-3 flex items-center gap-4 px-5 text-[15px] font-semibold text-[#a9b0bf]"><i
-                                class="bx {{ $future['icon'] }} text-lg"
-                        aria-hidden="true"></i>{{ $future['label'] }}</span>@endforeach
+                        @foreach ($productNavigation['future'] as $future)
+                            <span class="mt-3 flex items-center gap-4 px-5 text-[15px] font-semibold text-[#a9b0bf]"><i
+                                    class="bx {{ $future['icon'] }} text-lg"
+                                    aria-hidden="true"></i>{{ $future['label'] }}</span>
+                        @endforeach
                     </div>
                 @endif
             </nav>
-            @if(auth()->check())
+            @if (auth()->check())
                 <div class="border-t border-[#edf0f5] p-5">
                     <form method="POST" action="{{ route('logout') }}">@csrf<button
                             class="w-full rounded-xl px-4 py-3 text-right text-sm font-bold text-red-500 hover:bg-red-50">تسجيل
                             الخروج</button></form>
-            </div>@endif
+                </div>
+            @endif
         </aside>
 
         <div class="min-h-[calc(100vh-2rem)] lg:mr-[278px]">
@@ -142,7 +162,7 @@
         </div>
     </div>
 
-    @if($currentTenant)
+    @if ($currentTenant)
         <div id="tenant-switcher"
             class="fixed inset-0 z-50 hidden items-center justify-center bg-[#73809d]/55 p-4 backdrop-blur-[2px]"
             role="dialog" aria-modal="true" aria-labelledby="tenant-switcher-title" data-tenant-modal>
@@ -150,22 +170,30 @@
                 role="document">
                 <div class="flex items-start justify-between gap-4">
                     <div>
-                        <h2 id="tenant-switcher-title" class="text-3xl font-extrabold text-[#202b45]">تبديل مساحة العمل</h2>
+                        <h2 id="tenant-switcher-title" class="text-3xl font-extrabold text-[#202b45]">تبديل مساحة
+                            العمل</h2>
                     </div><button type="button"
                         class="grid h-10 w-10 place-items-center rounded-lg border border-[#dfe4ee] text-2xl text-[#52617d] hover:bg-[#f4f6fb]"
-                        aria-label="إغلاق" data-tenant-switcher-close><i class="bx bx-x" aria-hidden="true"></i></button>
+                        aria-label="إغلاق" data-tenant-switcher-close><i class="bx bx-x"
+                            aria-hidden="true"></i></button>
                 </div><label class="relative mt-7 block">
                     <div class="mt-3 max-h-[430px] space-y-3 overflow-y-auto" data-tenant-list>
-                        @foreach($productNavigation['tenants'] as $tenant)<form method="POST"
-                            action="{{ route('tenant.selection.store', $tenant) }}" data-tenant-option>@csrf<button
-                                type="submit"
-                                class="flex w-full items-center gap-4 rounded-xl border p-4 text-right transition {{ $currentTenant->is($tenant) ? 'border-[#5461dd] bg-[#f0f1ff]' : 'border-[#e0e4ed] hover:border-[#9da7e7] hover:bg-[#fafaff]' }}"><span
-                                    class="grid h-12 w-12 shrink-0 place-items-center rounded-xl {{ $currentTenant->is($tenant) ? 'bg-[#7982ea] text-white' : 'bg-[#f0f2f7] text-[#6d7890]' }}"><i
-                                        class="bx bx-buildings" aria-hidden="true"></i></span><span class="flex-1"><span
-                                        class="block text-lg font-bold text-[#253149]">{{ $tenant->name }}</span><span
-                                        class="mt-1 block text-sm text-[#8993a8]">{{ $tenant->slug }}</span></span>@if($currentTenant->is($tenant))<span
+                        @foreach ($productNavigation['tenants'] as $tenant)
+                            <form method="POST" action="{{ route('tenant.selection.store', $tenant) }}"
+                                data-tenant-option>@csrf<button type="submit"
+                                    class="flex w-full items-center gap-4 rounded-xl border p-4 text-right transition {{ $currentTenant->is($tenant) ? 'border-[#5461dd] bg-[#f0f1ff]' : 'border-[#e0e4ed] hover:border-[#9da7e7] hover:bg-[#fafaff]' }}"><span
+                                        class="grid h-12 w-12 shrink-0 place-items-center rounded-xl {{ $currentTenant->is($tenant) ? 'bg-[#7982ea] text-white' : 'bg-[#f0f2f7] text-[#6d7890]' }}"><i
+                                            class="bx bx-buildings" aria-hidden="true"></i></span><span
+                                        class="flex-1"><span
+                                            class="block text-lg font-bold text-[#253149]">{{ $tenant->name }}</span><span
+                                            class="mt-1 block text-sm text-[#8993a8]">{{ $tenant->slug }}</span></span>
+                                    @if ($currentTenant->is($tenant))
+                                        <span
                                             class="grid h-7 w-7 place-items-center rounded-full bg-[#5361d8] text-white"><i
-                        class="bx bx-check" aria-hidden="true"></i></span>@endif</button></form>@endforeach
+                                                class="bx bx-check" aria-hidden="true"></i></span>
+                                    @endif
+                                </button></form>
+                        @endforeach
                     </div>
                     <div class="mt-7 flex justify-start gap-3"><button type="button"
                             class="h-14 rounded-xl border border-[#dfe4ee] px-8 text-base font-bold text-[#65718b]"
@@ -175,10 +203,82 @@
             </div>
         </div>
     @endif
-    @if(session('status'))
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>@include('components.success-toast')@endif
+    @if (session('status'))
+        <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>@include('components.success-toast')
+    @endif
     <script>
-        (() => { const sidebar = document.getElementById('product-sidebar'); const backdrop = document.getElementById('mobile-backdrop'); const toggle = document.querySelector('[data-mobile-toggle]'); const closeButton = document.querySelector('[data-mobile-close]'); const tenantModal = document.querySelector('[data-tenant-modal]'); const tenantOpen = document.querySelector('[data-tenant-switcher-open]'); const tenantSearch = document.querySelector('[data-tenant-search]'); let lastFocused = null; const closeMenu = ({ restoreFocus = true } = {}) => { sidebar?.classList.remove('is-open'); sidebar?.setAttribute('aria-hidden', 'true'); backdrop?.classList.add('hidden'); toggle?.setAttribute('aria-expanded', 'false'); document.body.classList.remove('overflow-hidden'); if (restoreFocus) (lastFocused || toggle)?.focus(); }; const openMenu = () => { lastFocused = document.activeElement; sidebar?.classList.add('is-open'); sidebar?.setAttribute('aria-hidden', 'false'); backdrop?.classList.remove('hidden'); toggle?.setAttribute('aria-expanded', 'true'); document.body.classList.add('overflow-hidden'); closeButton?.focus(); }; const closeTenant = () => { tenantModal?.classList.add('hidden'); tenantModal?.classList.remove('flex'); tenantOpen?.focus(); }; const openTenant = () => { tenantModal?.classList.remove('hidden'); tenantModal?.classList.add('flex'); tenantSearch?.focus(); }; toggle?.addEventListener('click', () => sidebar?.classList.contains('is-open') ? closeMenu() : openMenu()); closeButton?.addEventListener('click', () => closeMenu()); backdrop?.addEventListener('click', () => closeMenu()); sidebar?.querySelectorAll('a, button').forEach((element) => element.addEventListener('click', () => { if (window.matchMedia('(max-width: 1023px)').matches) closeMenu({ restoreFocus: false }); })); tenantOpen?.addEventListener('click', openTenant); document.querySelectorAll('[data-tenant-switcher-close]').forEach((button) => button.addEventListener('click', closeTenant)); tenantModal?.addEventListener('click', (event) => { if (event.target === tenantModal) closeTenant(); }); tenantSearch?.addEventListener('input', (event) => { const query = event.target.value.toLowerCase(); document.querySelectorAll('[data-tenant-option]').forEach((option) => option.classList.toggle('hidden', !option.textContent.toLowerCase().includes(query))); }); window.addEventListener('resize', () => { if (window.matchMedia('(min-width: 1024px)').matches) closeMenu({ restoreFocus: false }); }); document.addEventListener('keydown', (event) => { if (event.key === 'Escape') { closeMenu(); if (!tenantModal?.classList.contains('hidden')) closeTenant(); } }); closeMenu({ restoreFocus: false }); })();
+        (() => {
+            const sidebar = document.getElementById('product-sidebar');
+            const backdrop = document.getElementById('mobile-backdrop');
+            const toggle = document.querySelector('[data-mobile-toggle]');
+            const closeButton = document.querySelector('[data-mobile-close]');
+            const tenantModal = document.querySelector('[data-tenant-modal]');
+            const tenantOpen = document.querySelector('[data-tenant-switcher-open]');
+            const tenantSearch = document.querySelector('[data-tenant-search]');
+            let lastFocused = null;
+            const closeMenu = ({
+                restoreFocus = true
+            } = {}) => {
+                sidebar?.classList.remove('is-open');
+                sidebar?.setAttribute('aria-hidden', 'true');
+                backdrop?.classList.add('hidden');
+                toggle?.setAttribute('aria-expanded', 'false');
+                document.body.classList.remove('overflow-hidden');
+                if (restoreFocus)(lastFocused || toggle)?.focus();
+            };
+            const openMenu = () => {
+                lastFocused = document.activeElement;
+                sidebar?.classList.add('is-open');
+                sidebar?.setAttribute('aria-hidden', 'false');
+                backdrop?.classList.remove('hidden');
+                toggle?.setAttribute('aria-expanded', 'true');
+                document.body.classList.add('overflow-hidden');
+                closeButton?.focus();
+            };
+            const closeTenant = () => {
+                tenantModal?.classList.add('hidden');
+                tenantModal?.classList.remove('flex');
+                tenantOpen?.focus();
+            };
+            const openTenant = () => {
+                tenantModal?.classList.remove('hidden');
+                tenantModal?.classList.add('flex');
+                tenantSearch?.focus();
+            };
+            toggle?.addEventListener('click', () => sidebar?.classList.contains('is-open') ? closeMenu() : openMenu());
+            closeButton?.addEventListener('click', () => closeMenu());
+            backdrop?.addEventListener('click', () => closeMenu());
+            sidebar?.querySelectorAll('a, button').forEach((element) => element.addEventListener('click', () => {
+                if (window.matchMedia('(max-width: 1023px)').matches) closeMenu({
+                    restoreFocus: false
+                });
+            }));
+            tenantOpen?.addEventListener('click', openTenant);
+            document.querySelectorAll('[data-tenant-switcher-close]').forEach((button) => button.addEventListener(
+                'click', closeTenant));
+            tenantModal?.addEventListener('click', (event) => {
+                if (event.target === tenantModal) closeTenant();
+            });
+            tenantSearch?.addEventListener('input', (event) => {
+                const query = event.target.value.toLowerCase();
+                document.querySelectorAll('[data-tenant-option]').forEach((option) => option.classList.toggle(
+                    'hidden', !option.textContent.toLowerCase().includes(query)));
+            });
+            window.addEventListener('resize', () => {
+                if (window.matchMedia('(min-width: 1024px)').matches) closeMenu({
+                    restoreFocus: false
+                });
+            });
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    closeMenu();
+                    if (!tenantModal?.classList.contains('hidden')) closeTenant();
+                }
+            });
+            closeMenu({
+                restoreFocus: false
+            });
+        })();
     </script>
     @stack('scripts')
 </body>

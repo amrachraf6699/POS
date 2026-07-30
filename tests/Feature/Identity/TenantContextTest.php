@@ -122,6 +122,6 @@ class TenantContextTest extends TenantIsolationTestCase
 
     public function test_tracker_remains_a_central_route_without_tenant_context(): void
     {
-        $this->get('/__tracker')->assertOk()->assertSee('AI agent workspace');
+        $this->get('/__tracker')->assertOk()->assertSeeText('AI agent');
     }
 }

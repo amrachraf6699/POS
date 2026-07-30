@@ -4,21 +4,145 @@
 
 @section('content')
     <div class="space-y-7">
-        <div class="flex items-end justify-between gap-4"><div><p class="text-sm font-medium text-[#7c879d]">نظرة عامة</p><h1 class="mt-2 text-3xl font-extrabold text-[#1d2943]">لوحة التحكم</h1><p class="mt-2 text-sm text-[#8993a8]">مرحباً بك في لوحة تحكم المستأجر. إليك نظرة عامة على حسابك.</p></div><div class="hidden rounded-xl border border-[#dfe4ee] px-4 py-2 text-sm text-[#69758d] sm:block">آخر تحديث: الآن</div></div>
+        <div class="flex items-end justify-between gap-4">
+            <div>
+                <p class="text-sm font-medium text-[#7c879d]">نظرة عامة</p>
+                <h1 class="mt-2 text-3xl font-extrabold text-[#1d2943]">لوحة التحكم</h1>
+                <p class="mt-2 text-sm text-[#8993a8]">مرحباً بك في لوحة تحكم المستأجر. إليك نظرة عامة على حسابك.</p>
+            </div>
+            <div class="hidden rounded-xl border border-[#dfe4ee] px-4 py-2 text-sm text-[#69758d] sm:block">آخر تحديث: الآن
+            </div>
+        </div>
 
         <div class="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-            <div class="rounded-2xl border border-[#e4e8f0] bg-white p-5 shadow-[0_5px_20px_rgba(43,57,91,.05)]"><div class="flex items-start justify-between"><div><p class="text-sm text-[#7b879c]">الفروع المتاحة</p><p class="mt-4 text-3xl font-extrabold text-[#3348c8]">{{ $dashboard->accessibleBranchCount }}</p><p class="mt-2 text-xs text-[#9aa3b5]">من أصل {{ $dashboard->visibleBranchCount }} فروع</p></div><span class="grid h-14 w-14 place-items-center rounded-xl bg-[#eef0ff] text-2xl text-[#4654d4]"><i class="bx bx-store" aria-hidden="true"></i></span></div><a href="{{ route('business.branches.index') }}" class="mt-6 block text-sm font-medium text-[#4353ce]">عرض جميع الفروع ←</a></div>
-            <div class="rounded-2xl border border-[#e4e8f0] bg-white p-5 shadow-[0_5px_20px_rgba(43,57,91,.05)]"><div class="flex items-start justify-between"><div><p class="text-sm text-[#7b879c]">التعيينات النشطة</p><p class="mt-4 text-3xl font-extrabold text-[#14975b]">{{ $dashboard->activeAssignmentCount }}</p><p class="mt-2 text-xs text-[#9aa3b5]">مستخدمين عاملين على الفروع</p></div><span class="grid h-14 w-14 place-items-center rounded-xl bg-[#eaf8f1] text-2xl text-[#19a96a]"><i class="bx bx-user-check" aria-hidden="true"></i></span></div><a href="{{ route('business.branches.index') }}" class="mt-6 block text-sm font-medium text-[#4353ce]">عرض جميع التعيينات ←</a></div>
-            <div class="rounded-2xl border border-[#e4e8f0] bg-white p-5 shadow-[0_5px_20px_rgba(43,57,91,.05)]"><div class="flex items-start justify-between"><div><p class="text-sm text-[#7b879c]">الفروع النشطة</p><p class="mt-4 text-3xl font-extrabold text-[#15965a]">{{ $dashboard->activeBranchCount }}</p><p class="mt-2 text-xs text-[#9aa3b5]">فروع عاملة حالياً</p></div><span class="grid h-14 w-14 place-items-center rounded-xl bg-[#eaf8f1] text-2xl text-[#19a96a]"><i class="bx bx-check-circle" aria-hidden="true"></i></span></div><a href="{{ route('business.branches.index') }}" class="mt-6 block text-sm font-medium text-[#4353ce]">عرض تفاصيل الفروع ←</a></div>
-            <div class="rounded-2xl border border-[#e4e8f0] bg-white p-5 shadow-[0_5px_20px_rgba(43,57,91,.05)]"><div class="flex items-start justify-between"><div><p class="text-sm text-[#7b879c]">{{ $dashboard->canManage ? 'الدعوات المعلقة' : 'حالة الإعدادات' }}</p><p class="mt-4 text-3xl font-extrabold text-[#df8a10]">{{ $dashboard->canManage ? $dashboard->pendingInvitationCount : '✓' }}</p><p class="mt-2 text-xs text-[#9aa3b5]">{{ $dashboard->canManage ? 'بانتظار القبول' : 'إعدادات مساحة العمل' }}</p></div><span class="grid h-14 w-14 place-items-center rounded-xl bg-[#fff5e7] text-2xl text-[#eb991b]">{{ $dashboard->canManage ? '✉' : '✓' }}</span></div>@if($dashboard->canManage)<a href="{{ route('tenant.invitations.index') }}" class="mt-6 block text-sm font-medium text-[#4353ce]">عرض جميع الدعوات ←</a>@else<span class="mt-6 block text-sm font-medium text-[#7b879c]">متاحة حسب صلاحيتك</span>@endif</div>
+            <div class="rounded-2xl border border-[#e4e8f0] bg-white p-5 shadow-[0_5px_20px_rgba(43,57,91,.05)]">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-sm text-[#7b879c]">الفروع المتاحة</p>
+                        <p class="mt-4 text-3xl font-extrabold text-[#3348c8]">{{ $dashboard->accessibleBranchCount }}</p>
+                        <p class="mt-2 text-xs text-[#9aa3b5]">من أصل {{ $dashboard->visibleBranchCount }} فروع</p>
+                    </div><span class="grid h-14 w-14 place-items-center rounded-xl bg-[#eef0ff] text-2xl text-[#4654d4]"><i
+                            class="bx bx-store" aria-hidden="true"></i></span>
+                </div><a href="{{ route('business.branches.index') }}"
+                    class="mt-6 block text-sm font-medium text-[#4353ce]">عرض جميع الفروع ←</a>
+            </div>
+            <div class="rounded-2xl border border-[#e4e8f0] bg-white p-5 shadow-[0_5px_20px_rgba(43,57,91,.05)]">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-sm text-[#7b879c]">التعيينات النشطة</p>
+                        <p class="mt-4 text-3xl font-extrabold text-[#14975b]">{{ $dashboard->activeAssignmentCount }}</p>
+                        <p class="mt-2 text-xs text-[#9aa3b5]">مستخدمين عاملين على الفروع</p>
+                    </div><span class="grid h-14 w-14 place-items-center rounded-xl bg-[#eaf8f1] text-2xl text-[#19a96a]"><i
+                            class="bx bx-user-check" aria-hidden="true"></i></span>
+                </div><a href="{{ route('business.branches.index') }}"
+                    class="mt-6 block text-sm font-medium text-[#4353ce]">عرض جميع التعيينات ←</a>
+            </div>
+            <div class="rounded-2xl border border-[#e4e8f0] bg-white p-5 shadow-[0_5px_20px_rgba(43,57,91,.05)]">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-sm text-[#7b879c]">الفروع النشطة</p>
+                        <p class="mt-4 text-3xl font-extrabold text-[#15965a]">{{ $dashboard->activeBranchCount }}</p>
+                        <p class="mt-2 text-xs text-[#9aa3b5]">فروع عاملة حالياً</p>
+                    </div><span class="grid h-14 w-14 place-items-center rounded-xl bg-[#eaf8f1] text-2xl text-[#19a96a]"><i
+                            class="bx bx-check-circle" aria-hidden="true"></i></span>
+                </div><a href="{{ route('business.branches.index') }}"
+                    class="mt-6 block text-sm font-medium text-[#4353ce]">عرض تفاصيل الفروع ←</a>
+            </div>
+            <div class="rounded-2xl border border-[#e4e8f0] bg-white p-5 shadow-[0_5px_20px_rgba(43,57,91,.05)]">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-sm text-[#7b879c]">{{ $dashboard->canManage ? 'الدعوات المعلقة' : 'حالة الإعدادات' }}
+                        </p>
+                        <p class="mt-4 text-3xl font-extrabold text-[#df8a10]">
+                            {{ $dashboard->canManage ? $dashboard->pendingInvitationCount : '✓' }}</p>
+                        <p class="mt-2 text-xs text-[#9aa3b5]">
+                            {{ $dashboard->canManage ? 'بانتظار القبول' : 'إعدادات مساحة العمل' }}</p>
+                    </div><span
+                        class="grid h-14 w-14 place-items-center rounded-xl bg-[#fff5e7] text-2xl text-[#eb991b]">{{ $dashboard->canManage ? '✉' : '✓' }}</span>
+                </div>
+                @if ($dashboard->canManage)
+                    <a href="{{ route('tenant.invitations.index') }}"
+                    class="mt-6 block text-sm font-medium text-[#4353ce]">عرض جميع الدعوات ←</a>@else<span
+                        class="mt-6 block text-sm font-medium text-[#7b879c]">متاحة حسب صلاحيتك</span>
+                @endif
+            </div>
         </div>
 
         <div class="grid gap-6 lg:grid-cols-5">
-            <section class="rounded-2xl border border-[#e4e8f0] bg-white p-5 shadow-[0_5px_20px_rgba(43,57,91,.05)] lg:col-span-3"><div class="flex items-center justify-between"><div><h2 class="text-lg font-extrabold">التعيينات النشطة</h2><p class="mt-1 text-sm text-[#8993a8]">نظرة على صلاحياتك الحالية في مساحة العمل.</p></div><a href="{{ route('business.branches.index') }}" class="rounded-lg border border-[#dfe4ee] px-4 py-2 text-sm font-medium text-[#4353ce]">عرض الكل</a></div><div class="mt-5 overflow-hidden rounded-xl border border-[#e7eaf1]"><div class="grid grid-cols-3 bg-[#fafbfe] px-4 py-3 text-xs font-bold text-[#66738b]"><span>الحالة</span><span>الفرع</span><span>المستخدم</span></div><div class="divide-y divide-[#edf0f5]"><div class="grid grid-cols-3 items-center px-4 py-4 text-sm"><span><span class="rounded-full bg-[#eaf8f1] px-3 py-1 text-xs font-bold text-[#15965a]">● نشط</span></span><span class="text-[#334056]">الفروع المتاحة لك</span><span class="font-semibold text-[#334056]">{{ $dashboard->activeAssignmentCount }} تعيين</span></div><div class="grid grid-cols-3 items-center px-4 py-4 text-sm"><span><span class="rounded-full bg-[#eef0ff] px-3 py-1 text-xs font-bold text-[#4353ce]">● نشط</span></span><span class="text-[#334056]">الوصول الحالي</span><span class="font-semibold text-[#334056]">{{ $dashboard->accessibleBranchCount }} فرع</span></div></div></div><a href="{{ route('business.branches.index') }}" class="mt-5 block text-sm font-medium text-[#4353ce]">عرض جميع التعيينات ←</a></section>
+            <section
+                class="rounded-2xl border border-[#e4e8f0] bg-white p-5 shadow-[0_5px_20px_rgba(43,57,91,.05)] lg:col-span-3">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-lg font-extrabold">التعيينات النشطة</h2>
+                        <p class="mt-1 text-sm text-[#8993a8]">نظرة على صلاحياتك الحالية في مساحة العمل.</p>
+                    </div><a href="{{ route('business.branches.index') }}"
+                        class="rounded-lg border border-[#dfe4ee] px-4 py-2 text-sm font-medium text-[#4353ce]">عرض الكل</a>
+                </div>
+                <div class="mt-5 overflow-hidden rounded-xl border border-[#e7eaf1]">
+                    <div class="grid grid-cols-3 bg-[#fafbfe] px-4 py-3 text-xs font-bold text-[#66738b]">
+                        <span>الحالة</span><span>الفرع</span><span>المستخدم</span>
+                    </div>
+                    <div class="divide-y divide-[#edf0f5]">
+                        <div class="grid grid-cols-3 items-center px-4 py-4 text-sm"><span><span
+                                    class="rounded-full bg-[#eaf8f1] px-3 py-1 text-xs font-bold text-[#15965a]">●
+                                    نشط</span></span><span class="text-[#334056]">الفروع المتاحة لك</span><span
+                                class="font-semibold text-[#334056]">{{ $dashboard->activeAssignmentCount }} تعيين</span>
+                        </div>
+                        <div class="grid grid-cols-3 items-center px-4 py-4 text-sm"><span><span
+                                    class="rounded-full bg-[#eef0ff] px-3 py-1 text-xs font-bold text-[#4353ce]">●
+                                    نشط</span></span><span class="text-[#334056]">الوصول الحالي</span><span
+                                class="font-semibold text-[#334056]">{{ $dashboard->accessibleBranchCount }} فرع</span>
+                        </div>
+                    </div>
+                </div><a href="{{ route('business.branches.index') }}"
+                    class="mt-5 block text-sm font-medium text-[#4353ce]">عرض جميع التعيينات ←</a>
+            </section>
 
-            <section class="rounded-2xl border border-[#e4e8f0] bg-white p-5 shadow-[0_5px_20px_rgba(43,57,91,.05)] lg:col-span-2"><div class="flex items-center gap-3"><span class="text-2xl text-[#4353ce]">ϟ</span><h2 class="text-lg font-extrabold">الإجراءات السريعة</h2></div><div class="mt-5 space-y-2">@if($dashboard->canManage)<a href="{{ route('business.branches.create') }}" class="flex items-center gap-3 rounded-xl border border-[#e4e8f0] p-3 transition hover:border-[#7580df] hover:bg-[#fafaff]"><span class="grid h-10 w-10 place-items-center rounded-lg bg-[#eef0ff] text-xl text-[#4353ce]">＋</span><span><b class="block text-sm text-[#334056]">إضافة فرع جديد</b><small class="text-xs text-[#8993a8]">إنشاء فرع جديد لنشاطك التجاري</small></span></a><a href="{{ route('tenant.invitations.index') }}" class="flex items-center gap-3 rounded-xl border border-[#e4e8f0] p-3 transition hover:border-[#7580df] hover:bg-[#fafaff]"><span class="grid h-10 w-10 place-items-center rounded-lg bg-[#eef0ff] text-xl text-[#4353ce]">♙</span><span><b class="block text-sm text-[#334056]">دعوة مستخدم</b><small class="text-xs text-[#8993a8]">إرسال دعوة مستخدم جديد</small></span></a><a href="{{ route('business.settings.edit') }}" class="flex items-center gap-3 rounded-xl border border-[#e4e8f0] p-3 transition hover:border-[#7580df] hover:bg-[#fafaff]"><span class="grid h-10 w-10 place-items-center rounded-lg bg-[#eef0ff] text-xl text-[#4353ce]">⚙</span><span><b class="block text-sm text-[#334056]">إعدادات النشاط التجاري</b><small class="text-xs text-[#8993a8]">تحديث معلومات نشاطك التجاري</small></span></a>@else<a href="{{ route('business.branches.index') }}" class="flex items-center gap-3 rounded-xl border border-[#e4e8f0] p-3 transition hover:border-[#7580df] hover:bg-[#fafaff]"><span class="grid h-10 w-10 place-items-center rounded-lg bg-[#eef0ff] text-xl text-[#4353ce]">▣</span><span><b class="block text-sm text-[#334056]">عرض الفروع المتاحة</b><small class="text-xs text-[#8993a8]">عرض مواقع العمل المسموح بها</small></span></a>@endif</div></section>
+            <section
+                class="rounded-2xl border border-[#e4e8f0] bg-white p-5 shadow-[0_5px_20px_rgba(43,57,91,.05)] lg:col-span-2">
+                <div class="flex items-center gap-3"><span class="text-2xl text-[#4353ce]">ϟ</span>
+                    <h2 class="text-lg font-extrabold">الإجراءات السريعة</h2>
+                </div>
+                <div class="mt-5 space-y-2">
+                    @if ($dashboard->canManage)
+                        <a href="{{ route('business.branches.create') }}"
+                            class="flex items-center gap-3 rounded-xl border border-[#e4e8f0] p-3 transition hover:border-[#7580df] hover:bg-[#fafaff]"><span
+                                class="grid h-10 w-10 place-items-center rounded-lg bg-[#eef0ff] text-xl text-[#4353ce]">＋</span><span><b
+                                    class="block text-sm text-[#334056]">إضافة فرع جديد</b><small
+                                    class="text-xs text-[#8993a8]">إنشاء فرع جديد لنشاطك التجاري</small></span></a><a
+                            href="{{ route('tenant.invitations.index') }}"
+                            class="flex items-center gap-3 rounded-xl border border-[#e4e8f0] p-3 transition hover:border-[#7580df] hover:bg-[#fafaff]"><span
+                                class="grid h-10 w-10 place-items-center rounded-lg bg-[#eef0ff] text-xl text-[#4353ce]">♙</span><span><b
+                                    class="block text-sm text-[#334056]">دعوة مستخدم</b><small
+                                    class="text-xs text-[#8993a8]">إرسال دعوة مستخدم جديد</small></span></a><a
+                            href="{{ route('business.settings.edit') }}"
+                            class="flex items-center gap-3 rounded-xl border border-[#e4e8f0] p-3 transition hover:border-[#7580df] hover:bg-[#fafaff]"><span
+                                class="grid h-10 w-10 place-items-center rounded-lg bg-[#eef0ff] text-xl text-[#4353ce]">⚙</span><span><b
+                                    class="block text-sm text-[#334056]">إعدادات النشاط التجاري</b><small
+                                class="text-xs text-[#8993a8]">تحديث معلومات نشاطك التجاري</small></span></a>@else<a
+                            href="{{ route('business.branches.index') }}"
+                            class="flex items-center gap-3 rounded-xl border border-[#e4e8f0] p-3 transition hover:border-[#7580df] hover:bg-[#fafaff]"><span
+                                class="grid h-10 w-10 place-items-center rounded-lg bg-[#eef0ff] text-xl text-[#4353ce]">▣</span><span><b
+                                    class="block text-sm text-[#334056]">عرض الفروع المتاحة</b><small
+                                    class="text-xs text-[#8993a8]">عرض مواقع العمل المسموح بها</small></span></a>
+                    @endif
+                </div>
+            </section>
         </div>
 
-        <section class="relative overflow-hidden rounded-2xl bg-[#192942] px-7 py-7 text-white shadow-lg"><div class="relative z-10 max-w-2xl"><div class="flex items-center gap-3"><h2 class="text-xl font-extrabold">مزيد من الميزات قريباً</h2><span class="rounded-lg bg-[#6d55d8] px-3 py-1 text-xs font-bold">قريباً</span></div><p class="mt-3 text-sm leading-7 text-[#d6dced]">نعمل على إطلاق تقارير متقدمة، إدارة مستخدمين متقدمة، إدارة المخزون والمشتريات، والمزيد من التكاملات لتمكينك من إدارة نشاطك التجاري بكفاءة أعلى.</p><button type="button" class="mt-4 rounded-xl border border-white px-6 py-2 text-sm font-bold">تعرف على المزيد ⓘ</button></div><div class="absolute left-10 top-1/2 hidden -translate-y-1/2 text-8xl text-[#2b3b5c] opacity-60 lg:block">▥</div></section>
+        <section class="relative overflow-hidden rounded-2xl bg-[#192942] px-7 py-7 text-white shadow-lg">
+            <div class="relative z-10 max-w-2xl">
+                <div class="flex items-center gap-3">
+                    <h2 class="text-xl font-extrabold">مزيد من الميزات قريباً</h2><span
+                        class="rounded-lg bg-[#6d55d8] px-3 py-1 text-xs font-bold">قريباً</span>
+                </div>
+                <p class="mt-3 text-sm leading-7 text-[#d6dced]">نعمل على إطلاق تقارير متقدمة، إدارة مستخدمين متقدمة، إدارة
+                    المخزون والمشتريات، والمزيد من التكاملات لتمكينك من إدارة نشاطك التجاري بكفاءة أعلى.</p><button
+                    type="button" class="mt-4 rounded-xl border border-white px-6 py-2 text-sm font-bold">تعرف على المزيد
+                    ⓘ</button>
+            </div>
+            <div class="absolute left-10 top-1/2 hidden -translate-y-1/2 text-8xl text-[#2b3b5c] opacity-60 lg:block">▥
+            </div>
+        </section>
     </div>
 @endsection

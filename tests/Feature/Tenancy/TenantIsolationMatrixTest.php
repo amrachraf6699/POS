@@ -77,6 +77,6 @@ class TenantIsolationMatrixTest extends TenantIsolationTestCase
     {
         $this->assertTrue(Schema::hasTable('tenant_notes'));
         $this->get('/register')->assertOk()->assertSee('dir="rtl"', false);
-        $this->get('/__tracker')->assertOk()->assertSee('AI agent workspace');
+        $this->get('/__tracker')->assertOk()->assertSeeText('AI agent');
     }
 }

@@ -3,44 +3,55 @@
 @section('title', 'إدارة نسبة الضريبة')
 
 @section('content')
-<div class="mx-auto max-w-3xl space-y-6">
-    <div>
-        <a href="{{ route('catalog.index') }}" class="text-sm font-bold text-indigo-600 hover:underline">الكتالوج والضرائب</a>
-        <h1 class="mt-4 text-3xl font-extrabold">إدارة نسبة الضريبة</h1>
-        <p class="mt-2 text-sm text-slate-500">القيمة وتاريخ السريان ثابتان لهذا الإصدار؛ أنشئ إصداراً جديداً لتغييرهما.</p>
+    <div class="mx-auto max-w-3xl space-y-6">
+        <div>
+            <a href="{{ route('catalog.index') }}" class="text-sm font-bold text-indigo-600 hover:underline">الكتالوج
+                والضرائب</a>
+            <h1 class="mt-4 text-3xl font-extrabold">إدارة نسبة الضريبة</h1>
+            <p class="mt-2 text-sm text-slate-500">القيمة وتاريخ السريان ثابتان لهذا الإصدار؛ أنشئ إصداراً جديداً لتغييرهما.
+            </p>
+        </div>
+
+        @if ($errors->any())
+            <div class="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700" role="alert">يرجى مراجعة
+                البيانات المدخلة.</div>
+        @endif
+
+        <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <p class="font-bold">{{ $taxRate->name }} <span
+                    dir="ltr">{{ number_format($taxRate->rate_basis_points / 100, 2) }}%</span></p>
+            <p class="mt-2 text-sm text-slate-500">من {{ $taxRate->effective_from->format('Y-m-d') }} إلى
+                {{ $taxRate->effective_to?->format('Y-m-d') ?: '—' }}</p>
+        </section>
+
+        <form method="POST" action="{{ route('catalog.tax-rates.update', $taxRate) }}"
+            class="space-y-5 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            @csrf
+            @method('PUT')
+            <div><label for="tax-rate-name" class="text-sm font-bold">التسمية العربية</label><input id="tax-rate-name"
+                    name="name" value="{{ old('name', $taxRate->name) }}" required
+                    class="mt-2 h-12 w-full rounded-xl border border-slate-300 px-4"></div>
+            <input type="hidden" name="status" value="{{ $taxRate->status }}">
+            <button class="rounded-xl bg-indigo-600 px-6 py-3 text-sm font-bold text-white">حفظ التسمية</button>
+        </form>
+
+        @if ($taxRate->isActive() && $taxRate->effective_to === null)
+            <form method="POST" action="{{ route('catalog.tax-rates.versions.store', $taxRate) }}"
+                class="grid gap-5 rounded-2xl border border-indigo-100 bg-indigo-50 p-5 sm:grid-cols-2">
+                @csrf
+                <h2 class="sm:col-span-2 text-xl font-extrabold">إنشاء إصدار جديد</h2>
+                @include('catalog::tax-rates.fields')
+                <div class="sm:col-span-2"><button
+                        class="rounded-xl bg-slate-900 px-6 py-3 text-sm font-bold text-white">إنشاء الإصدار</button></div>
+            </form>
+        @endif
+
+        @if ($taxRate->isActive())
+            <form method="POST" action="{{ route('catalog.tax-rates.deactivate', $taxRate) }}">
+                @csrf
+                <button class="rounded-xl border border-red-200 px-5 py-3 text-sm font-bold text-red-600">تعطيل نسبة
+                    الضريبة</button>
+            </form>
+        @endif
     </div>
-
-    @if($errors->any())
-        <div class="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700" role="alert">يرجى مراجعة البيانات المدخلة.</div>
-    @endif
-
-    <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-        <p class="font-bold">{{ $taxRate->name }} <span dir="ltr">{{ number_format($taxRate->rate_basis_points / 100, 2) }}%</span></p>
-        <p class="mt-2 text-sm text-slate-500">من {{ $taxRate->effective_from->format('Y-m-d') }} إلى {{ $taxRate->effective_to?->format('Y-m-d') ?: '—' }}</p>
-    </section>
-
-    <form method="POST" action="{{ route('catalog.tax-rates.update', $taxRate) }}" class="space-y-5 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-        @csrf
-        @method('PUT')
-        <div><label for="tax-rate-name" class="text-sm font-bold">التسمية العربية</label><input id="tax-rate-name" name="name" value="{{ old('name', $taxRate->name) }}" required class="mt-2 h-12 w-full rounded-xl border border-slate-300 px-4"></div>
-        <input type="hidden" name="status" value="{{ $taxRate->status }}">
-        <button class="rounded-xl bg-indigo-600 px-6 py-3 text-sm font-bold text-white">حفظ التسمية</button>
-    </form>
-
-    @if($taxRate->isActive() && $taxRate->effective_to === null)
-        <form method="POST" action="{{ route('catalog.tax-rates.versions.store', $taxRate) }}" class="grid gap-5 rounded-2xl border border-indigo-100 bg-indigo-50 p-5 sm:grid-cols-2">
-            @csrf
-            <h2 class="sm:col-span-2 text-xl font-extrabold">إنشاء إصدار جديد</h2>
-            @include('catalog::tax-rates.fields')
-            <div class="sm:col-span-2"><button class="rounded-xl bg-slate-900 px-6 py-3 text-sm font-bold text-white">إنشاء الإصدار</button></div>
-        </form>
-    @endif
-
-    @if($taxRate->isActive())
-        <form method="POST" action="{{ route('catalog.tax-rates.deactivate', $taxRate) }}">
-            @csrf
-            <button class="rounded-xl border border-red-200 px-5 py-3 text-sm font-bold text-red-600">تعطيل نسبة الضريبة</button>
-        </form>
-    @endif
-</div>
 @endsection

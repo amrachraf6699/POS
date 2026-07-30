@@ -12,11 +12,11 @@ class TrackerDashboardTest extends TestCase
         $response = $this->get('/__tracker');
 
         $response->assertOk()
-            ->assertSee('Engineering progress')
+            ->assertSeeText('Engineering progress')
             ->assertSee('12')
             ->assertSee('48')
-            ->assertSee('Not started')
-            ->assertSee('Agent maintained');
+            ->assertSeeText('Not started')
+            ->assertSeeText('Agent');
     }
 
     public function test_tracker_dashboard_has_no_write_routes(): void

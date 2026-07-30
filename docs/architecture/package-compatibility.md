@@ -22,3 +22,9 @@ php artisan module:list
 ```
 
 Do not upgrade Laravel, PHP, or module tooling independently. Review the compatibility impact and update this record when a version changes.
+
+## Temporary view-formatting tool
+
+The one-time view cleanup uses `blade-formatter` `1.44.4` through `npx --package`; it is not added to `package.json`, Composer, or the deployed application. Its purpose is to format project-owned `.blade.php` files consistently while preserving Blade directives. The formatter requires Node `>=14`; the local Node `22.12.0` runtime satisfies that requirement and it has no PHP or Laravel runtime dependency.
+
+The alternative is manual formatting of every template, which is error-prone for Blade directive boundaries. Rollback is simply `git revert` of the formatting commit; no dependency removal or production deployment change is needed because the formatter is temporary.

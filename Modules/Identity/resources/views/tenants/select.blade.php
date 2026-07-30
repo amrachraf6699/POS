@@ -15,12 +15,14 @@
             @forelse ($tenants as $tenant)
                 <form method="POST" action="{{ route('tenant.selection.store', $tenant) }}">
                     @csrf
-                    <button type="submit" class="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white p-5 text-right shadow-sm transition hover:border-indigo-300 hover:shadow-md">
+                    <button type="submit"
+                        class="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white p-5 text-right shadow-sm transition hover:border-indigo-300 hover:shadow-md">
                         <span>
                             <span class="block text-lg font-bold text-slate-900">{{ $tenant->name }}</span>
                             <span class="mt-1 block text-sm text-slate-500">{{ $tenant->slug }}</span>
                         </span>
-                        <span class="rounded-full bg-indigo-50 px-3 py-1 text-sm font-semibold text-indigo-700">اختيار</span>
+                        <span
+                            class="rounded-full bg-indigo-50 px-3 py-1 text-sm font-semibold text-indigo-700">اختيار</span>
                     </button>
                 </form>
             @empty
