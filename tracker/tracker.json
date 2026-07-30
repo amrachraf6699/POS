@@ -21,17 +21,20 @@
                     "title": "Runtime and Environments",
                     "status": "done",
                     "notes": [
-                        "Local development now defaults to SQLite; production MySQL requirements and environment validation are documented."
+                        "Local development now defaults to SQLite; production MySQL requirements and environment validation are documented.",
+                        "Test commands now use a committed in-memory SQLite environment and fail closed before a test can reach the developer database."
                     ],
                     "conflicts": [],
                     "problems": [],
                     "resolutions": [
-                        "Resolved branch index navigation failure caused by referencing the nonexistent home route; navigation now targets the existing Business Settings route."
+                        "Resolved branch index navigation failure caused by referencing the nonexistent home route; navigation now targets the existing Business Settings route.",
+                        "Resolved local database loss from testing: `.env.testing`, PHPUnit force overrides, and the test bootstrap now require in-memory SQLite."
                     ],
                     "evidence": [
                         "php artisan app:environment-check",
                         "EnvironmentCheckCommandTest passed",
-                        "10 tracker/environment tests passed"
+                        "10 tracker/environment tests passed",
+                        "TestEnvironmentSafetyTest verifies the test database is in-memory SQLite."
                     ],
                     "latest_commit": "abf4d7e"
                 },

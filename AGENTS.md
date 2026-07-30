@@ -52,6 +52,13 @@ Build the Egypt-focused, Arabic-only POS SaaS as a Laravel 10 modular monolith u
 
 Every behavior task adds or updates tests. Required coverage includes happy path, validation, authorization, tenant isolation, duplicate/retry behavior, and failure rollback where applicable. Critical workflows require feature tests; pure calculation and policy rules may also have unit tests. Run formatting, tests, static analysis, and dependency audit before release.
 
+### Test database safety (non-negotiable)
+
+- Read `.env` before any database-affecting command. It is the developer's main local database and must never be migrated, truncated, wiped, or refreshed by tests.
+- Run the test suite only through `php artisan test` or Composer's `test` script. The committed `.env.testing` and `phpunit.xml` must force `DB_CONNECTION=sqlite` and `DB_DATABASE=:memory:`.
+- Before running `migrate:fresh`, `migrate:refresh`, `db:wipe`, or any test command with `--env=testing`, verify that `.env.testing` exists and that it uses the in-memory SQLite database. Never run those destructive commands against the default `.env` environment.
+- Keep the fail-closed test bootstrap guard in `tests/CreatesApplication.php`. If the active test connection is not in-memory SQLite, stop and fix the test environment rather than running migrations or tests.
+
 ## Package policy
 
 `nwidart/laravel-modules` is an approved required dependency for project structure. Before installation, verify and record the exact Laravel 10/PHP 8.1-compatible release with Composer. Do not silently substitute a different module package or a package-free structure. For every other package, first document the purpose, selected version, PHP/Laravel compatibility, alternatives, and rollback/removal impact. Pin all versions and update the compatibility record.
