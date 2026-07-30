@@ -450,7 +450,7 @@
         },
         "04-Inventory-and-Transfers": {
             "title": "Inventory and Transfers",
-            "status": "in_progress",
+            "status": "review",
             "weight": 2,
             "notes": [
                 "TASK-001 is complete: the enabled Inventory module provides an immutable tenant-scoped movement ledger, transactional branch-product balances, and an authorized read-only balance page.",
@@ -502,12 +502,19 @@
                     "title": "Branch Transfers",
             "status": "in_progress",
             "notes": [
-              "Transfer approval is now a tenant setting, defaulting to immediate posting for newly created documents."
+              "Transfer approval is now a tenant setting, defaulting to immediate posting for newly created documents.",
+              "Tenant-scoped transfer documents, immutable lines, paired ledger movements, approval and cancellation actions, and Arabic RTL transfer pages are implemented."
             ],
                     "conflicts": [],
                     "problems": [],
                     "resolutions": [],
-                    "evidence": [],
+            "evidence": [
+              "Focused approval-setting tests passed: 5 tests, 29 assertions.",
+              "Focused transfer action tests passed: 2 tests, 13 assertions.",
+              "Full protected in-memory SQLite suite passed: 132 tests, 623 assertions.",
+              "Transfer route registration, Blade compilation, Pint, PHPStan, and tracker JSON validation passed.",
+              "Composer audit reported the three existing Laravel framework advisories tracked for Phase 04; no dependency changes were made."
+            ],
                     "latest_commit": null
                 },
                 "TASK-004-low-stock-and-inventory-tests": {

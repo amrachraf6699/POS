@@ -47,7 +47,7 @@ class UpdateBusinessSettingsRequest extends FormRequest
             'receipt_show_tax_breakdown' => ['required', 'boolean'],
             'low_stock_threshold' => ['required', 'integer', 'min:0'],
             'allow_negative_stock' => ['required', 'boolean'],
-            'transfer_requires_manager_approval' => ['required', 'boolean'],
+            'transfer_requires_manager_approval' => ['sometimes', 'boolean'],
         ];
     }
 }

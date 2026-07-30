@@ -51,7 +51,8 @@ final class ProductNavigation
         }
 
         if ($this->authorization->allows($user, $tenant, 'inventory.view')) {
-            $items[] = ['label' => 'أرصدة المخزون', 'url' => route('inventory.balances.index'), 'patterns' => ['inventory.*'], 'icon' => 'bx-archive-in'];
+            $items[] = ['label' => 'أرصدة المخزون', 'url' => route('inventory.balances.index'), 'patterns' => ['inventory.balances.*', 'inventory.adjustments.*'], 'icon' => 'bx-archive-in'];
+            $items[] = ['label' => 'تحويلات الفروع', 'url' => route('inventory.transfers.index'), 'patterns' => ['inventory.transfers.*'], 'icon' => 'bx-transfer-alt'];
         }
 
         return [
